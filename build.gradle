@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.22'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+group 'com.urosjarc'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainClass = 'com.urosjarc.dbanalyser.MainKt'
+}
+kotlin {
+    jvmToolchain(17)
+}
+
+javafx {
+    version = '17.0.6'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+
+    // koin
+    implementation("io.insert-koin:koin-logger-slf4j:3.3.0")
+    implementation("io.insert-koin:koin-core:3.3.0")
+    testImplementation("io.insert-koin:koin-test-junit5:3.3.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
