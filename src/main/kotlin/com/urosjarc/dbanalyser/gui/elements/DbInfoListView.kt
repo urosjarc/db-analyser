@@ -9,12 +9,12 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-abstract class DbListViewUi : KoinComponent {
+abstract class DbInfoListViewUi : KoinComponent {
     @FXML
     lateinit var self: ListView<Db>
 }
 
-class DbListView : DbListViewUi() {
+class DbInfoListView : DbInfoListViewUi() {
 
     val dbRepo by this.inject<DbRepo>()
     fun init() {

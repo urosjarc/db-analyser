@@ -4,37 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox alignment="CENTER" prefHeight="97.0" prefWidth="271.0" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.DbLoginPart">
+<VBox alignment="CENTER" prefHeight="89.0" prefWidth="271.0" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.DbLoginPart">
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
     <children>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Label text="Name: "/>
-                <TextField fx:id="nameTF" HBox.hgrow="ALWAYS"/>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Label text="Url: "/>
-                <TextField fx:id="urlTF" HBox.hgrow="ALWAYS"/>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Label text="Username: " HBox.hgrow="ALWAYS"/>
-                <TextField fx:id="usernameTF" HBox.hgrow="ALWAYS"/>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-            <children>
-                <Label text="Passwordd: " HBox.hgrow="ALWAYS"/>
-                <PasswordField fx:id="passwordTF" HBox.hgrow="ALWAYS"/>
-            </children>
-        </HBox>
-        <Button fx:id="loginB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Login" VBox.vgrow="ALWAYS"/>
+      <ComboBox editable="true" maxWidth="1.7976931348623157E308" promptText="Name..." />
+          <TextField fx:id="urlTF" promptText="Address..." />
+          <TextField fx:id="usernameTF" promptText="Username..." />
+          <PasswordField fx:id="passwordTF" promptText="Password..." />
+        <Button fx:id="loginB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Login" VBox.vgrow="ALWAYS" />
     </children>
 </VBox>

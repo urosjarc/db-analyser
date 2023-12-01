@@ -8,10 +8,12 @@ abstract class Repository<T : Any> {
         this.watchers.add(watcher)
     }
 
-    fun notifyWatchers() {
+    private fun notifyWatchers() {
         this.watchers.forEach { it() }
     }
+
     fun get(): MutableList<T> = this.data
+
     fun save(t: T) {
         this.data.add(t)
         this.notifyWatchers()

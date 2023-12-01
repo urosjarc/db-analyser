@@ -7,7 +7,7 @@ import javafx.fxml.FXML
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class DbWidgetUi : KoinComponent {
+abstract class DbSearchWidgetUi : KoinComponent {
     @FXML
     lateinit var dbLoginPartController: DbLoginPart
 
@@ -16,7 +16,7 @@ abstract class DbWidgetUi : KoinComponent {
 
 }
 
-class DbWidget : DbWidgetUi() {
+class DbSearchWidget : DbWidgetUi() {
     val dbRepo by this.inject<DbRepo>()
 
     @FXML
