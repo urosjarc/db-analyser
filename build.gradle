@@ -14,8 +14,9 @@ repositories {
 
 ext {
     junitVersion = '5.9.2'
+    slf4jVersion = "2.0.9"
+    koinVersion = "3.3.0"
 }
-
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -29,19 +30,29 @@ kotlin {
 }
 
 javafx {
-    version = '17.0.6'
+    version = '18'
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
+    // Dark style
+    implementation("org.jfxtras:jmetro:11.6.14")
+
+    // Db clients
+    implementation("org.xerial:sqlite-jdbc:3.44.1.0")
+    implementation("com.mysql:mysql-connector-j:8.2.0")
+
+    // Logging
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
 
     // koin
-    implementation("io.insert-koin:koin-logger-slf4j:3.3.0")
-    implementation("io.insert-koin:koin-core:3.3.0")
-    testImplementation("io.insert-koin:koin-test-junit5:3.3.0")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 }
 
 test {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="500.0" prefWidth="271.0" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.DbSearch">
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+    <children>
+      <ComboBox fx:id="startTableCB" editable="true" maxWidth="1.7976931348623157E308" promptText="Start table..." />
+      <ComboBox fx:id="endTableCB" editable="true" maxWidth="1.7976931348623157E308" prefWidth="150.0" promptText="End table..." />
+        <Button fx:id="searchB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Search" VBox.vgrow="ALWAYS" />
+      <TreeTableView fx:id="tableTTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+        <columns>
+        </columns>
+      </TreeTableView>
+    </children>
+</VBox>

@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
-<HBox prefHeight="275.0" prefWidth="432.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
-   <children>
-       <fx:include fx:id="dbWidget" maxHeight="1.7976931348623157E308" maxWidth="300.0" source="../widgets/DbWidget.fxml" HBox.hgrow="ALWAYS" />
-       <fx:include fx:id="dbSearchWidget" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/DbSearchWidget.fxml" HBox.hgrow="ALWAYS" />
-   </children>
-</HBox>
+<SplitPane dividerPositions="0.5, 0.5" prefHeight="373.0" prefWidth="448.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
+    <items>
+        <fx:include fx:id="dbLogin" source="../widgets/DbLogin.fxml"/>
+        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Searching">
+                    <fx:include fx:id="dbSearch" source="../widgets/DbSearch.fxml"/>
+                </Tab>
+                <Tab text="Untitled Tab 2">
+                </Tab>
+            </tabs>
+        </TabPane>
+    </items>
+</SplitPane>
