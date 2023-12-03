@@ -2,7 +2,6 @@ package com.urosjarc.dbanalyser.app.client
 
 import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.app.db.DbRepo
-import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.shared.Repository
 import org.koin.core.component.inject
 
