@@ -21,7 +21,7 @@ abstract class Repository<T : Any> : KoinComponent {
         this.onErrorCb.add(watcher)
     }
 
-    fun error(msg: String){
+    fun error(msg: String) {
         this.onErrorCb.forEach { it(msg) }
     }
 
@@ -31,13 +31,21 @@ abstract class Repository<T : Any> : KoinComponent {
     }
 
     fun save(t: T) {
-        this.data.add(t)
+        if (this.data.contains(t)) {
+            val i = this.data.indexOf(t)
+            this.data[i] = t
+        } else {
+            this.data.add(t)
+        }
         this.onChangeCb.forEach { it() }
-        this.select(t)
     }
 
     fun select(t: T) {
         this.selected = t
         this.onSelectCb.forEach { it(t) }
+    }
+
+    fun find(t: T): T? {
+        return this.data.filter { it.equals(t) }.firstOrNull()
     }
 }

@@ -1,10 +1,8 @@
 package com.urosjarc.dbanalyser.gui.widgets
 
-import com.urosjarc.dbanalyser.app.client.Client
 import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.app.db.DbRepo
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import org.koin.core.component.KoinComponent
@@ -44,21 +42,21 @@ class DbLogin : DbLoginUi() {
         this.dbRepo.onChange { this.dbLV.items.setAll(this.dbRepo.data) }
         this.loginB.setOnAction { this.login() }
         this.dbLV.setOnMouseClicked { this.select() }
-        this.clientRepo.onError { this.clientError(msg=it) }
+        this.clientRepo.onError { this.clientRepoError(msg = it) }
     }
 
-    fun clientError(msg: String) {
+    fun clientRepoError(msg: String) {
         Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).show()
     }
 
     fun select() {
-        val db = this.dbLV.selectionModel.selectedItem
+        var db = this.dbLV.selectionModel.selectedItem
+        db = this.dbRepo.find(db) ?: db
         this.nameTF.text = db.name
         this.usernameTF.text = db.user
         this.passwordTF.text = db.password
         this.urlTF.text = db.url
         this.typeCB.value = db.type
-        this.dbRepo.select(db)
     }
 
     fun login() {
@@ -69,7 +67,7 @@ class DbLogin : DbLoginUi() {
             url = this.urlTF.text,
             type = this.typeCB.value
         )
-        if(!this.dbRepo.contains(db)) this.dbRepo.save(db)
-        else this.dbRepo.select(db)
+        this.dbRepo.save(db)
+        this.dbRepo.select(db)
     }
 }

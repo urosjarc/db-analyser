@@ -9,5 +9,9 @@ data class Db(
 ) {
     enum class Type { MYSQL, SQLITE}
 
+    override fun equals(other: Any?): Boolean = when (other) {
+        is Db -> this.name == other.name
+        else -> super.equals(other)
+    }
     override fun toString(): String = "${this.name} ${this.url}"
 }
