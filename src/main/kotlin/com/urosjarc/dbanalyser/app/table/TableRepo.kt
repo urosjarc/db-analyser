@@ -10,4 +10,12 @@ class TableRepo : Repository<Table>() {
     init {
         this.clientRepo.onSelect { this.setAll(it.tables()) }
     }
+
+    override fun save() {
+        TODO("Not yet implemented")
+    }
+
+    override fun load() {
+        TODO("Not yet implemented")
+    }
 }

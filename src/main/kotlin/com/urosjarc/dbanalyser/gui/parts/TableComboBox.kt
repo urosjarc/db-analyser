@@ -40,6 +40,7 @@ class TableComboBox : TableComboBoxUi() {
     }
 
     private fun onTab() {
+        if(this.self.items.isEmpty()) return
         this.table = this.self.items.first()
         this.self.value = this.table
     }

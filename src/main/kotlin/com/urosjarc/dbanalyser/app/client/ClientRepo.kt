@@ -5,7 +5,7 @@ import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.shared.Repository
 import org.koin.core.component.inject
 
-class ClientRepo: Repository<Client>(){
+class ClientRepo: Repository<Client>() {
     val dbRepo by this.inject<DbRepo>()
 
     init {
@@ -17,5 +17,13 @@ class ClientRepo: Repository<Client>(){
             if(client.inited()) this.select(client)
             else this.error(msg="Client could not connect!")
         }
+    }
+
+    override fun save() {
+        TODO("Not yet implemented")
+    }
+
+    override fun load() {
+        TODO("Not yet implemented")
     }
 }

@@ -38,6 +38,7 @@ class DbLogin : DbLoginUi() {
 
     @FXML
     fun initialize() {
+        this.dbLV.items.setAll(this.dbRepo.data)
         this.typeCB.items.setAll(Db.Type.values().toList())
         this.dbRepo.onChange { this.dbLV.items.setAll(this.dbRepo.data) }
         this.loginB.setOnAction { this.login() }
@@ -57,6 +58,7 @@ class DbLogin : DbLoginUi() {
         this.passwordTF.text = db.password
         this.urlTF.text = db.url
         this.typeCB.value = db.type
+        this.dbRepo.select(db)
     }
 
     fun login() {

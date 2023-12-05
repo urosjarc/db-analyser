@@ -1,5 +1,8 @@
 package com.urosjarc.dbanalyser.app.db
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Db(
     val name: String,
     val user: String,

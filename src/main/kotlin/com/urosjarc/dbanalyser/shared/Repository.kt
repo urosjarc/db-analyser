@@ -1,14 +1,27 @@
 package com.urosjarc.dbanalyser.shared
 
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
+import kotlinx.serialization.json.encodeToStream
 import org.koin.core.component.KoinComponent
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.InputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
+import java.util.*
 
 abstract class Repository<T : Any> : KoinComponent {
-    var data = mutableListOf<T>()
+    val data = mutableListOf<T>()
     var selected: T? = null
+    open val file: File? = null
 
     private val onChangeCb = mutableListOf<() -> Unit>()
     private val onSelectCb = mutableListOf<(t: T) -> Unit>()
     private val onErrorCb = mutableListOf<(t: String) -> Unit>()
+
     fun onChange(watcher: () -> Unit) {
         this.onChangeCb.add(watcher)
     }
@@ -26,8 +39,10 @@ abstract class Repository<T : Any> : KoinComponent {
     }
 
     fun setAll(t: List<T>) {
-        this.data = t.toMutableList()
+        this.data.clear()
+        this.data.addAll(t.toMutableList())
         this.onChangeCb.forEach { it() }
+        this.save()
     }
 
     fun save(t: T) {
@@ -38,6 +53,7 @@ abstract class Repository<T : Any> : KoinComponent {
             this.data.add(t)
         }
         this.onChangeCb.forEach { it() }
+        this.save()
     }
 
     fun select(t: T) {
@@ -48,4 +64,7 @@ abstract class Repository<T : Any> : KoinComponent {
     fun find(t: T): T? {
         return this.data.filter { it.equals(t) }.firstOrNull()
     }
+    abstract fun load()
+
+    abstract fun save()
 }

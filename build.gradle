@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'org.jetbrains.kotlin.jvm' version '1.8.22'
     id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.22'
 }
 
 group 'com.urosjarc'
@@ -45,6 +46,8 @@ dependencies {
     //Fuzzy search
     implementation("me.xdrop:fuzzywuzzy:1.4.0")
 
+    //Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.0")
 
     // Logging
     implementation("org.slf4j:slf4j-api:$slf4jVersion")
