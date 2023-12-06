@@ -14,4 +14,6 @@ class TableRepo : Repository<Table>() {
     override fun save() = Unit
 
     override fun load() = Unit
+
+    fun find(t: String) = this.data.firstOrNull { it.name == t }
 }
