@@ -13,7 +13,7 @@ import org.koin.core.component.inject
 
 open class TableComboBoxUi : KoinComponent {
     @FXML
-    lateinit var self: ComboBox<Table>
+    lateinit var self: ComboBox<String>
 }
 
 class TableComboBox : TableComboBoxUi() {
@@ -22,9 +22,10 @@ class TableComboBox : TableComboBoxUi() {
 
     @FXML
     private fun initialize() {
+        this.self.valueProperty().addListener { _, _, newValue -> this.onSelect(newValue) }
         this.self.editor.setOnKeyPressed { this.onKeyPressed(keyEvent = it) }
         this.self.setOnKeyPressed { this.onKeyPressed(keyEvent = it) }
-        this.tableRepo.onChange { this.self.items.setAll(this.tableRepo.data) }
+        this.tableRepo.onChange { this.self.items.setAll(this.tableRepo.data.map { it.name }) }
     }
 
     private fun onKeyPressed(keyEvent: KeyEvent) {
@@ -32,17 +33,26 @@ class TableComboBox : TableComboBoxUi() {
         if (keyEvent.code == KeyCode.TAB) this.onTab()
     }
 
+    fun onSelect(text: String){
+        this.table = this.tableRepo.data.firstOrNull { it.name == text }
+        if(this.table != null) this.self.editor.text = this.table!!.name;
+    }
+
     private fun onChange() {
         this.self.show()
-        this.table = null
-        val tables = this.tableRepo.data.sortedByDescending { FuzzySearch.ratio(it.name, this.self.editor.text) }
-        this.self.items = FXCollections.observableList(tables)
+        val tables = this.sortedTables()
+        this.self.items = FXCollections.observableList(tables.map { it.name })
+        this.table = tables.firstOrNull()
     }
 
     private fun onTab() {
         if(this.self.items.isEmpty()) return
-        this.table = this.self.items.first()
-        this.self.value = this.table
+        val tables = this.sortedTables()
+        this.table = tables.firstOrNull()
+        this.self.value = this.table.toString()
+        this.self.hide()
     }
+
+    private fun sortedTables() = this.tableRepo.data.sortedByDescending { FuzzySearch.ratio(it.name, this.self.editor.text) }
 
 }

@@ -11,11 +11,7 @@ class TableRepo : Repository<Table>() {
         this.clientRepo.onSelect { this.setAll(it.tables()) }
     }
 
-    override fun save() {
-        TODO("Not yet implemented")
-    }
+    override fun save() = Unit
 
-    override fun load() {
-        TODO("Not yet implemented")
-    }
+    override fun load() = Unit
 }
