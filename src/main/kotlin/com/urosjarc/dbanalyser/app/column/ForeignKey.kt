@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ForeignKey(
-    val table: String,
+    val tableName: String,
     val from: String,
     val to: String
 )

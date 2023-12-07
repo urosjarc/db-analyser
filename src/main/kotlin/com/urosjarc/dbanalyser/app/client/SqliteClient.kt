@@ -34,7 +34,7 @@ class SqliteClient(override val db: Db) : Client {
             this.exec("SELECT * FROM pragma_foreign_key_list('${table.name}')") {
                 foreignKeys.add(
                     ForeignKey(
-                        table = it.getString("table"),
+                        tableName = it.getString("table"),
                         from = it.getString("from"),
                         to = it.getString("to")
                     )

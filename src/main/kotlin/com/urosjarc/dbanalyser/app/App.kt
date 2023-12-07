@@ -3,6 +3,7 @@ package com.urosjarc.dbanalyser.app
 import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
+import com.urosjarc.dbanalyser.app.table.TableService
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -16,6 +17,7 @@ object App {
         this.single { ClientRepo() }
         this.single { TableRepo() }
         this.single { Json { this.prettyPrint = true } }
+        this.factory { TableService() }
     }
 
     fun init(tip: Tip = Tip.TEST) {

@@ -11,4 +11,6 @@ data class Table(
     override fun toString(): String {
         return this.name
     }
+
+    val foreignKeys get() = this.columns.mapNotNull { it.foreignKey }
 }
