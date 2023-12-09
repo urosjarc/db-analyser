@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 
 
-<TableView fx:id="logsTV" prefHeight="301.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.DbLogs">
+<TableView fx:id="logsTV" prefHeight="301.0" prefWidth="297.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.AppLogs">
   <columns>
     <TableColumn fx:id="levelColumn" prefWidth="75.0" text="Level" />
     <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Time" />

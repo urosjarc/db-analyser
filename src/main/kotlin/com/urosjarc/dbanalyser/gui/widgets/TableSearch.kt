@@ -1,20 +1,15 @@
 package com.urosjarc.dbanalyser.gui.widgets
 
-import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.TableComboBox
 import com.urosjarc.dbanalyser.gui.parts.TableTreeView
-import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.Button
-import javafx.scene.control.TreeItem
-import javafx.scene.control.TreeTableColumn
-import javafx.scene.control.TreeTableView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-abstract class DbSearchUi : KoinComponent {
+abstract class TableSearchUi : KoinComponent {
     @FXML
     lateinit var startTableController: TableComboBox
 
@@ -28,7 +23,7 @@ abstract class DbSearchUi : KoinComponent {
     lateinit var searchB: Button
 }
 
-class DbSearch : DbSearchUi() {
+class TableSearch : TableSearchUi() {
 
     val tableRepo by this.inject<TableRepo>()
 

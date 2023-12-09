@@ -5,12 +5,10 @@ import com.urosjarc.dbanalyser.app.logs.LogRepo
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.*
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-abstract class DbLogsUi : KoinComponent {
+abstract class AppLogsUi : KoinComponent {
     @FXML
     lateinit var dataColumn: TableColumn<Log, String>
 
@@ -24,7 +22,7 @@ abstract class DbLogsUi : KoinComponent {
     lateinit var logsTV: TableView<Log>
 }
 
-class DbLogs : DbLogsUi() {
+class AppLogs : AppLogsUi() {
 
     val logRepo by this.inject<LogRepo>()
 
