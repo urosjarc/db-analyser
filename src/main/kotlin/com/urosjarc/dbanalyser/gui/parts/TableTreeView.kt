@@ -2,6 +2,7 @@ package com.urosjarc.dbanalyser.gui.parts
 
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableConnection
+import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
@@ -28,9 +29,11 @@ open class TableTreeViewUi : KoinComponent {
 
 class TableTreeView : TableTreeViewUi() {
     val tableService by this.inject<TableService>()
+    val tableRepo by this.inject<TableRepo>()
 
     @FXML
     fun initialize() {
+        this.self.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue -> this.onItemClicked(newValue.value) }
         this.nameColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.name) }
         this.fromColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = false)) }
         this.toColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
@@ -55,6 +58,10 @@ class TableTreeView : TableTreeViewUi() {
                 queue.add(newNode)
             }
         }
+    }
+
+    fun onItemClicked(tableConnection: TableConnection){
+        this.tableRepo.select(tableConnection.table)
     }
 
 }
