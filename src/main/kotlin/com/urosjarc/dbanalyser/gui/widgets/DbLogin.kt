@@ -56,15 +56,14 @@ class DbLogin : DbLoginUi() {
     }
 
     fun select(mouseEvent: MouseEvent) {
-        if(mouseEvent.clickCount >= 2) return this.login()
-        var db = this.dbLV.selectionModel.selectedItem
+        if(mouseEvent.clickCount == 2) return this.login()
+        var db: Db = this.dbLV.selectionModel.selectedItem ?: return
         db = this.dbRepo.find(db) ?: db
         this.nameTF.text = db.name
         this.usernameTF.text = db.user
         this.passwordTF.text = db.password
         this.urlTF.text = db.url
         this.typeCB.value = db.type
-        this.dbRepo.select(db)
     }
 
     fun login() {

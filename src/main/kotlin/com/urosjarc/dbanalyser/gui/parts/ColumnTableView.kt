@@ -8,13 +8,11 @@ import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
+import javafx.scene.input.MouseEvent
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 open class ColumnTableViewUi : KoinComponent {
-    @FXML
-    lateinit var tableNameL: Label
-
     @FXML
     lateinit var self: TableView<Column>
 
@@ -34,7 +32,8 @@ class ColumnTableView : ColumnTableViewUi() {
     val tableRepo by this.inject<TableRepo>()
     @FXML
     fun initialize(){
-        this.tableRepo.onSelect { this.update(it) }
+
+        this.self.setOnMouseClicked { this.onItemClicked(it) }
 
         this.keyColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.meta) }
         this.typeColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.type) }
@@ -50,6 +49,16 @@ class ColumnTableView : ColumnTableViewUi() {
 
     fun update(table: Table) {
         this.self.items.setAll(table.columns)
-        this.tableNameL.text = table.name
+    }
+    fun onItemClicked(mouseEvent: MouseEvent){
+        if(mouseEvent.clickCount == 2){
+            val column = this.self.selectionModel.selectedItem
+            if(column.foreignKey != null){
+                val table = this.tableRepo.find(column.foreignKey.tableName)
+                if(table != null) {
+                    this.tableRepo.select(table)
+                }
+            }
+        }
     }
 }

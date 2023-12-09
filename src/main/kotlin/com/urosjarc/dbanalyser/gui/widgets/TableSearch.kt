@@ -9,7 +9,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-abstract class TableSearchUi : KoinComponent {
+open class TableSearchUi : KoinComponent {
     @FXML
     lateinit var startTableController: TableComboBox
 
@@ -21,6 +21,8 @@ abstract class TableSearchUi : KoinComponent {
 
     @FXML
     lateinit var searchB: Button
+
+
 }
 
 class TableSearch : TableSearchUi() {

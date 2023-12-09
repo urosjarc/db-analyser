@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableInfo">
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableInfo">
     <items>
-        <fx:include source="../parts/ColumnTableView.fxml"/>
-        <fx:include source="../parts/BackConnectionTableView.fxml"/>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="nameL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </Label>
+              <fx:include fx:id="columnTableView" source="../parts/ColumnTableView.fxml" />
+         </children>
+      </VBox>
+        <fx:include fx:id="backConnectionView" source="../parts/BackConnectionTableView.fxml" />
     </items>
 </SplitPane>

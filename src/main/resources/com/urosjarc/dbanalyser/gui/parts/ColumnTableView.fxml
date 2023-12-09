@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
 
-<?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.urosjarc.dbanalyser.gui.parts.ColumnTableView"
-      prefHeight="400.0" prefWidth="600.0">
-    <Label fx:id="tableNameL" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER"
-           VBox.vgrow="NEVER">
-        <font>
-            <Font name="System Bold" size="18.0"/>
-        </font>
-        <VBox.margin>
-            <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
-        </VBox.margin>
-    </Label>
-    <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Constraints"/>
-            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type"/>
-            <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name"/>
-            <TableColumn fx:id="forwardColumn" prefWidth="75.0" text="Forward"/>
-        </columns>
-    </TableView>
-</VBox>
+ <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ColumnTableView">
+     <columns>
+         <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Constraints" />
+         <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+         <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+         <TableColumn fx:id="forwardColumn" prefWidth="75.0" text="Forward" />
+     </columns>
+ </TableView>

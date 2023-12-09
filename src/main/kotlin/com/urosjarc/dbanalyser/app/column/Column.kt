@@ -18,5 +18,7 @@ data class Column(
         return data.joinToString()
     }
 
+    val baseType get() = this.type.split("(").first()
+
     val connection get() = if (this.foreignKey != null) "${this.foreignKey.tableName}.${this.foreignKey.to}" else ""
 }

@@ -1,5 +1,6 @@
 package com.urosjarc.dbanalyser.gui.parts
 
+import com.urosjarc.dbanalyser.app.column.ForeignKey
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
@@ -8,6 +9,7 @@ import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
+import javafx.scene.input.MouseEvent
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -34,6 +36,7 @@ class BackConnectionTableView: BackConnectionTableViewUi() {
     @FXML
     fun initialize(){
         this.tableRepo.onSelect { this.update(it) }
+        this.self.setOnMouseClicked { this.onItemClicked(it) }
 
         this.fromColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.table.name) }
         this.fromKeyColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.from) }
@@ -45,6 +48,13 @@ class BackConnectionTableView: BackConnectionTableViewUi() {
         this.toColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
         this.fromKeyColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
         this.toKeyColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
+    }
+
+    private fun onItemClicked(mouseEvent: MouseEvent) {
+        if(mouseEvent.clickCount == 2){
+            val column = this.self.selectionModel.selectedItem
+            this.tableRepo.select(column.table)
+        }
     }
 
     fun update(table: Table) {

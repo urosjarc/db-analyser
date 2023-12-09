@@ -13,11 +13,13 @@
         </SplitPane>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Searching">
-                    <fx:include fx:id="dbSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                <Tab text="Table Searching">
+                    <fx:include fx:id="tableSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                 source="../widgets/TableSearch.fxml"/>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+                <Tab text="Column Searching">
+                    <fx:include fx:id="columnSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                source="../widgets/ColumnSearch.fxml"/>
                 </Tab>
             </tabs>
         </TabPane>
