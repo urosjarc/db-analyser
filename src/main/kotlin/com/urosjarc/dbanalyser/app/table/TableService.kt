@@ -3,8 +3,9 @@ package com.urosjarc.dbanalyser.app.table
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class TableService : KoinComponent {
-    val tableRepo by this.inject<TableRepo>()
+class TableService(
+    val tableRepo: TableRepo
+) {
 
     fun forwardConnections(table: Table): MutableList<TableConnection> {
         val tableCons = mutableListOf<TableConnection>()

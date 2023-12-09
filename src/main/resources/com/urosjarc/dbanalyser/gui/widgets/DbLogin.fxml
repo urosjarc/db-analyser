@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+
 <VBox prefHeight="352.0" prefWidth="274.0" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.DbLogin">
    <children>
           <TextField fx:id="nameTF" promptText="Name..." />
@@ -11,7 +12,7 @@
           <PasswordField fx:id="passwordTF" promptText="Password..." />
       <ChoiceBox fx:id="typeCB" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
           <Button fx:id="loginB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Login" VBox.vgrow="ALWAYS" />
-      <ListView fx:id="dbLV" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+      <ListView fx:id="dbLV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

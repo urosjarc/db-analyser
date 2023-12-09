@@ -4,8 +4,8 @@
 
 <TreeTableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.TableTreeView">
   <columns>
-    <TreeTableColumn fx:id="nameColumn" text="Table" />
-    <TreeTableColumn fx:id="fromColumn" text="From" />
-    <TreeTableColumn fx:id="toColumn" text="To" />
+    <TreeTableColumn fx:id="nameColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Table" />
+    <TreeTableColumn fx:id="fromColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="From" />
+    <TreeTableColumn fx:id="toColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="To" />
   </columns>
 </TreeTableView>

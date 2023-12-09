@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableInfo">
+    <items>
+        <VBox>
+            <children>
+                <Label fx:id="tableNameL" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" VBox.vgrow="NEVER">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                    </VBox.margin>
+                </Label>
+                <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Constraints" />
+                        <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+                        <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+                        <TableColumn fx:id="forwardColumn" prefWidth="75.0" text="Forward" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+        <TableView fx:id="backwardTC" prefHeight="200.0" prefWidth="200.0">
+            <columns>
+                <TableColumn fx:id="fromColumn" prefWidth="75.0" text="From" />
+                <TableColumn fx:id="fromKeyColumn" prefWidth="75.0" text="Key" />
+                <TableColumn fx:id="toColumn" prefWidth="75.0" text="To" />
+                <TableColumn fx:id="toKeyColumn" prefWidth="75.0" text="Key" />
+            </columns>
+        </TableView>
+    </items>
+</SplitPane>

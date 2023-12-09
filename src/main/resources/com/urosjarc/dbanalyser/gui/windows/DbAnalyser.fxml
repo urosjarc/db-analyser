@@ -2,17 +2,25 @@
 
 <?import javafx.scene.control.*?>
 
-<SplitPane dividerPositions="0.5" prefHeight="513.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
+<SplitPane dividerPositions="0.5, 0.5" prefHeight="513.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
     <items>
-        <fx:include fx:id="dbLogin" source="../widgets/DbLogin.fxml" />
+        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+            <items>
+                <fx:include fx:id="dbLogin" source="../widgets/DbLogin.fxml"/>
+                <fx:include fx:id="dbLogs" source="../widgets/DbLogs.fxml"/>
+            </items>
+        </SplitPane>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Searching">
-                    <fx:include fx:id="dbSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/DbSearch.fxml" />
+                    <fx:include fx:id="dbSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                source="../widgets/DbSearch.fxml"/>
                 </Tab>
                 <Tab text="Untitled Tab 2">
                 </Tab>
             </tabs>
         </TabPane>
+        <fx:include fx:id="tableInfo" source="../widgets/TableInfo.fxml"/>
     </items>
 </SplitPane>

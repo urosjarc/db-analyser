@@ -3,8 +3,10 @@ package com.urosjarc.dbanalyser.gui.widgets
 import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.app.db.DbRepo
+import com.urosjarc.dbanalyser.app.logs.LogService
 import javafx.fxml.FXML
 import javafx.scene.control.*
+import javafx.scene.input.MouseEvent
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -30,19 +32,22 @@ abstract class DbLoginUi : KoinComponent {
 
     @FXML
     lateinit var dbLV: ListView<Db>
+
 }
 
 class DbLogin : DbLoginUi() {
     val dbRepo by this.inject<DbRepo>()
     val clientRepo by this.inject<ClientRepo>()
+    val logService by this.inject<LogService>()
 
     @FXML
     fun initialize() {
+        this.logService.info("Inited!!!")
         this.dbLV.items.setAll(this.dbRepo.data)
         this.typeCB.items.setAll(Db.Type.values().toList())
         this.dbRepo.onChange { this.dbLV.items.setAll(this.dbRepo.data) }
         this.loginB.setOnAction { this.login() }
-        this.dbLV.setOnMouseClicked { this.select() }
+        this.dbLV.setOnMouseClicked { this.select(it) }
         this.clientRepo.onError { this.clientRepoError(msg = it) }
     }
 
@@ -50,7 +55,8 @@ class DbLogin : DbLoginUi() {
         Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).show()
     }
 
-    fun select() {
+    fun select(mouseEvent: MouseEvent) {
+        if(mouseEvent.clickCount >= 2) return this.login()
         var db = this.dbLV.selectionModel.selectedItem
         db = this.dbRepo.find(db) ?: db
         this.nameTF.text = db.name

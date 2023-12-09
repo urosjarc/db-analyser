@@ -31,15 +31,14 @@ class TableTreeView : TableTreeViewUi() {
 
     @FXML
     fun initialize() {
-        this.nameColumn.setCellValueFactory {
-            ReadOnlyStringWrapper(it.value.value.table.name)
-        }
-        this.fromColumn.setCellValueFactory {
-            ReadOnlyStringWrapper(it.value.value.connectionName(from = false))
-        }
-        this.toColumn.setCellValueFactory {
-            ReadOnlyStringWrapper(it.value.value.connectionName(from = true))
-        }
+        this.nameColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.name) }
+        this.fromColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = false)) }
+        this.toColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
+
+        this.self.columnResizePolicy = TreeTableView.CONSTRAINED_RESIZE_POLICY;
+        this.nameColumn.maxWidth = (1f * Integer.MAX_VALUE * 40).toDouble()
+        this.fromColumn.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
+        this.toColumn.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
     }
 
     fun update(startTable: Table, endTable: Table?) {
@@ -47,7 +46,7 @@ class TableTreeView : TableTreeViewUi() {
         this.self.root = TreeItem(tableConnection)
         this.self.root.isExpanded = true
         val queue = mutableListOf(this.self.root)
-        while(queue.isNotEmpty()){
+        while (queue.isNotEmpty()) {
             val current = queue.removeFirst()
             current.value.childrens.forEach {
                 val newNode = TreeItem(it)

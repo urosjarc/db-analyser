@@ -16,7 +16,6 @@ import java.util.*
 abstract class Repository<T : Any> : KoinComponent {
     val data = mutableListOf<T>()
     var selected: T? = null
-    open val file: File? = null
 
     private val onChangeCb = mutableListOf<() -> Unit>()
     private val onSelectCb = mutableListOf<(t: T) -> Unit>()
@@ -64,7 +63,8 @@ abstract class Repository<T : Any> : KoinComponent {
     fun find(t: T): T? {
         return this.data.filter { it.equals(t) }.firstOrNull()
     }
-    abstract fun load()
 
-    abstract fun save()
+    open fun load() {}
+
+    open fun save() {}
 }

@@ -41,6 +41,7 @@ class DbSearch : DbSearchUi() {
         val startTable = this.startTableController.table!!
         val endTable = this.endTableController.table
         this.tableTreeViewController.update(startTable=startTable, endTable=endTable)
+        this.tableRepo.select(startTable)
     }
 
 }
