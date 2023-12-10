@@ -7,4 +7,4 @@ data class ForeignKey(
     val tableName: String,
     val from: String,
     val to: String
-)
+) {}

@@ -47,6 +47,7 @@ class SqliteClient(override val db: Db) : Client {
                         name = name,
                         type = it.getString("type"),
                         notNull = it.getBoolean("notnull"),
+                        defaultValue = it.getString("dflt_value"),
                         primaryKey = it.getBoolean("pk"),
                         foreignKey = foreignKeys.firstOrNull { fk -> fk.from == name}
                     )

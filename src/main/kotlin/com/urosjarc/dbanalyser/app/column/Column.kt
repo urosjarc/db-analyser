@@ -7,6 +7,7 @@ data class Column(
     val name: String,
     val type: String,
     val notNull: Boolean,
+    val defaultValue: String?,
     val primaryKey: Boolean,
     val foreignKey: ForeignKey? = null
 ) {
@@ -18,7 +19,11 @@ data class Column(
         return data.joinToString()
     }
 
+    val isForeignKey get() = this.foreignKey != null
+
+    val hasDefaultValue get() = this.defaultValue != null
+
     val baseType get() = this.type.split("(").first()
 
-    val connection get() = if (this.foreignKey != null) "${this.foreignKey.tableName}.${this.foreignKey.to}" else ""
+    val connection get() = if (this.isForeignKey) "${this.foreignKey?.tableName}.${this.foreignKey?.to}" else ""
 }

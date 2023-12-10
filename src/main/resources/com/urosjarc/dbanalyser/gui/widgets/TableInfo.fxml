@@ -9,7 +9,7 @@
     <items>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label fx:id="nameL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="Label" textAlignment="CENTER">
+            <Label fx:id="nameL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="&lt; Empty &gt;" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>

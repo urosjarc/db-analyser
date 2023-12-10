@@ -1,22 +1,22 @@
 package com.urosjarc.dbanalyser.gui.widgets
 
 import com.urosjarc.dbanalyser.app.column.Column
+import com.urosjarc.dbanalyser.app.column.ColumnRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
+import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
 import javafx.scene.control.TextField
 import javafx.scene.layout.FlowPane
+import me.xdrop.fuzzywuzzy.FuzzySearch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 open class ColumnSearchUi : KoinComponent {
     @FXML
     lateinit var typeFP: FlowPane
-
-    @FXML
-    lateinit var searchB: Button
 
     @FXML
     lateinit var nameTF: TextField
@@ -41,16 +41,29 @@ open class ColumnSearchUi : KoinComponent {
 
     @FXML
     lateinit var primaryKeyCB: CheckBox
+
+    @FXML
+    lateinit var columnTableViewController: ColumnTableView
+
+    @FXML
+    lateinit var selectAllB: Button
+
+    @FXML
+    lateinit var deselectAllB: Button
 }
 
 class ColumnSearch : ColumnSearchUi() {
 
     val tableRepo by this.inject<TableRepo>()
+    val columnRepo by this.inject<ColumnRepo>()
 
     @FXML
     fun initialize() {
-        this.tableRepo.onChange { this.update() }
-        this.nameTF.setOnAction { this.search() }
+        this.tableRepo.onChange { this.updateTypes() }
+        this.selectAllB.setOnAction { this.selectAll(true) }
+        this.deselectAllB.setOnAction { this.selectAll(false) }
+
+        this.nameTF.setOnKeyTyped { this.search() }
         this.constrainedCB.setOnAction { this.search() }
         this.defaultCB.setOnAction { this.search() }
         this.notNullCB.setOnAction { this.search() }
@@ -60,11 +73,55 @@ class ColumnSearch : ColumnSearchUi() {
         this.primaryKeyCB.setOnAction { this.search() }
     }
 
-    private fun search() {
-        println("search")
+    private fun selectAll(state: Boolean) {
+        this.constrainedCB.isSelected = state
+        this.defaultCB.isSelected = state
+        this.notNullCB.isSelected = state
+        this.uniqueCB.isSelected = state
+        this.selfRefKeyCB.isSelected = state
+        this.foreignKeyCB.isSelected = state
+        this.primaryKeyCB.isSelected = state
+        this.typeFP.children.forEach { if (it is CheckBox) it.isSelected = state }
+        this.search()
     }
 
-    fun update() {
+    private fun search() {
+        println("search")
+        val columns = mutableListOf<Column>()
+        this.tableRepo.data.forEach { table ->
+            for (column in table.columns) {
+                if (this.primaryKeyCB.isSelected && column.primaryKey) {
+                    columns.add(column); continue
+                }
+                if (this.foreignKeyCB.isSelected && column.isForeignKey) {
+                    columns.add(column); continue
+                }
+                if (this.selfRefKeyCB.isSelected && column.foreignKey?.tableName == table.name) {
+                    columns.add(column); continue
+                }
+                if (this.notNullCB.isSelected && column.notNull) {
+                    columns.add(column); continue
+                }
+                if (this.defaultCB.isSelected && column.hasDefaultValue) {
+                    columns.add(column); continue
+                }
+
+                for (child in this.typeFP.children) {
+                    if (child is CheckBox && child.isSelected && child.text.equals(column.baseType)) {
+                        columns.add(column)
+                        break
+                    }
+                }
+            }
+        }
+
+        columns.sortByDescending { FuzzySearch.weightedRatio(it.name, this.nameTF.text) }
+
+        this.columnTableViewController.self.items.setAll(columns)
+
+    }
+
+    fun updateTypes() {
         val baseTypes = mutableSetOf<String>()
         this.tableRepo.data.forEach { table ->
             table.columns.forEach { column: Column ->
@@ -73,8 +130,8 @@ class ColumnSearch : ColumnSearchUi() {
         }
         this.typeFP.children.setAll(baseTypes.map {
             CheckBox(it).also {
-                it.isIndeterminate = true
-                it.isAllowIndeterminate = true
+                it.isSelected = true
+                it.setOnAction { this.search() }
             }
         })
     }

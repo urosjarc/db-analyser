@@ -1,6 +1,7 @@
 package com.urosjarc.dbanalyser.gui.parts
 
 import com.urosjarc.dbanalyser.app.column.Column
+import com.urosjarc.dbanalyser.app.column.ColumnRepo
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -30,9 +31,9 @@ open class ColumnTableViewUi : KoinComponent {
 }
 class ColumnTableView : ColumnTableViewUi() {
     val tableRepo by this.inject<TableRepo>()
+
     @FXML
     fun initialize(){
-
         this.self.setOnMouseClicked { this.onItemClicked(it) }
 
         this.keyColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.meta) }
