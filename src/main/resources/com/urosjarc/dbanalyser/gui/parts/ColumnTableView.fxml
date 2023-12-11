@@ -7,6 +7,7 @@
      <columns>
          <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Constraints" />
          <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
+         <TableColumn fx:id="tableColumn" prefWidth="75.0" text="Table" />
          <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
          <TableColumn fx:id="forwardColumn" prefWidth="75.0" text="Forward" />
      </columns>

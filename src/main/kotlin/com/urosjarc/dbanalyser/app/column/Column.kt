@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Column(
+    val table: String,
     val name: String,
     val type: String,
     val notNull: Boolean,

@@ -44,6 +44,7 @@ class SqliteClient(override val db: Db) : Client {
                 val name = it.getString("name")
                 table.columns.add(
                     Column(
+                        table = table.name,
                         name = name,
                         type = it.getString("type"),
                         notNull = it.getBoolean("notnull"),

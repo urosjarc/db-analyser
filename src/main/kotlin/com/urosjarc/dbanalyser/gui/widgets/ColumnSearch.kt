@@ -9,6 +9,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
 import javafx.scene.control.TextField
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.FlowPane
 import me.xdrop.fuzzywuzzy.FuzzySearch
 import org.koin.core.component.KoinComponent
@@ -59,6 +60,11 @@ class ColumnSearch : ColumnSearchUi() {
 
     @FXML
     fun initialize() {
+        this.columnTableViewController.also {
+            it.forwardOnColumnClick = true
+            it.forwardOnNumberClicks = 1
+        }
+
         this.tableRepo.onChange { this.updateTypes() }
         this.selectAllB.setOnAction { this.selectAll(true) }
         this.deselectAllB.setOnAction { this.selectAll(false) }
@@ -86,7 +92,6 @@ class ColumnSearch : ColumnSearchUi() {
     }
 
     private fun search() {
-        println("search")
         val columns = mutableListOf<Column>()
         this.tableRepo.data.forEach { table ->
             for (column in table.columns) {

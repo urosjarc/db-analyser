@@ -23,6 +23,12 @@ class TableInfo : TableInfoUi() {
 
     @FXML
     fun initialize(){
+        this.columnTableViewController.also {
+            it.tableColumn.isVisible = false
+            it.forwardOnForeignColumnClick = true
+            it.forwardOnNumberClicks = 2
+        }
+
         this.columnTableViewController.let {ctrl ->
             ctrl.tableRepo.onSelect {
                 this.nameL.text = it.name

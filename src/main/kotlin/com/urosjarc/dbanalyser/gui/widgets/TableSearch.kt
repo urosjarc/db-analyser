@@ -35,7 +35,7 @@ class TableSearch : TableSearchUi() {
     }
 
     fun search() {
-        val startTable = this.startTableController.table!!
+        val startTable = this.startTableController.table ?: return
         val endTable = this.endTableController.table
         this.tableTreeViewController.update(startTable=startTable, endTable=endTable)
         this.tableRepo.select(startTable)

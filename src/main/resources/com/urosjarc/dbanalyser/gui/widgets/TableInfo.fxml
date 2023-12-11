@@ -20,7 +20,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </padding>
             </Label>
-              <fx:include fx:id="columnTableView" source="../parts/ColumnTableView.fxml" />
+              <fx:include fx:id="columnTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../parts/ColumnTableView.fxml" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
         <fx:include fx:id="backConnectionView" source="../parts/BackConnectionTableView.fxml" />
