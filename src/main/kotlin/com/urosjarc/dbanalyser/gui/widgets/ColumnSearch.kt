@@ -139,5 +139,6 @@ class ColumnSearch : ColumnSearchUi() {
                 it.setOnAction { this.search() }
             }
         })
+        this.search()
     }
 }

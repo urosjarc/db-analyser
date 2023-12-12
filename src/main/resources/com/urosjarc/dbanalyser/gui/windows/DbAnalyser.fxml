@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.5, 0.5" prefHeight="513.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
-    <items>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
-            <items>
-                <fx:include fx:id="dbLogin" source="../widgets/DbLogin.fxml"/>
-                <fx:include fx:id="dbLogs" source="../widgets/AppLogs.fxml"/>
-            </items>
+<TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
+    <Tab text="Db">
+        <SplitPane dividerPositions="0.3076923076923077" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <fx:include fx:id="dbLogin" maxHeight="1.7976931348623157E308" source="../widgets/DbLogin.fxml" />
+            <fx:include fx:id="dbLogs" maxHeight="1.7976931348623157E308" source="../widgets/AppLogs.fxml" />
         </SplitPane>
-        <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
+    </Tab>
+    <Tab text="Tables">
+        <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+            <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
                 <Tab text="Tables">
-                    <fx:include fx:id="tableNotes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                source="../widgets/TableList.fxml"/>
+                    <fx:include fx:id="tableNotes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/TableSearch.fxml" />
                 </Tab>
-                <Tab text="Table Searching">
-                    <fx:include fx:id="tableSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                source="../widgets/TableSearch.fxml"/>
+                <Tab text="Columns">
+                    <fx:include fx:id="columnSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/ColumnSearch.fxml" />
                 </Tab>
-                <Tab text="Column Searching">
-                    <fx:include fx:id="columnSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                source="../widgets/ColumnSearch.fxml"/>
+                <Tab text="Connections">
+                    <fx:include fx:id="tableSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/ConnectionSearch.fxml" />
                 </Tab>
-            </tabs>
-        </TabPane>
-        <fx:include fx:id="tableInfo" source="../widgets/TableInfo.fxml"/>
-    </items>
-</SplitPane>
+            </TabPane>
+            <fx:include fx:id="tableInfo" source="../widgets/TableInfo.fxml" />
+        </SplitPane>
+    </Tab>
+    <Tab text="Settings">
+
+    </Tab>
+</TabPane>
