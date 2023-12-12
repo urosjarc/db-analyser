@@ -2,6 +2,7 @@ package com.urosjarc.dbanalyser.gui.widgets
 
 import com.urosjarc.dbanalyser.gui.parts.BackConnectionTableView
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
+import com.urosjarc.dbanalyser.gui.parts.ForwardConnectionTableView
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import org.koin.core.component.KoinComponent
@@ -16,6 +17,9 @@ open class TableInfoUi : KoinComponent {
 
     @FXML
     lateinit var backConnectionViewController: BackConnectionTableView
+
+    @FXML
+    lateinit var forwardConnectionViewController: ForwardConnectionTableView
 
 }
 

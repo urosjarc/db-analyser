@@ -54,6 +54,10 @@ class SqliteClient(override val db: Db) : Client {
                     )
                 )
             }
+            this.exec("SELECT COUNT(1) as rows FROM ${table.name}") {
+                val rows = it.getInt("rows")
+                table.rows = rows
+            }
             tables.add(table)
         }
         return tables

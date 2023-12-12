@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<TableView fx:id="self" prefHeight="318.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableNotes">
+    <columns>
+        <TableColumn fx:id="connectionsTC" prefWidth="233.0" text="Connections">
+            <columns>
+                <TableColumn fx:id="allTC" prefWidth="75.0" text="All"/>
+                <TableColumn fx:id="forwardTC" prefWidth="75.0" text="Forward"/>
+                <TableColumn fx:id="backwardTC" prefWidth="75.0" text="Backward"/>
+            </columns>
+        </TableColumn>
+        <TableColumn fx:id="columnsTC" prefWidth="74.0" text="Columns"/>
+        <TableColumn fx:id="rowsTC" minWidth="9.0" prefWidth="78.0" text="Rows"/>
+        <TableColumn fx:id="nameTC" prefWidth="52.0" text="Name"/>
+    </columns>
+</TableView>

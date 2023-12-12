@@ -5,24 +5,50 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableInfo">
+<SplitPane dividerPositions="0.5, 0.5" orientation="VERTICAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableInfo">
     <items>
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Parents" textAlignment="CENTER" VBox.vgrow="NEVER">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </Label>
+              <fx:include fx:id="forwardConnectionView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../parts/ForwardConnectionTableView.fxml" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Label fx:id="nameL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="&lt; Empty &gt;" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="23.0" />
-               </font>
+            <Label fx:id="nameL" alignment="CENTER" maxWidth="1.7976931348623157E308" text="..." textAlignment="CENTER">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <padding>
                   <Insets bottom="5.0" top="5.0" />
                </padding>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
             </Label>
+            <TextArea fx:id="notesTA" prefRowCount="3" promptText="Table notes..." wrapText="true" VBox.vgrow="NEVER" />
               <fx:include fx:id="columnTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../parts/ColumnTableView.fxml" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-        <fx:include fx:id="backConnectionView" source="../parts/BackConnectionTableView.fxml" />
+      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Children" textAlignment="CENTER" VBox.vgrow="NEVER">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </Label>
+              <fx:include fx:id="backConnectionView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../parts/BackConnectionTableView.fxml" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
     </items>
 </SplitPane>

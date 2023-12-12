@@ -1,0 +1,63 @@
+package com.urosjarc.dbanalyser.gui.parts
+
+import com.urosjarc.dbanalyser.app.column.ForeignKey
+import com.urosjarc.dbanalyser.app.table.Table
+import com.urosjarc.dbanalyser.app.table.TableConnection
+import com.urosjarc.dbanalyser.app.table.TableRepo
+import com.urosjarc.dbanalyser.app.table.TableService
+import javafx.beans.property.ReadOnlyStringWrapper
+import javafx.fxml.FXML
+import javafx.scene.control.TableColumn
+import javafx.scene.control.TableView
+import javafx.scene.input.MouseEvent
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+
+open class ForwardConnectionTableViewUi : KoinComponent {
+    @FXML
+    lateinit var self: TableView<TableConnection>
+
+    @FXML
+    lateinit var toColumn: TableColumn<TableConnection, String>
+
+    @FXML
+    lateinit var toKeyColumn: TableColumn<TableConnection, String>
+
+    @FXML
+    lateinit var fromColumn: TableColumn<TableConnection, String>
+
+    @FXML
+    lateinit var fromKeyColumn: TableColumn<TableConnection, String>
+}
+
+class ForwardConnectionTableView: ForwardConnectionTableViewUi() {
+    val tableRepo by this.inject<TableRepo>()
+    val tableService by this.inject<TableService>()
+    @FXML
+    fun initialize(){
+        this.tableRepo.onSelect { this.update(it) }
+        this.self.setOnMouseClicked { this.onItemClicked(it) }
+
+        this.fromColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.tableName) }
+        this.fromKeyColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.to) }
+        this.toColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.table.name) }
+        this.toKeyColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.from) }
+
+        this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
+        this.fromColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.toColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.fromKeyColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.toKeyColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
+    }
+
+    private fun onItemClicked(mouseEvent: MouseEvent) {
+        if(mouseEvent.clickCount == 2){
+            val column = this.self.selectionModel.selectedItem
+            this.tableRepo.select(column.table)
+        }
+    }
+
+    fun update(table: Table) {
+        this.self.items.setAll(this.tableService.forwardConnections(table=table))
+    }
+}

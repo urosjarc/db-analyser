@@ -13,6 +13,10 @@
         </SplitPane>
         <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
+                <Tab text="Tables">
+                    <fx:include fx:id="tableNotes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                source="../widgets/TableList.fxml"/>
+                </Tab>
                 <Tab text="Table Searching">
                     <fx:include fx:id="tableSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                                 source="../widgets/TableSearch.fxml"/>
