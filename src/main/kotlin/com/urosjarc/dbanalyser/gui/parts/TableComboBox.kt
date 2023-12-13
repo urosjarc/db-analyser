@@ -2,6 +2,7 @@ package com.urosjarc.dbanalyser.gui.parts
 
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
+import com.urosjarc.dbanalyser.shared.matchRatio
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
@@ -46,6 +47,6 @@ class TableComboBox : TableComboBoxUi() {
         this.table = tables.firstOrNull()
     }
 
-    private fun sortedTables() = this.tableRepo.data.sortedByDescending { FuzzySearch.ratio(it.name, this.self.value) }
+    private fun sortedTables() = this.tableRepo.data.sortedByDescending { matchRatio(it.name, this.self.value ?: "") }
 
 }

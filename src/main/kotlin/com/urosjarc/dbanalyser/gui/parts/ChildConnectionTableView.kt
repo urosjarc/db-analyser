@@ -1,6 +1,5 @@
 package com.urosjarc.dbanalyser.gui.parts
 
-import com.urosjarc.dbanalyser.app.column.ForeignKey
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
@@ -18,19 +17,19 @@ open class BackConnectionTableViewUi : KoinComponent {
     lateinit var self: TableView<TableConnection>
 
     @FXML
-    lateinit var toColumn: TableColumn<TableConnection, String>
+    lateinit var toTC: TableColumn<TableConnection, String>
 
     @FXML
-    lateinit var toKeyColumn: TableColumn<TableConnection, String>
+    lateinit var toKeyTC: TableColumn<TableConnection, String>
 
     @FXML
-    lateinit var fromColumn: TableColumn<TableConnection, String>
+    lateinit var fromTC: TableColumn<TableConnection, String>
 
     @FXML
-    lateinit var fromKeyColumn: TableColumn<TableConnection, String>
+    lateinit var fromKeyTC: TableColumn<TableConnection, String>
 }
 
-class BackConnectionTableView: BackConnectionTableViewUi() {
+class ChildConnectionTableView: BackConnectionTableViewUi() {
     val tableRepo by this.inject<TableRepo>()
     val tableService by this.inject<TableService>()
     @FXML
@@ -38,16 +37,16 @@ class BackConnectionTableView: BackConnectionTableViewUi() {
         this.tableRepo.onSelect { this.update(it) }
         this.self.setOnMouseClicked { this.onItemClicked(it) }
 
-        this.fromColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.table.name) }
-        this.fromKeyColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.from) }
-        this.toColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.tableName) }
-        this.toKeyColumn.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.to) }
+        this.fromTC.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.table.name) }
+        this.fromKeyTC.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.from) }
+        this.toTC.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.tableName) }
+        this.toKeyTC.setCellValueFactory { val conn = it.value; ReadOnlyStringWrapper(conn.foreignKey?.to) }
 
         this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-        this.fromColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
-        this.toColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
-        this.fromKeyColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
-        this.toKeyColumn.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.fromTC.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.toTC.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.fromKeyTC.maxWidth = (Integer.MAX_VALUE * 25.0)
+        this.toKeyTC.maxWidth = (Integer.MAX_VALUE * 25.0)
     }
 
     private fun onItemClicked(mouseEvent: MouseEvent) {

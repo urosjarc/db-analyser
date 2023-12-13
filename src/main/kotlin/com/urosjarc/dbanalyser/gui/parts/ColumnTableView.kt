@@ -16,19 +16,19 @@ open class ColumnTableViewUi : KoinComponent {
     lateinit var self: TableView<Column>
 
     @FXML
-    lateinit var forwardColumn: TableColumn<Column, String>
+    lateinit var toTC: TableColumn<Column, String>
 
     @FXML
-    lateinit var typeColumn: TableColumn<Column, String>
+    lateinit var typeTC: TableColumn<Column, String>
 
     @FXML
-    lateinit var tableColumn: TableColumn<Column, String>
+    lateinit var tableTC: TableColumn<Column, String>
 
     @FXML
-    lateinit var nameColumn: TableColumn<Column, String>
+    lateinit var nameTC: TableColumn<Column, String>
 
     @FXML
-    lateinit var keyColumn: TableColumn<Column, String>
+    lateinit var keyTC: TableColumn<Column, String>
 }
 
 class ColumnTableView : ColumnTableViewUi() {
@@ -42,18 +42,18 @@ class ColumnTableView : ColumnTableViewUi() {
     fun initialize() {
         this.self.setOnMouseClicked { this.onItemClicked(it) }
 
-        this.keyColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.meta) }
-        this.typeColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.type) }
-        this.tableColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.table) }
-        this.nameColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.name) }
-        this.forwardColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.connection) }
+        this.keyTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.meta) }
+        this.typeTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.type) }
+        this.tableTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.table) }
+        this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.name) }
+        this.toTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.connection) }
 
         this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-        this.keyColumn.maxWidth = (Integer.MAX_VALUE * 10.0)
-        this.typeColumn.maxWidth = (Integer.MAX_VALUE * 20.0)
-        this.tableColumn.maxWidth = (Integer.MAX_VALUE * 20.0)
-        this.nameColumn.maxWidth = (Integer.MAX_VALUE * 30.0)
-        this.forwardColumn.maxWidth = (Integer.MAX_VALUE * 20.0)
+        this.keyTC.maxWidth = (Integer.MAX_VALUE * 10.0)
+        this.typeTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+        this.tableTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+        this.nameTC.maxWidth = (Integer.MAX_VALUE * 30.0)
+        this.toTC.maxWidth = (Integer.MAX_VALUE * 20.0)
     }
 
     fun update(table: Table) {

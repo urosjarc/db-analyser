@@ -1,8 +1,8 @@
 package com.urosjarc.dbanalyser.gui.widgets
 
-import com.urosjarc.dbanalyser.gui.parts.BackConnectionTableView
+import com.urosjarc.dbanalyser.gui.parts.ChildConnectionTableView
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
-import com.urosjarc.dbanalyser.gui.parts.ForwardConnectionTableView
+import com.urosjarc.dbanalyser.gui.parts.ParentConnectionTableView
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import org.koin.core.component.KoinComponent
@@ -16,10 +16,10 @@ open class TableInfoUi : KoinComponent {
     lateinit var columnTableViewController: ColumnTableView
 
     @FXML
-    lateinit var backConnectionViewController: BackConnectionTableView
+    lateinit var childConnectionViewController: ChildConnectionTableView
 
     @FXML
-    lateinit var forwardConnectionViewController: ForwardConnectionTableView
+    lateinit var parentConnectionViewController: ParentConnectionTableView
 
 }
 
@@ -28,7 +28,7 @@ class TableInfo : TableInfoUi() {
     @FXML
     fun initialize(){
         this.columnTableViewController.also {
-            it.tableColumn.isVisible = false
+            it.tableTC.isVisible = false
             it.forwardOnForeignColumnClick = true
             it.forwardOnNumberClicks = 2
         }

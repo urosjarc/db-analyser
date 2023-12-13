@@ -4,8 +4,8 @@
 
 <TableView fx:id="logsTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.AppLogs">
   <columns>
-    <TableColumn fx:id="levelColumn" prefWidth="75.0" text="Level" />
-    <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Time" />
-    <TableColumn fx:id="dataColumn" text="Log" />
+    <TableColumn fx:id="levelTC" prefWidth="75.0" text="Level" />
+    <TableColumn fx:id="timeTC" prefWidth="75.0" text="Time" />
+    <TableColumn fx:id="dataTC" text="Log" />
   </columns>
 </TableView>

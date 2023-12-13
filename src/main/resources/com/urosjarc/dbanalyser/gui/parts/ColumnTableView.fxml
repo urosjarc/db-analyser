@@ -2,13 +2,12 @@
 
 <?import javafx.scene.control.*?>
 
-
- <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ColumnTableView">
+<TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ColumnTableView">
      <columns>
-         <TableColumn fx:id="keyColumn" prefWidth="75.0" text="Constraints" />
-         <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
-         <TableColumn fx:id="tableColumn" prefWidth="75.0" text="Table" />
-         <TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
-         <TableColumn fx:id="forwardColumn" prefWidth="75.0" text="Forward" />
+         <TableColumn fx:id="keyTC" prefWidth="75.0" text="Constraints" />
+         <TableColumn fx:id="typeTC" prefWidth="75.0" text="Type" />
+         <TableColumn fx:id="tableTC" prefWidth="75.0" text="Table" />
+         <TableColumn fx:id="nameTC" prefWidth="75.0" text="Name" />
+         <TableColumn fx:id="toTC" prefWidth="75.0" text="To" />
      </columns>
  </TableView>

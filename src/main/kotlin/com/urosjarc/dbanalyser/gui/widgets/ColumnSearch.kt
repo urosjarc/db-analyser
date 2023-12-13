@@ -4,6 +4,7 @@ import com.urosjarc.dbanalyser.app.column.Column
 import com.urosjarc.dbanalyser.app.column.ColumnRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
+import com.urosjarc.dbanalyser.shared.matchRatio
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -120,7 +121,7 @@ class ColumnSearch : ColumnSearchUi() {
             }
         }
 
-        columns.sortByDescending { FuzzySearch.weightedRatio(it.name, this.nameTF.text) }
+        columns.sortByDescending { matchRatio(it.name, this.nameTF.text) }
 
         this.columnTableViewController.self.items.setAll(columns)
 

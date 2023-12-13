@@ -10,16 +10,17 @@ import org.koin.core.component.inject
 
 abstract class AppLogsUi : KoinComponent {
     @FXML
-    lateinit var dataColumn: TableColumn<Log, String>
-
-    @FXML
-    lateinit var timeColumn: TableColumn<Log, String>
-
-    @FXML
-    lateinit var levelColumn: TableColumn<Log, String>
-
-    @FXML
     lateinit var logsTV: TableView<Log>
+
+    @FXML
+    lateinit var dataTC: TableColumn<Log, String>
+
+    @FXML
+    lateinit var timeTC: TableColumn<Log, String>
+
+    @FXML
+    lateinit var levelTC: TableColumn<Log, String>
+
 }
 
 class AppLogs : AppLogsUi() {
@@ -31,14 +32,14 @@ class AppLogs : AppLogsUi() {
         this.logsTV.items.addAll(this.logRepo.data)
         this.logRepo.onSelect { this.logsTV.items.add(it) }
 
-        this.levelColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.type.name) }
-        this.timeColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.time.toString()) }
-        this.dataColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.data) }
+        this.levelTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.type.name) }
+        this.timeTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.time.toString()) }
+        this.dataTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.data) }
 
         this.logsTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-        this.levelColumn.maxWidth = (1f * Integer.MAX_VALUE * 20).toDouble()
-        this.timeColumn.maxWidth = (1f * Integer.MAX_VALUE * 20).toDouble()
-        this.dataColumn.maxWidth = (1f * Integer.MAX_VALUE * 60).toDouble()
+        this.levelTC.maxWidth = (1f * Integer.MAX_VALUE * 20).toDouble()
+        this.timeTC.maxWidth = (1f * Integer.MAX_VALUE * 20).toDouble()
+        this.dataTC.maxWidth = (1f * Integer.MAX_VALUE * 60).toDouble()
     }
 
 }

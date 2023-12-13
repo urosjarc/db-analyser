@@ -18,13 +18,13 @@ open class TableTreeViewUi : KoinComponent {
     lateinit var self: TreeTableView<TableConnection>
 
     @FXML
-    lateinit var nameColumn: TreeTableColumn<TableConnection, String>
+    lateinit var nameTC: TreeTableColumn<TableConnection, String>
 
     @FXML
-    lateinit var fromColumn: TreeTableColumn<TableConnection, String>
+    lateinit var fromTC: TreeTableColumn<TableConnection, String>
 
     @FXML
-    lateinit var toColumn: TreeTableColumn<TableConnection, String>
+    lateinit var toTC: TreeTableColumn<TableConnection, String>
 }
 
 class TableTreeView : TableTreeViewUi() {
@@ -34,14 +34,14 @@ class TableTreeView : TableTreeViewUi() {
     @FXML
     fun initialize() {
         this.self.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue -> this.onItemClicked(newValue.value) }
-        this.nameColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.name) }
-        this.fromColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = false)) }
-        this.toColumn.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
+        this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.name) }
+        this.fromTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = false)) }
+        this.toTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
 
         this.self.columnResizePolicy = TreeTableView.CONSTRAINED_RESIZE_POLICY;
-        this.nameColumn.maxWidth = (1f * Integer.MAX_VALUE * 40).toDouble()
-        this.fromColumn.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
-        this.toColumn.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
+        this.nameTC.maxWidth = (1f * Integer.MAX_VALUE * 40).toDouble()
+        this.fromTC.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
+        this.toTC.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
     }
 
     fun update(startTable: Table, endTable: Table?) {
