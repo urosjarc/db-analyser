@@ -10,7 +10,7 @@ class TableService(
     fun forwardConnections(table: Table): MutableList<TableConnection> {
         val tableCons = mutableListOf<TableConnection>()
         table.foreignKeys.forEach { foreignKey ->
-            val foreignTable = this.tableRepo.find(foreignKey.tableName)
+            val foreignTable = this.tableRepo.find(foreignKey.from.table.name)
             if (foreignTable != null) tableCons.add(TableConnection(table = foreignTable, foreignKey = foreignKey))
         }
         return tableCons
@@ -20,7 +20,7 @@ class TableService(
         val tableCons = mutableListOf<TableConnection>()
         this.tableRepo.data.forEach { otherTable ->
             otherTable.foreignKeys.forEach { foreignKey ->
-                if (foreignKey.tableName == table.name) {
+                if (foreignKey.from.table.name == table.name) {
                     tableCons.add(TableConnection(table = otherTable, foreignKey = foreignKey))
                 }
             }

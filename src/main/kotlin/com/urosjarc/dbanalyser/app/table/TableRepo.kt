@@ -9,7 +9,7 @@ class TableRepo : Repository<Table>() {
     val clientRepo by this.inject<ClientRepo>()
 
     init {
-        this.clientRepo.onSelect { this.setAll(it.tables()) }
+        this.clientRepo.onSelect { this.setAll(it.schemas().first().tables) }
     }
 
     fun find(t: String) = this.data.firstOrNull { it.name == t }

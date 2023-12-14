@@ -67,6 +67,6 @@ data class TableConnection(
         return string
     }
 
-    val backwardConnection get() = this.foreignKey?.tableName == table.name
+    val backwardConnection get() = this.foreignKey?.from?.table?.name == table.name
     val forwardConnection get() = !this.backwardConnection
 }

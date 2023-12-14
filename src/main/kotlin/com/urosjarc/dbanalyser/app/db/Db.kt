@@ -10,7 +10,7 @@ data class Db(
     val url: String,
     val type: Type
 ) {
-    enum class Type { MYSQL, SQLITE}
+    enum class Type { SQLITE, MS_SQL}
 
     override fun equals(other: Any?): Boolean = when (other) {
         is Db -> this.name == other.name
