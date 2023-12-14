@@ -1,7 +1,5 @@
 package com.urosjarc.dbanalyser.app.table
 
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class TableService(
     val tableRepo: TableRepo

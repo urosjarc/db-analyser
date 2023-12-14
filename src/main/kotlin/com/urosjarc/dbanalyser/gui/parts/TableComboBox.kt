@@ -27,7 +27,7 @@ class TableComboBox : TableComboBoxUi() {
         this.self.setOnKeyPressed { this.onKeyPressed(keyEvent = it) }
         this.self.valueProperty().addListener { _, _, newValue -> this.onSelect(newValue) }
         this.self.editor.setOnKeyPressed { this.onKeyPressed(keyEvent = it) }
-        this.tableRepo.onChange { this.self.items.setAll(this.tableRepo.data.map { it.name }) }
+        this.tableRepo.onChange { this.self.items.setAll(this.tableRepo.data.map { it.toString() }) }
         this.self.value = ""
     }
 
@@ -36,17 +36,17 @@ class TableComboBox : TableComboBoxUi() {
     }
 
     fun onSelect(text: String?){
-        this.table = this.tableRepo.data.firstOrNull { it.name == text }
-        if(this.table != null) this.self.value = this.table!!.name
+        this.table = this.tableRepo.data.firstOrNull { it.toString() == text }
+        if(this.table != null) this.self.value = this.table.toString()
     }
 
     private fun onChange() {
         this.self.show()
         val tables = this.sortedTables()
-        this.self.items = FXCollections.observableList(tables.map { it.name })
+        this.self.items = FXCollections.observableList(tables.map { it.toString() })
         this.table = tables.firstOrNull()
     }
 
-    private fun sortedTables() = this.tableRepo.data.sortedByDescending { matchRatio(it.name, this.self.value ?: "") }
+    private fun sortedTables() = this.tableRepo.data.sortedByDescending { matchRatio(it.toString(), this.self.value ?: "") }
 
 }

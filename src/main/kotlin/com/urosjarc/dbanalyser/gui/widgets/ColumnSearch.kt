@@ -102,7 +102,7 @@ class ColumnSearch : ColumnSearchUi() {
                 if (this.foreignKeyCB.isSelected && column.isForeignKey) {
                     columns.add(column); continue
                 }
-                if (this.selfRefKeyCB.isSelected && column.foreignKey?.tableName == table.name) {
+                if (this.selfRefKeyCB.isSelected && column.foreignKey?.from?.table?.name == table.name) {
                     columns.add(column); continue
                 }
                 if (this.notNullCB.isSelected && column.notNull) {

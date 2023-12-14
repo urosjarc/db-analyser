@@ -35,9 +35,6 @@ open class TableSearchUi : KoinComponent {
     lateinit var childrenTC: TableColumn<Table, Int>
 
     @FXML
-    lateinit var rowsTC: TableColumn<Table, Int>
-
-    @FXML
     lateinit var columnsTC: TableColumn<Table, Int>
 
     @FXML
@@ -57,7 +54,6 @@ class TableSearch : TableSearchUi() {
         this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.name) }
         this.columnsTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.columns.size) }
         this.parentsTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.foreignKeys.size) }
-        this.rowsTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.rows) }
         this.childrenTC.setCellValueFactory { ReadOnlyObjectWrapper(this.tableService.backwardConnections(table = it.value).size) }
         this.relativesTC.setCellValueFactory { ReadOnlyObjectWrapper(this.tableService.connections(table = it.value).size) }
 
@@ -65,7 +61,6 @@ class TableSearch : TableSearchUi() {
         this.relativesTC.maxWidth = (Integer.MAX_VALUE * 10.0)
         this.parentsTC.maxWidth = (Integer.MAX_VALUE * 10.0)
         this.childrenTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-        this.rowsTC.maxWidth = (Integer.MAX_VALUE * 10.0)
         this.columnsTC.maxWidth = (Integer.MAX_VALUE * 10.0)
         this.nameTC.maxWidth = (Integer.MAX_VALUE * 50.0)
     }

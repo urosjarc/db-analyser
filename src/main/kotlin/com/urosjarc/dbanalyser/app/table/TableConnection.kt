@@ -12,8 +12,8 @@ data class TableConnection(
     override fun equals(other: Any?): Boolean {
         return when (other) {
             is TableConnection -> {
-                val equalTableName = other.table.name == this.table.name
-                val equalParentName = other.parent?.table?.name == this.parent?.table?.name
+                val equalTableName = other.table == this.table
+                val equalParentName = other.parent?.table == this.parent?.table
                 val equalForeignKey = other.foreignKey == this.foreignKey
                 equalTableName && equalParentName && equalForeignKey
             }
@@ -57,16 +57,16 @@ data class TableConnection(
 
     fun connectionName(from: Boolean): String {
         val string = if (this.forwardConnection)
-            if (from) "${this.parent?.table?.name}.${this.foreignKey?.from}"
-            else "${this.table.name}.${this.foreignKey?.to}"
+            if (from) this.foreignKey?.from.toString()
+            else this.foreignKey?.to.toString()
         else
-            if (from) "${this.table.name}.${this.foreignKey?.to}"
-            else "${this.parent?.table?.name}.${this.foreignKey?.from}"
+            if (from) this.foreignKey?.to.toString()
+            else this.foreignKey?.from.toString()
 
         if (string.contains("null")) return ""
         return string
     }
 
-    val backwardConnection get() = this.foreignKey?.from?.table?.name == table.name
+    val backwardConnection get() = this.foreignKey?.from?.table == table
     val forwardConnection get() = !this.backwardConnection
 }

@@ -4,6 +4,7 @@ import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.app.logs.LogRepo
 import com.urosjarc.dbanalyser.app.logs.LogService
+import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import kotlinx.serialization.json.Json
@@ -19,6 +20,7 @@ object App {
         this.single<LogRepo> { LogRepo("log.json") }
         this.single<ClientRepo> { ClientRepo() }
         this.single<TableRepo> { TableRepo() }
+        this.single<SchemaRepo> { SchemaRepo() }
 
         this.single { TableService(get()) }
         this.single { LogService(get()) }
