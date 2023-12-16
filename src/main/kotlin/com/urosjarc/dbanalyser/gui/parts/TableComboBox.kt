@@ -6,9 +6,7 @@ import com.urosjarc.dbanalyser.shared.matchRatio
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
-import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
-import me.xdrop.fuzzywuzzy.FuzzySearch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

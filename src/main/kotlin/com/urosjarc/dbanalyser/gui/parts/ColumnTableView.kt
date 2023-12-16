@@ -13,7 +13,7 @@ import org.koin.core.component.inject
 
 open class ColumnTableViewUi : KoinComponent {
 	@FXML
-	lateinit var self: TableView<Column>
+	lateinit var columnTV: TableView<Column>
 
 	@FXML
 	lateinit var toTC: TableColumn<Column, String>
@@ -22,13 +22,17 @@ open class ColumnTableViewUi : KoinComponent {
 	lateinit var typeTC: TableColumn<Column, String>
 
 	@FXML
+	lateinit var schemaTC: TableColumn<Column, String>
+
+	@FXML
 	lateinit var tableTC: TableColumn<Column, String>
 
 	@FXML
-	lateinit var nameTC: TableColumn<Column, String>
+	lateinit var columnTC: TableColumn<Column, String>
 
 	@FXML
 	lateinit var keyTC: TableColumn<Column, String>
+
 }
 
 class ColumnTableView : ColumnTableViewUi() {
@@ -40,29 +44,31 @@ class ColumnTableView : ColumnTableViewUi() {
 
 	@FXML
 	fun initialize() {
-		this.self.setOnMouseClicked { this.onItemClicked(it) }
+		this.columnTV.setOnMouseClicked { this.onItemClicked(it) }
 
 		this.keyTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.meta) }
 		this.typeTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.type) }
-		this.tableTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.table.toString()) }
-		this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.name) }
+		this.schemaTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.table.schema?.name) }
+		this.tableTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.table.name) }
+		this.columnTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.name) }
 		this.toTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.connection) }
 
-		this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
+		this.columnTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
 		this.keyTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.typeTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+		this.typeTC.maxWidth = (Integer.MAX_VALUE * 10.0)
+		this.schemaTC.maxWidth = (Integer.MAX_VALUE * 10.0)
 		this.tableTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.nameTC.maxWidth = (Integer.MAX_VALUE * 30.0)
-		this.toTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+		this.columnTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+		this.toTC.maxWidth = (Integer.MAX_VALUE * 30.0)
 	}
 
 	fun update(table: Table) {
-		this.self.items.setAll(table.columns)
+		this.columnTV.items.setAll(table.columns)
 	}
 
 	fun onItemClicked(mouseEvent: MouseEvent) {
 		if (mouseEvent.clickCount == this.forwardOnNumberClicks) {
-			val column = this.self.selectionModel.selectedItem
+			val column = this.columnTV.selectionModel.selectedItem
 			var table: Table? = null
 			if (this.forwardOnColumnClick) table = this.tableRepo.find(column.table)
 			if (this.forwardOnForeignColumnClick && column.foreignKey != null) {

@@ -20,9 +20,10 @@ class MsSqlClient(db: Db) : Client(db) {
 		this.schemaResults {
 			val name = it.getString("name")
 			schemas[name] = Schema(
-					name = name,
+				name = name,
 			)
 		}
+		this.log.info("Schemas: ${schemas.size}")
 
 		/**
 		 * Tables
@@ -35,16 +36,18 @@ class MsSqlClient(db: Db) : Client(db) {
 
 			if (schema != null) {
 				val table = Table(
-						schema = schema,
-						name = name,
-						created = toDateTime(it.getTimestamp("created")),
-						modified = toDateTime(it.getTimestamp("modified")))
+					schema = schema,
+					name = name,
+					created = toDateTime(it.getTimestamp("created")),
+					modified = toDateTime(it.getTimestamp("modified"))
+				)
 				tables["$schema.$name"] = table
 				schema.tables.add(table)
 			} else {
-				println("MISSING TABLE: $schema.$name")
+				this.log.warn("Missing schema: $schemaName")
 			}
 		}
+		this.log.info("Tables: ${tables.size}")
 
 		/**
 		 * Columns
@@ -58,24 +61,27 @@ class MsSqlClient(db: Db) : Client(db) {
 
 			if (table != null) {
 				val column = Column(
-						table = table,
-						name = name,
-						type = it.getString("type"),
-						notNull = !it.getBoolean("isNull"),
-						defaultValue = null, //TODO: Make this happend
-						primaryKey = it.getBoolean("primaryKey"),
-						foreignKey = null
+					table = table,
+					name = name,
+					type = it.getString("type"),
+					notNull = !it.getBoolean("isNull"),
+					defaultValue = null, //TODO: Make this happend
+					primaryKey = it.getBoolean("primaryKey"),
+					foreignKey = null
 				)
 				columns["$schemaName.$tableName.$name"] = column
 				table.columns.add(column)
 			} else {
-				println("MISSING COL: $schemaName.$tableName.$name")
+				this.log.warn("Missing table: $schemaName.$tableName")
 			}
 		}
+		this.log.info("Columns: ${columns.size}")
 
 		/**
 		 * Foreign keys
 		 */
+
+		var foreignKeys = 0
 		this.foreignKeyResults {
 			val fromSchema = it.getString("fromSchema")
 			val fromTable = it.getString("fromTable")
@@ -87,34 +93,46 @@ class MsSqlClient(db: Db) : Client(db) {
 			val fromColumn = columns["$fromSchema.$fromTable.$fromColumnStr"]
 			val toColumn = columns["$toSchema.$toTable.$toColumnStr"]
 
-			if (fromColumn != null && toColumn != null) {
-				fromColumn.foreignKey = ForeignKey(
-						from = fromColumn,
-						to = toColumn
-				)
+
+			if (fromColumn == null) {
+				this.log.warn("Missing column: $fromSchema.$fromTable.$fromColumnStr")
+				return@foreignKeyResults
+			} else if (toColumn == null) {
+				this.log.warn("Missing column: $toSchema.$toTable.$toColumnStr")
+				return@foreignKeyResults
 			} else {
-				println("MISSING FK: $fromSchema.$fromTable.$fromColumnStr -> $toSchema.$toTable.$toColumnStr")
+				fromColumn.foreignKey = ForeignKey(
+					from = fromColumn,
+					to = toColumn
+				)
+				foreignKeys++
 			}
 		}
+		this.log.info("Foreign keys: $foreignKeys")
 
 		return schemas.values.toList()
 	}
 
-	fun schemaResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec("""
+	fun schemaResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec(
+		"""
 			select sch.name as name
 			from sys.schemas sch
-        """, onResultSet = onResultSet)
+        """, onResultSet = onResultSet
+	)
 
-	fun tableResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec("""
+	fun tableResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec(
+		"""
 			select sch.name        as _schema,
 				   tab.name        as name,
 				   tab.create_date as created,
 				   tab.modify_date as modified
 			from sys.tables tab
 					 INNER JOIN sys.schemas sch ON sch.schema_id = tab.schema_id
-        """, onResultSet = onResultSet)
+        """, onResultSet = onResultSet
+	)
 
-	fun columnResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec("""
+	fun columnResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec(
+		"""
 			SELECT sch.name        as _schema,
 				   tab.name        as _table,
 				   col.name        as name,
@@ -125,9 +143,11 @@ class MsSqlClient(db: Db) : Client(db) {
 					 INNER JOIN sys.tables tab on col.object_id = tab.object_id
 					 INNER JOIN sys.schemas sch ON sch.schema_id = tab.schema_id
 					 inner JOIN sys.types typ ON col.user_type_id = typ.user_type_id
-		""", onResultSet = onResultSet)
+		""", onResultSet = onResultSet
+	)
 
-	fun foreignKeyResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec("""
+	fun foreignKeyResults(onResultSet: (rs: ResultSet) -> Unit) = this.exec(
+		"""
 			SELECT sch1.name as fromSchema,
 				   tab1.name AS fromTable,
 				   col1.name AS fromColumn,
@@ -142,6 +162,7 @@ class MsSqlClient(db: Db) : Client(db) {
 					 INNER JOIN sys.columns col1 ON col1.column_id = parent_column_id AND col1.object_id = tab1.object_id
 					 INNER JOIN sys.columns col2 ON col2.column_id = referenced_column_id
 				AND col2.object_id = tab2.object_id;
-        """, onResultSet = onResultSet)
+        """, onResultSet = onResultSet
+	)
 
 }

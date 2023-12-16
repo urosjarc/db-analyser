@@ -4,7 +4,8 @@ import com.urosjarc.dbanalyser.app.logs.Log
 import com.urosjarc.dbanalyser.app.logs.LogRepo
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
-import javafx.scene.control.*
+import javafx.scene.control.TableColumn
+import javafx.scene.control.TableView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

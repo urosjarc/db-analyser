@@ -1,9 +1,11 @@
 package com.urosjarc.dbanalyser.shared
 
-import me.xdrop.fuzzywuzzy.FuzzySearch
+import com.urosjarc.dbanalyser.app.logs.LogService
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 abstract class Repository<T : Any> : KoinComponent {
+    val log by this.inject<LogService>()
     val data = mutableListOf<T>()
     var selected: T? = null
 
@@ -34,7 +36,7 @@ abstract class Repository<T : Any> : KoinComponent {
         this.save()
     }
 
-    fun save(t: T) {
+    open fun save(t: T) {
         if (this.data.contains(t)) {
             val i = this.data.indexOf(t)
             this.data[i] = t

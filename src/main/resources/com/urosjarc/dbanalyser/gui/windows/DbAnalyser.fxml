@@ -10,21 +10,27 @@
             <fx:include fx:id="dbLogs" maxHeight="1.7976931348623157E308" source="../widgets/AppLogs.fxml" />
         </SplitPane>
     </Tab>
-    <Tab text="Tables">
+    <Tab text="Search">
         <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
             <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
-                <Tab text="Tables">
-                    <fx:include fx:id="tableNotes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/TableSearch.fxml" />
+                <Tab fx:id="schemasT" text="Schemas">
+                    <fx:include fx:id="schemaSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/SchemaSearch.fxml" />
                 </Tab>
-                <Tab text="Columns">
+                <Tab fx:id="tablesT" text="Tables">
+                    <fx:include fx:id="tableSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/TableSearch.fxml" />
+                </Tab>
+                <Tab fx:id="columnsT" text="Columns">
                     <fx:include fx:id="columnSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/ColumnSearch.fxml" />
                 </Tab>
-                <Tab text="Connections">
-                    <fx:include fx:id="tableSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/ConnectionSearch.fxml" />
+                <Tab fx:id="connectionsT" text="Connections">
+                    <fx:include fx:id="connectionSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../widgets/ConnectionSearch.fxml" />
                 </Tab>
             </TabPane>
             <fx:include fx:id="tableInfo" source="../widgets/TableInfo.fxml" />
         </SplitPane>
+    </Tab>
+    <Tab text="Changes">
+
     </Tab>
     <Tab text="Settings">
 

@@ -1,6 +1,5 @@
 package com.urosjarc.dbanalyser.app.logs
 
-import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.shared.Repository
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -21,5 +20,10 @@ class LogRepo(val fileName: String) : Repository<Log>() {
         val file = File(this.fileName)
         if (!file.exists()) file.createNewFile()
         file.writeText(Json.encodeToString(this.data))
+    }
+
+    override fun save(t: Log){
+        super.save(t)
+        this.select(t)
     }
 }

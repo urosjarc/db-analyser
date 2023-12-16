@@ -33,7 +33,7 @@ class TableTreeView : TableTreeViewUi() {
 
     @FXML
     fun initialize() {
-        this.self.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue -> this.onItemClicked(newValue.value) }
+        this.self.selectionModel.selectedItemProperty().addListener { _, _, newValue -> this.onItemClicked(newValue.value) }
         this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.toString()) }
         this.fromTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = false)) }
         this.toTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
