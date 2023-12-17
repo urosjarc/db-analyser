@@ -6,7 +6,6 @@ import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
 import javafx.beans.property.ReadOnlyStringWrapper
-import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
@@ -69,6 +68,6 @@ class ParentConnectionTableView : ForwardConnectionTableViewUi() {
 	}
 
 	fun update(table: Table) {
-		this.self.items.setAll(this.tableService.forwardConnections(table = table))
+		this.self.items.setAll(this.tableService.parents(table = table))
 	}
 }

@@ -7,9 +7,9 @@ class TableService(
 	val tableRepo: TableRepo
 ) {
 
-	fun forwardConnections(table: Table): MutableList<ForeignKey> = table.foreignKeys.toMutableList()
+	fun parents(table: Table): MutableList<ForeignKey> = table.foreignKeys.toMutableList()
 
-	fun backwardConnections(table: Table): MutableList<ForeignKey> {
+	fun children(table: Table): MutableList<ForeignKey> {
 		val fkeys = mutableListOf<ForeignKey>()
 		this.tableRepo.data.filter { it != table }.forEach { otherTable ->
 			otherTable.foreignKeys.forEach { foreignKey ->
@@ -21,10 +21,6 @@ class TableService(
 		return fkeys
 	}
 
-	fun connections(table: Table): Set<ForeignKey> {
-		return (this.forwardConnections(table = table) + this.backwardConnections(table = table)).toSet()
-	}
-
 	fun paths(startTable: Table, endTable: Table?, maxDepth: Int): TableConnection {
 		val node = TableConnection(table = startTable, foreignKey = null)
 		val queue = mutableListOf(node)
@@ -32,6 +28,7 @@ class TableService(
 		while (queue.isNotEmpty()) {
 			val current = queue.removeFirst()
 
+			// If end is not known show everything
 			if (endTable == null) current.alive = true
 
 			// If recursive connection
@@ -43,16 +40,30 @@ class TableService(
 				continue
 			}
 
-			// If max depth
-			if (current.depth >= maxDepth) continue
+			// If max depth reached skip
+			if (current.depth() >= maxDepth) continue
 
-			val cons = this.connections(table = current.table)
-				.filter { it.from.table.name != current.parent?.table?.name }
+			// Get parent connections for current table
+			val parents = this.parents(table = current.table)
+			parents
+				//Skip double self reference
+				.filter { it.to.table != current.parent?.table }
+				.forEach {
+					val tc = TableConnection(table = it.to.table, foreignKey = it, parent = current)
+					current.connect(tc)
+					queue.add(tc)
+				}
 
-			cons.forEach {
-//                current.connect(it)
-//                queue.add(it)
-			}
+			//Get children connections for current table
+			val children = this.children(table = current.table)
+			children
+				//Skip double self reference
+				.filter { it.from.table != current.parent?.table }
+				.forEach {
+					val tc = TableConnection(table = it.from.table, foreignKey = it, parent = current)
+					current.connect(tc)
+					queue.add(tc)
+				}
 		}
 
 		node.removeZombies()

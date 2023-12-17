@@ -87,7 +87,7 @@ class SchemaSearch : SchemaSearchUi() {
 				tablesTC = it.tables.size,
 				columnsTC = it.tables.sumOf { tab -> tab.columns.size },
 				parentsTC = it.tables.sumOf { tab -> tab.foreignKeys.size },
-				childrenTC = it.tables.sumOf { tab -> this.tableService.backwardConnections(table = tab).size }
+				childrenTC = it.tables.sumOf { tab -> this.tableService.children(table = tab).size }
 			)
 		})
 	}

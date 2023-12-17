@@ -68,6 +68,6 @@ class ChildConnectionTableView : BackConnectionTableViewUi() {
 	}
 
 	fun update(table: Table) {
-		this.self.items.setAll(this.tableService.backwardConnections(table = table))
+		this.self.items.setAll(this.tableService.children(table = table))
 	}
 }

@@ -85,7 +85,7 @@ class TableSearch : TableSearchUi() {
 				tableTC = it.name,
 				columnsTC = it.columns.size,
 				parentsTC = it.foreignKeys.size,
-				childrenTC = this.tableService.backwardConnections(table = it).size
+				childrenTC = this.tableService.children(table = it).size
 			)
 		})
 	}
