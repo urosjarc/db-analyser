@@ -12,6 +12,9 @@ fun matchRatio(first: String, second: String): Int {
 fun toDateTime(timestamp: Timestamp): Instant =
 	Instant.fromEpochMilliseconds(timestamp.time)
 
-fun startThread(cb: () -> Unit) = Thread { cb() }.start()
-
-fun startUiThread(cb: () -> Unit) = Thread { Platform.runLater { cb() } }.start()
+fun startThread(sleep: Int = 0, workCb: () -> Unit): Thread {
+	return Thread {
+		Thread.sleep(sleep.toLong())
+		workCb()
+	}.also { it.start() }
+}

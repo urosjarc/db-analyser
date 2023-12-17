@@ -3,10 +3,11 @@ package com.urosjarc.dbanalyser.gui.windows
 import com.urosjarc.dbanalyser.app.schema.Schema
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
-import com.urosjarc.dbanalyser.gui.widgets.tables.ConnectionSearch
 import com.urosjarc.dbanalyser.gui.widgets.dbs.DbLogin
+import com.urosjarc.dbanalyser.gui.widgets.tables.ConnectionSearch
 import com.urosjarc.dbanalyser.gui.widgets.tables.TableInfo
-import com.urosjarc.dbanalyser.shared.startUiThread
+import com.urosjarc.dbanalyser.shared.startThread
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Tab
 import org.koin.core.component.KoinComponent
@@ -51,8 +52,12 @@ class DbAnalyser : DbAnalyserUi() {
 		this.schemaRepo.onData { this.update(it) }
 	}
 
-	fun update(schemas: List<Schema>) = startUiThread {
-		this.tablesT.text = "Tables: ${schemas.sumOf { it.tables.size }}"
-		this.columnsT.text = "Columns: ${schemas.sumOf { sch -> sch.tables.sumOf { it.columns.size } }}"
+	fun update(schemas: List<Schema>) = startThread {
+		val tableSize = schemas.sumOf { it.tables.size }
+		val columnSize = schemas.sumOf { sch -> sch.tables.sumOf { it.columns.size } }
+		Platform.runLater {
+			this.tablesT.text = "Tables: $tableSize"
+			this.columnsT.text = "Columns: $columnSize"
+		}
 	}
 }

@@ -5,7 +5,7 @@ import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.shared.matchRatio
 import com.urosjarc.dbanalyser.shared.startThread
-import com.urosjarc.dbanalyser.shared.startUiThread
+import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -65,7 +65,7 @@ class ColumnSearch : ColumnSearchUi() {
 			it.forwardOnNumberClicks = 1
 		}
 
-		this.tableRepo.onData { this.updateTypes() }
+		this.tableRepo.onData { this.update() }
 		this.selectAllB.setOnAction { this.selectAll(true) }
 		this.deselectAllB.setOnAction { this.selectAll(false) }
 
@@ -126,19 +126,22 @@ class ColumnSearch : ColumnSearchUi() {
 
 	}
 
-	fun updateTypes() = startUiThread {
+	fun update() = startThread {
 		val baseTypes = mutableSetOf<String>()
 		this.tableRepo.data.forEach { table ->
 			table.columns.forEach { column: Column ->
 				if (column.baseType.isNotBlank()) baseTypes.add(column.baseType)
 			}
 		}
-		this.typeFP.children.setAll(FXCollections.observableArrayList(baseTypes.map { type ->
-			CheckBox(type).also { cb ->
-				cb.isSelected = true
-				cb.setOnAction { this.search() }
-			}
-		}))
-		this.search()
+
+		Platform.runLater {
+			this.typeFP.children.setAll(FXCollections.observableArrayList(baseTypes.map { type ->
+				CheckBox(type).also { cb ->
+					cb.isSelected = true
+					cb.setOnAction { this.search() }
+				}
+			}))
+			this.search()
+		}
 	}
 }
