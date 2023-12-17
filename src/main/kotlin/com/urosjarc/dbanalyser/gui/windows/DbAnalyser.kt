@@ -1,11 +1,11 @@
 package com.urosjarc.dbanalyser.gui.windows
 
+import com.urosjarc.dbanalyser.app.schema.Schema
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
-import com.urosjarc.dbanalyser.gui.widgets.ConnectionSearch
-import com.urosjarc.dbanalyser.gui.widgets.DbLogin
-import com.urosjarc.dbanalyser.gui.widgets.TableInfo
-import com.urosjarc.dbanalyser.shared.startThread
+import com.urosjarc.dbanalyser.gui.widgets.tables.ConnectionSearch
+import com.urosjarc.dbanalyser.gui.widgets.dbs.DbLogin
+import com.urosjarc.dbanalyser.gui.widgets.tables.TableInfo
 import com.urosjarc.dbanalyser.shared.startUiThread
 import javafx.fxml.FXML
 import javafx.scene.control.Tab
@@ -26,7 +26,10 @@ abstract class DbAnalyserUi : KoinComponent {
 	lateinit var columnTableViewController: ColumnTableView
 
 	@FXML
-	lateinit var schemasT: Tab
+	lateinit var mainSchemasT: Tab
+
+	@FXML
+	lateinit var mainTablesT: Tab
 
 	@FXML
 	lateinit var tablesT: Tab
@@ -39,16 +42,17 @@ abstract class DbAnalyserUi : KoinComponent {
 }
 
 class DbAnalyser : DbAnalyserUi() {
+
 	val schemaRepo by this.inject<SchemaRepo>()
 
 	@FXML
 	fun initialize() {
-		this.schemaRepo.onChange { this.update() }
+		this.schemaRepo.onSelect { this.update(it) }
+		this.schemaRepo.onData { this.update(it) }
 	}
 
-	fun update() = startUiThread {
-		this.schemasT.text = "Schemas: ${schemaRepo.data.size}"
-		this.tablesT.text = "Tables: ${schemaRepo.data.sumOf { it.tables.size }}"
-		this.columnsT.text = "Columns: ${schemaRepo.data.sumOf { sch -> sch.tables.sumOf { it.columns.size } }}"
+	fun update(schemas: List<Schema>) = startUiThread {
+		this.tablesT.text = "Tables: ${schemas.sumOf { it.tables.size }}"
+		this.columnsT.text = "Columns: ${schemas.sumOf { sch -> sch.tables.sumOf { it.columns.size } }}"
 	}
 }

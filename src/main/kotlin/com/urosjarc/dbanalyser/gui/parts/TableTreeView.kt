@@ -61,7 +61,7 @@ class TableTreeView : TableTreeViewUi() {
     }
 
     fun onItemClicked(tableConnection: TableConnection){
-        this.tableRepo.select(tableConnection.table)
+        this.tableRepo.chose(tableConnection.table)
     }
 
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.ColumnSearch">
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.tables.ColumnSearch">
     <TextField fx:id="columnTF" alignment="CENTER" promptText="Column name" />
     <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="20.0" VBox.vgrow="NEVER">
         <CheckBox fx:id="primaryKeyCB" mnemonicParsing="false" selected="true" text="Primary key" />
@@ -35,5 +35,5 @@
         <Button fx:id="selectAllB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Select all" HBox.hgrow="ALWAYS" />
         <Button fx:id="deselectAllB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Deselect all" HBox.hgrow="ALWAYS" />
     </HBox>
-    <fx:include fx:id="columnTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../parts/ColumnTableView.fxml" VBox.vgrow="ALWAYS" />
+    <fx:include fx:id="columnTableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../../parts/ColumnTableView.fxml" VBox.vgrow="ALWAYS" />
 </VBox>

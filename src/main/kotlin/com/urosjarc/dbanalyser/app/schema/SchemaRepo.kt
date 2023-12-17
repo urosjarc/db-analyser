@@ -5,11 +5,11 @@ import com.urosjarc.dbanalyser.shared.Repository
 import org.koin.core.component.inject
 
 class SchemaRepo : Repository<Schema>() {
-    val clientRepo by this.inject<ClientRepo>()
+	val clientRepo by this.inject<ClientRepo>()
 
-    init {
-        this.clientRepo.onSelect { this.setAll(it.schemas()) }
-    }
+	init {
+		this.clientRepo.onChose { this.set(it.schemas()) }
+	}
 
-    fun find(t: String) = this.data.firstOrNull { it.name == t }
+	fun find(t: String) = this.data.firstOrNull { it.name == t }
 }

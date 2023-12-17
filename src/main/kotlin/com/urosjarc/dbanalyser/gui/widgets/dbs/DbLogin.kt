@@ -1,9 +1,8 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.dbs
 
 import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.app.db.DbRepo
-import com.urosjarc.dbanalyser.app.logs.LogService
 import com.urosjarc.dbanalyser.shared.startThread
 import javafx.fxml.FXML
 import javafx.scene.control.*
@@ -43,7 +42,7 @@ class DbLogin : DbLoginUi() {
 	fun initialize() {
 		this.dbLV.items.setAll(this.dbRepo.data)
 		this.typeCB.items.setAll(Db.Type.values().toList())
-		this.dbRepo.onChange { this.dbLV.items.setAll(this.dbRepo.data) }
+		this.dbRepo.onData { this.dbLV.items.setAll(this.dbRepo.data) }
 		this.loginB.setOnAction { this.login() }
 		this.dbLV.setOnMouseClicked { this.select(it) }
 		this.clientRepo.onError { this.clientRepoError(msg = it) }
@@ -76,6 +75,6 @@ class DbLogin : DbLoginUi() {
 			type = typeCB.value
 		)
 		dbRepo.save(db)
-		dbRepo.select(db)
+		dbRepo.chose(db)
 	}
 }

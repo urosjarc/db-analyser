@@ -25,7 +25,7 @@ class TableComboBox : TableComboBoxUi() {
         this.self.setOnKeyPressed { this.onKeyPressed(keyEvent = it) }
         this.self.valueProperty().addListener { _, _, newValue -> this.onSelect(newValue) }
         this.self.editor.setOnKeyPressed { this.onKeyPressed(keyEvent = it) }
-        this.tableRepo.onChange { this.self.items.setAll(this.tableRepo.data.map { it.toString() }) }
+        this.tableRepo.onData { this.self.items.setAll(this.tableRepo.data.map { it.toString() }) }
         this.self.value = ""
     }
 

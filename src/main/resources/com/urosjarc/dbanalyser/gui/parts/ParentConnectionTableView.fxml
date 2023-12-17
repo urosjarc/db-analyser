@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.*?>
-<TableView prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-           fx:id="self" fx:controller="com.urosjarc.dbanalyser.gui.parts.ParentConnectionTableView">
-    <columns>
-        <TableColumn fx:id="fromTC" prefWidth="75.0" text="From"/>
-        <TableColumn fx:id="fromKeyTC" prefWidth="75.0" text="Key"/>
-        <TableColumn fx:id="toTC" prefWidth="75.0" text="To"/>
-        <TableColumn fx:id="toKeyTC" prefWidth="75.0" text="Key"/>
-    </columns>
-</TableView>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ParentConnectionTableView">
+   <children>
+      <TextField fx:id="tableTF" alignment="CENTER" promptText="Table..." />
+      <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+          <columns>
+              <TableColumn fx:id="fromTC" prefWidth="75.0" text="From" />
+              <TableColumn fx:id="schemaTC" prefWidth="75.0" text="Schema" />
+              <TableColumn fx:id="tableTC" prefWidth="75.0" text="Table" />
+              <TableColumn fx:id="columnTC" prefWidth="75.0" text="Column" />
+          </columns>
+      </TableView>
+   </children>
+</VBox>

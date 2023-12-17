@@ -1,11 +1,10 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
 import com.urosjarc.dbanalyser.shared.startThread
-import javafx.application.Platform
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
@@ -59,8 +58,8 @@ class TableSearch : TableSearchUi() {
 
 	@FXML
 	fun initialize() {
-		this.tableRepo.onChange { this.update() }
-		this.modelTV.setOnMouseClicked { this.onItemClicked(it) }
+		this.tableRepo.onData { this.update() }
+		this.modelTV.setOnMouseClicked { this.chose(it) }
 		this.tableTF.setOnAction { this.search() }
 
 		this.schemaTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.schemaTC) }
@@ -79,13 +78,6 @@ class TableSearch : TableSearchUi() {
 		this.tableTC.maxWidth = (Integer.MAX_VALUE * 50.0)
 	}
 
-	private fun onItemClicked(mouseEvent: MouseEvent) {
-		if (mouseEvent.clickCount == 1) {
-			val table: Table = this.tableRepo.find(this.modelTV.selectionModel.selectedItem.tableTC)!!
-			this.tableRepo.select(table)
-		}
-	}
-
 	private fun update() = startThread {
 		this.modelTV.items.setAll(this.tableRepo.data.map {
 			Model(
@@ -100,5 +92,15 @@ class TableSearch : TableSearchUi() {
 
 	private fun search() = startThread {
 		modelTV.items.sortByDescending { matchRatio(it.tableTC, tableTF.text) }
+	}
+
+	private fun chose(mouseEvent: MouseEvent) {
+		if (mouseEvent.clickCount == 1) {
+			val item = this.modelTV.selectionModel.selectedItem
+			if(item != null){
+				val table: Table = this.tableRepo.find(item.tableTC)!!
+				this.tableRepo.chose(table)
+			}
+		}
 	}
 }

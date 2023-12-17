@@ -13,7 +13,7 @@ class LogRepo(val fileName: String) : Repository<Log>() {
     override fun load() {
         val file = File(this.fileName)
         if (!file.exists()) return
-        this.setAll(Json.decodeFromString(file.readText()))
+        this.set(Json.decodeFromString(file.readText()))
     }
 
     override fun save() {
@@ -24,6 +24,6 @@ class LogRepo(val fileName: String) : Repository<Log>() {
 
     override fun save(t: Log){
         super.save(t)
-        this.select(t)
+        this.chose(t)
     }
 }

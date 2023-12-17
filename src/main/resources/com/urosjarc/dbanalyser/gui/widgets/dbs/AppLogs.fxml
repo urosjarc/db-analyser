@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<TableView fx:id="logsTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.AppLogs">
+<TableView fx:id="logsTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.dbs.AppLogs">
   <columns>
     <TableColumn fx:id="levelTC" prefWidth="75.0" text="Level" />
     <TableColumn fx:id="timeTC" prefWidth="75.0" text="Time" />

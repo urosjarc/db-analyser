@@ -1,10 +1,11 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
 import com.urosjarc.dbanalyser.gui.parts.ChildConnectionTableView
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.gui.parts.ParentConnectionTableView
 import javafx.fxml.FXML
 import javafx.scene.control.Label
+import javafx.scene.control.TextField
 import org.koin.core.component.KoinComponent
 
 
@@ -29,13 +30,14 @@ class TableInfo : TableInfoUi() {
     fun initialize(){
         this.columnTableViewController.also {
             it.tableTC.isVisible = false
+            it.schemaTC.isVisible = false
             it.forwardOnForeignColumnClick = true
             it.forwardOnNumberClicks = 2
         }
 
         this.columnTableViewController.let {ctrl ->
-            ctrl.tableRepo.onSelect {
-                this.nameL.text = it.name
+            ctrl.tableRepo.onChose {
+                this.nameL.text = it.toString()
                 ctrl.update(it)
             }
         }

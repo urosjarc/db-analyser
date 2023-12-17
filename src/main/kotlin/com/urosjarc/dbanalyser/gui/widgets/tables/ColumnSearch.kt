@@ -1,4 +1,4 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
 import com.urosjarc.dbanalyser.app.column.Column
 import com.urosjarc.dbanalyser.app.table.TableRepo
@@ -65,7 +65,7 @@ class ColumnSearch : ColumnSearchUi() {
 			it.forwardOnNumberClicks = 1
 		}
 
-		this.tableRepo.onChange { this.updateTypes() }
+		this.tableRepo.onData { this.updateTypes() }
 		this.selectAllB.setOnAction { this.selectAll(true) }
 		this.deselectAllB.setOnAction { this.selectAll(false) }
 

@@ -1,10 +1,9 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.TableComboBox
 import com.urosjarc.dbanalyser.gui.parts.TableTreeView
 import com.urosjarc.dbanalyser.shared.startThread
-import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import org.koin.core.component.KoinComponent
@@ -41,7 +40,7 @@ class ConnectionSearch : ConnectionSearchUi() {
 		val startTable = startTableController.table ?: return@startThread
 		val endTable = endTableController.table
 		tableTreeViewController.update(startTable = startTable, endTable = endTable)
-		tableRepo.select(startTable)
+		tableRepo.chose(startTable)
 	}
 
 }

@@ -1,13 +1,13 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.schemas
 
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
 import com.urosjarc.dbanalyser.shared.startThread
-import javafx.application.Platform
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
+import javafx.scene.control.SelectionMode
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
@@ -58,8 +58,10 @@ class SchemaSearch : SchemaSearchUi() {
 
 	@FXML
 	fun initialize() {
-		this.schemaRepo.onChange { this.update() }
+
+		this.schemaRepo.onData { this.update() }
 		this.schemaTF.setOnAction { this.search() }
+		this.modelTV.selectionModel.selectedItemProperty().addListener { _, _, _ -> this.select() }
 
 		this.schemaTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.schemaTC) }
 		this.tablesTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.tablesTC) }
@@ -68,6 +70,7 @@ class SchemaSearch : SchemaSearchUi() {
 		this.childrenTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.childrenTC) }
 		this.relativesTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.relativesTC) }
 
+		this.modelTV.selectionModel.selectionMode = SelectionMode.MULTIPLE
 		this.modelTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
 		this.schemaTC.maxWidth = (Float.MAX_VALUE * 50.0)
 		this.tablesTC.maxWidth = (Float.MAX_VALUE * 10.0)
@@ -91,5 +94,10 @@ class SchemaSearch : SchemaSearchUi() {
 
 	private fun search() = startThread {
 		this.modelTV.items.sortByDescending { matchRatio(it.schemaTC, this.schemaTF.text) }
+	}
+
+	private fun select() {
+		val schemas = this.modelTV.selectionModel.selectedItems.mapNotNull { this.schemaRepo.find(it.schemaTC) }
+		this.schemaRepo.select(schemas)
 	}
 }

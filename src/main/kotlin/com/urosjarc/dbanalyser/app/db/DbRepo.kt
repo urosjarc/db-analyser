@@ -14,7 +14,7 @@ class DbRepo(val fileName: String) : Repository<Db>() {
         this.log.err("asdf")
         val file = File(this.fileName)
         if (!file.exists()) return
-        this.setAll(Json.decodeFromString(file.readText()))
+        this.set(Json.decodeFromString(file.readText()))
     }
 
     override fun save() {

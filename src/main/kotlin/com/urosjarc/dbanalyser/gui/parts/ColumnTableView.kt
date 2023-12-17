@@ -3,15 +3,20 @@ package com.urosjarc.dbanalyser.gui.parts
 import com.urosjarc.dbanalyser.app.column.Column
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
+import com.urosjarc.dbanalyser.shared.matchRatio
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
+import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 open class ColumnTableViewUi : KoinComponent {
+	@FXML
+	lateinit var columnTF: TextField
+
 	@FXML
 	lateinit var columnTV: TableView<Column>
 
@@ -44,7 +49,8 @@ class ColumnTableView : ColumnTableViewUi() {
 
 	@FXML
 	fun initialize() {
-		this.columnTV.setOnMouseClicked { this.onItemClicked(it) }
+		this.columnTV.setOnMouseClicked { this.chose(it) }
+		this.columnTF.setOnAction { this.search() }
 
 		this.keyTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.meta) }
 		this.typeTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.type) }
@@ -65,16 +71,16 @@ class ColumnTableView : ColumnTableViewUi() {
 	fun update(table: Table) {
 		this.columnTV.items.setAll(table.columns)
 	}
-
-	fun onItemClicked(mouseEvent: MouseEvent) {
+	private fun search() {
+		this.columnTV.items.sortByDescending { matchRatio(it.name, this.columnTF.text) }
+	}
+	fun chose(mouseEvent: MouseEvent) {
 		if (mouseEvent.clickCount == this.forwardOnNumberClicks) {
-			val column = this.columnTV.selectionModel.selectedItem
+			val column = this.columnTV.selectionModel.selectedItem ?: return
 			var table: Table? = null
-			if (this.forwardOnColumnClick) table = this.tableRepo.find(column.table)
-			if (this.forwardOnForeignColumnClick && column.foreignKey != null) {
-				table = this.tableRepo.find(column.foreignKey!!.from.table.name)
-			}
-			if (table != null) this.tableRepo.select(table)
+			if (this.forwardOnColumnClick) table = column.table
+			if (this.forwardOnForeignColumnClick) table = column.foreignKey?.to?.table
+			if (table != null) this.tableRepo.chose(table)
 
 		}
 	}

@@ -2,16 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.TableSearch">
-    <TextField fx:id="tableTF" alignment="CENTER" maxWidth="1.7976931348623157E308" promptText="Table name..." />
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.schemas.SchemaSearch">
+    <TextField fx:id="schemaTF" alignment="CENTER" maxWidth="1.7976931348623157E308" promptText="Schema name..." />
     <TableView fx:id="modelTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
         <columns>
             <TableColumn fx:id="relativesTC" prefWidth="75.0" text="Relatives" />
             <TableColumn fx:id="parentsTC" prefWidth="75.0" text="Parents" />
             <TableColumn fx:id="childrenTC" prefWidth="75.0" text="Children" />
+            <TableColumn fx:id="tablesTC" prefWidth="52.0" text="Tables" />
             <TableColumn fx:id="columnsTC" prefWidth="74.0" text="Columns" />
             <TableColumn fx:id="schemaTC" prefWidth="52.0" text="Schema" />
-            <TableColumn fx:id="tableTC" prefWidth="52.0" text="Table" />
         </columns>
     </TableView>
 </VBox>

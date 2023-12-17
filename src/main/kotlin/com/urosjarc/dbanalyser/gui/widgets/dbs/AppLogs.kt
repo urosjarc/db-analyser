@@ -1,4 +1,4 @@
-package com.urosjarc.dbanalyser.gui.widgets
+package com.urosjarc.dbanalyser.gui.widgets.dbs
 
 import com.urosjarc.dbanalyser.app.logs.Log
 import com.urosjarc.dbanalyser.app.logs.LogRepo
@@ -31,7 +31,7 @@ class AppLogs : AppLogsUi() {
     @FXML
     fun initialize() {
         this.logsTV.items.addAll(this.logRepo.data)
-        this.logRepo.onSelect { this.logsTV.items.add(it) }
+        this.logRepo.onChose { this.logsTV.items.add(it) }
 
         this.levelTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.type.name) }
         this.timeTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.time.toString()) }
