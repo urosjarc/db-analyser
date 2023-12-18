@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
 <VBox alignment="CENTER" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.tables.ConnectionSearch">
     <fx:include fx:id="startTable" source="../../parts/TableComboBox.fxml" />
     <fx:include fx:id="endTable" source="../../parts/TableComboBox.fxml" />
     <Button fx:id="searchB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Search" VBox.vgrow="ALWAYS" />
-    <fx:include fx:id="tableTreeView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../../parts/TableTreeView.fxml" VBox.vgrow="ALWAYS" />
+   <SplitPane dividerPositions="0.75" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+     <items>
+          <fx:include fx:id="tableTreeView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" source="../../parts/TableTreeView.fxml" VBox.vgrow="ALWAYS" />
+         <TextArea fx:id="connectionTA" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+     </items>
+   </SplitPane>
 </VBox>

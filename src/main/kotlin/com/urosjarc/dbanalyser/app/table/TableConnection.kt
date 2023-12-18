@@ -3,6 +3,7 @@ package com.urosjarc.dbanalyser.app.table
 import com.urosjarc.dbanalyser.app.column.ForeignKey
 
 class TableConnection(
+	val isParent: Boolean,
 	val table: Table,
 	val foreignKey: ForeignKey?,
 	var parent: TableConnection? = null,

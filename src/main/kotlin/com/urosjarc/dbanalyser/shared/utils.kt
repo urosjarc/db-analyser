@@ -14,7 +14,12 @@ fun toDateTime(timestamp: Timestamp): Instant =
 
 fun startThread(sleep: Int = 0, workCb: () -> Unit): Thread {
 	return Thread {
-		Thread.sleep(sleep.toLong())
-		workCb()
+		try {
+			Thread.sleep(sleep.toLong())
+			workCb()
+		} catch (_: InterruptedException){
+
+		}
+
 	}.also { it.start() }
 }

@@ -22,7 +22,7 @@ class TableService(
 	}
 
 	fun paths(startTable: Table, endTable: Table?, maxDepth: Int): TableConnection {
-		val node = TableConnection(table = startTable, foreignKey = null)
+		val node = TableConnection(isParent = false, table = startTable, foreignKey = null)
 		val queue = mutableListOf(node)
 
 		while (queue.isNotEmpty()) {
@@ -49,7 +49,7 @@ class TableService(
 				//Skip double self reference
 				.filter { it.to.table != current.parent?.table }
 				.forEach {
-					val tc = TableConnection(table = it.to.table, foreignKey = it, parent = current)
+					val tc = TableConnection(isParent = false, table = it.to.table, foreignKey = it, parent = current)
 					current.connect(tc)
 					queue.add(tc)
 				}
@@ -60,7 +60,7 @@ class TableService(
 				//Skip double self reference
 				.filter { it.from.table != current.parent?.table }
 				.forEach {
-					val tc = TableConnection(table = it.from.table, foreignKey = it, parent = current)
+					val tc = TableConnection(isParent = true, table = it.from.table, foreignKey = it, parent = current)
 					current.connect(tc)
 					queue.add(tc)
 				}
