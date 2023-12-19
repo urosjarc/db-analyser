@@ -39,8 +39,8 @@ class TableConnection(
 		return count
 	}
 
-	fun connectionName(from: Boolean): String = this.foreignKey.let {
-		if (from) it?.from.toString()
-		else it?.to.toString()
-	}
+	fun connectionName(from: Boolean): String = this.foreignKey?.let {
+		if (from) it.from.toString()
+		else it.to.toString()
+	} ?: ""
 }

@@ -52,6 +52,7 @@ class ConnectionSearch : ConnectionSearchUi() {
 
 	fun chose(tableConnection: TableConnection) {
 		var node = tableConnection
+		val signs = mutableSetOf<String>()
 
 		val joins = mutableListOf<String>()
 		while (node.parent != null) {
@@ -61,13 +62,20 @@ class ConnectionSearch : ConnectionSearchUi() {
 			val end = if(node.isParent) fkey?.to else fkey?.from
 
 			val startTable = start?.table
-			val startSign = startTable?.name?.filter { it.isUpperCase() }
-			val startColumn = start?.name
+			var startSign = startTable?.name?.filter { it.isUpperCase() }!!
+			val startColumn = start.name
 
 			val endTable = end?.table
 			val endSign = endTable?.name?.filter { it.isUpperCase() }
 			val endColumn = end?.name
+
 			joins.add(0, "\tJOIN ${startTable} ${startSign} ON ${startSign}.${startColumn} = ${endSign}.${endColumn}")
+
+			var i = 1
+			val originalStartSign = startSign
+			while(signs.contains(startSign)) startSign = "$originalStartSign${i++}"
+			signs.add(startSign)
+
 			node = node.parent!!
 		}
 
