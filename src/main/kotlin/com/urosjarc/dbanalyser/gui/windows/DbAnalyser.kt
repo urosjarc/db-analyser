@@ -4,8 +4,8 @@ import com.urosjarc.dbanalyser.app.schema.Schema
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.gui.widgets.dbs.DbLogin
-import com.urosjarc.dbanalyser.gui.widgets.tables.ConnectionSearch
-import com.urosjarc.dbanalyser.gui.widgets.tables.TableInfo
+import com.urosjarc.dbanalyser.gui.widgets.search.ConnectionSearch
+import com.urosjarc.dbanalyser.gui.widgets.search.TableInfo
 import com.urosjarc.dbanalyser.shared.startThread
 import javafx.application.Platform
 import javafx.fxml.FXML

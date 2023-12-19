@@ -3,6 +3,7 @@ package com.urosjarc.dbanalyser.gui.widgets.schemas
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import com.urosjarc.dbanalyser.shared.startThread
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -72,12 +73,12 @@ class SchemaSearch : SchemaSearchUi() {
 
 		this.modelTV.selectionModel.selectionMode = SelectionMode.MULTIPLE
 		this.modelTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
-		this.schemaTC.maxWidth = (Float.MAX_VALUE * 50.0)
-		this.tablesTC.maxWidth = (Float.MAX_VALUE * 10.0)
-		this.columnsTC.maxWidth = (Float.MAX_VALUE * 10.0)
-		this.parentsTC.maxWidth = (Float.MAX_VALUE * 10.0)
-		this.childrenTC.maxWidth = (Float.MAX_VALUE * 10.0)
-		this.relativesTC.maxWidth = (Float.MAX_VALUE * 10.0)
+		setColumnWidth(this.schemaTC, 50)
+		setColumnWidth(this.tablesTC, 10)
+		setColumnWidth(this.columnsTC, 10)
+		setColumnWidth(this.parentsTC, 10)
+		setColumnWidth(this.childrenTC, 10)
+		setColumnWidth(this.relativesTC, 10)
 	}
 
 	private fun update() = startThread {

@@ -4,6 +4,7 @@ import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TreeItem
@@ -33,15 +34,15 @@ class TableTreeView : TableTreeViewUi() {
 
 	@FXML
 	fun initialize() {
-		this.self.selectionModel.selectedItemProperty().addListener { _, _, newValue -> this.chose(newValue.value) }
+		this.self.selectionModel.selectedItemProperty().addListener { _, _, newValue -> this.chose(newValue?.value) }
 		this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.toString()) }
 		this.fromTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
 		this.toTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = false)) }
 
 		this.self.columnResizePolicy = TreeTableView.CONSTRAINED_RESIZE_POLICY;
-		this.nameTC.maxWidth = (1f * Integer.MAX_VALUE * 40).toDouble()
-		this.fromTC.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
-		this.toTC.maxWidth = (1f * Integer.MAX_VALUE * 30).toDouble()
+		setColumnWidth(this.nameTC, 40)
+		setColumnWidth(this.fromTC, 30)
+		setColumnWidth(this.toTC, 30)
 	}
 
 	fun update(startTable: Table, endTable: Table?) {

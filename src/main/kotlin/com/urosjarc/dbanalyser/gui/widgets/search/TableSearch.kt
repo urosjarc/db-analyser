@@ -1,9 +1,10 @@
-package com.urosjarc.dbanalyser.gui.widgets.tables
+package com.urosjarc.dbanalyser.gui.widgets.search
 
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import com.urosjarc.dbanalyser.shared.startThread
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -70,12 +71,12 @@ class TableSearch : TableSearchUi() {
 		this.relativesTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.relativesTC) }
 
 		this.modelTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY
-		this.relativesTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.parentsTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.childrenTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.columnsTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.schemaTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.tableTC.maxWidth = (Integer.MAX_VALUE * 50.0)
+		setColumnWidth(this.relativesTC, 10)
+		setColumnWidth(this.parentsTC, 10)
+		setColumnWidth(this.childrenTC, 10)
+		setColumnWidth(this.columnsTC, 10)
+		setColumnWidth(this.schemaTC, 10)
+		setColumnWidth(this.tableTC, 50)
 	}
 
 	private fun update() = startThread {

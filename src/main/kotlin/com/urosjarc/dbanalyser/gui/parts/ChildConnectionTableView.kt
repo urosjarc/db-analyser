@@ -5,6 +5,7 @@ import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
@@ -50,10 +51,10 @@ class ChildConnectionTableView : BackConnectionTableViewUi() {
 		this.columnTC.setCellValueFactory { val fkey = it.value; ReadOnlyStringWrapper(fkey.from.name) }
 
 		this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-		this.toTC.maxWidth = (Integer.MAX_VALUE * 40.0)
-		this.schemaTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.tableTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.columnTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+		setColumnWidth(this.toTC, 40)
+		setColumnWidth(this.schemaTC, 20)
+		setColumnWidth(this.tableTC, 20)
+		setColumnWidth(this.columnTC, 20)
 	}
 
 	private fun chose(mouseEvent: MouseEvent) {

@@ -4,6 +4,7 @@ import com.urosjarc.dbanalyser.app.column.Column
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.shared.matchRatio
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
@@ -60,12 +61,12 @@ class ColumnTableView : ColumnTableViewUi() {
 		this.toTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.connection) }
 
 		this.columnTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-		this.keyTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.typeTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.schemaTC.maxWidth = (Integer.MAX_VALUE * 10.0)
-		this.tableTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.columnTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.toTC.maxWidth = (Integer.MAX_VALUE * 30.0)
+		setColumnWidth(this.keyTC, 10)
+		setColumnWidth(this.typeTC, 10)
+		setColumnWidth(this.schemaTC, 10)
+		setColumnWidth(this.tableTC, 20)
+		setColumnWidth(this.columnTC, 20)
+		setColumnWidth(this.toTC, 30)
 	}
 
 	fun update(table: Table) {

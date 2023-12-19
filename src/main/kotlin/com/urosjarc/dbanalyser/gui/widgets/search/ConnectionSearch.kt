@@ -1,4 +1,4 @@
-package com.urosjarc.dbanalyser.gui.widgets.tables
+package com.urosjarc.dbanalyser.gui.widgets.search
 
 import com.urosjarc.dbanalyser.app.table.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
@@ -58,8 +58,8 @@ class ConnectionSearch : ConnectionSearchUi() {
 		while (node.parent != null) {
 
 			val fkey = node.foreignKey
-			val start = if(node.isParent) fkey?.from else fkey?.to
-			val end = if(node.isParent) fkey?.to else fkey?.from
+			val start = if (node.isParent) fkey?.from else fkey?.to
+			val end = if (node.isParent) fkey?.to else fkey?.from
 
 			val startTable = start?.table
 			var startSign = startTable?.name?.filter { it.isUpperCase() }!!
@@ -73,7 +73,7 @@ class ConnectionSearch : ConnectionSearchUi() {
 
 			var i = 1
 			val originalStartSign = startSign
-			while(signs.contains(startSign)) startSign = "$originalStartSign${i++}"
+			while (signs.contains(startSign)) startSign = "$originalStartSign${i++}"
 			signs.add(startSign)
 
 			node = node.parent!!

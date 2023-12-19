@@ -1,11 +1,10 @@
-package com.urosjarc.dbanalyser.gui.widgets.tables
+package com.urosjarc.dbanalyser.gui.widgets.search
 
 import com.urosjarc.dbanalyser.gui.parts.ChildConnectionTableView
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.gui.parts.ParentConnectionTableView
 import javafx.fxml.FXML
 import javafx.scene.control.Label
-import javafx.scene.control.TextField
 import org.koin.core.component.KoinComponent
 
 

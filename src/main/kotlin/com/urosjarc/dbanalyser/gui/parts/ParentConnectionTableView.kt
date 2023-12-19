@@ -5,6 +5,7 @@ import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.matchRatio
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
@@ -50,10 +51,10 @@ class ParentConnectionTableView : ForwardConnectionTableViewUi() {
 		this.columnTC.setCellValueFactory { val fkey = it.value; ReadOnlyStringWrapper(fkey.to.name) }
 
 		this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-		this.fromTC.maxWidth = (Integer.MAX_VALUE * 40.0)
-		this.schemaTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.tableTC.maxWidth = (Integer.MAX_VALUE * 20.0)
-		this.columnTC.maxWidth = (Integer.MAX_VALUE * 20.0)
+		setColumnWidth(this.fromTC, 40)
+		setColumnWidth(this.schemaTC, 20)
+		setColumnWidth(this.tableTC, 20)
+		setColumnWidth(this.columnTC, 20)
 	}
 
 	private fun search() {

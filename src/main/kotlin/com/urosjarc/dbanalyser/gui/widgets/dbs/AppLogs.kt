@@ -2,6 +2,7 @@ package com.urosjarc.dbanalyser.gui.widgets.dbs
 
 import com.urosjarc.dbanalyser.app.logs.Log
 import com.urosjarc.dbanalyser.app.logs.LogRepo
+import com.urosjarc.dbanalyser.shared.setColumnWidth
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
@@ -38,9 +39,9 @@ class AppLogs : AppLogsUi() {
         this.dataTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.data) }
 
         this.logsTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-        this.levelTC.maxWidth = (1f * Integer.MAX_VALUE * 20).toDouble()
-        this.timeTC.maxWidth = (1f * Integer.MAX_VALUE * 20).toDouble()
-        this.dataTC.maxWidth = (1f * Integer.MAX_VALUE * 60).toDouble()
+        setColumnWidth(this.levelTC, 20)
+        setColumnWidth(this.timeTC, 20)
+        setColumnWidth(this.dataTC, 60)
     }
 
 }
