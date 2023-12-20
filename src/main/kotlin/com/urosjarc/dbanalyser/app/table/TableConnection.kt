@@ -1,15 +1,24 @@
 package com.urosjarc.dbanalyser.app.table
 
 import com.urosjarc.dbanalyser.app.column.ForeignKey
+import javafx.beans.property.SimpleIntegerProperty
 
 class TableConnection(
 	val isParent: Boolean,
 	val table: Table,
 	val foreignKey: ForeignKey?,
+	var maxRelations: SimpleIntegerProperty = SimpleIntegerProperty(-1),
 	var parent: TableConnection? = null,
-	val childrens: MutableList<TableConnection> = mutableListOf(),
+	val children: MutableSet<TableConnection> = mutableSetOf(),
 	var alive: Boolean = false
 ) {
+
+	override fun toString(): String {
+		return "${this.foreignKey?.from} -> ${this.foreignKey?.to}"
+	}
+	override fun hashCode(): Int = this.toString().hashCode()
+	override fun equals(other: Any?): Boolean = other.hashCode() == this.hashCode()
+
 	fun makeBranchAlive() {
 		this.alive = true
 		var node: TableConnection? = this
@@ -20,13 +29,13 @@ class TableConnection(
 	}
 
 	fun removeZombies() {
-		this.childrens.removeIf { !it.alive }
-		this.childrens.forEach { it.removeZombies() }
+		this.children.removeIf { !it.alive }
+		this.children.forEach { it.removeZombies() }
 	}
 
 	fun connect(con: TableConnection) {
 		con.parent = this
-		this.childrens.add(con)
+		this.children.add(con)
 	}
 
 	fun depth(): Int {

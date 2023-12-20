@@ -20,9 +20,6 @@ open class ColumnSearchUi : KoinComponent {
 	lateinit var typeFP: FlowPane
 
 	@FXML
-	lateinit var columnTF: TextField
-
-	@FXML
 	lateinit var constrainedCB: CheckBox
 
 	@FXML
@@ -63,13 +60,14 @@ class ColumnSearch : ColumnSearchUi() {
 		this.columnTableViewController.also {
 			it.forwardOnColumnClick = true
 			it.forwardOnNumberClicks = 1
+			it.disableSearch = true
+			it.columnTF.setOnAction { this.search() }
 		}
 
 		this.tableRepo.onData { this.update() }
 		this.selectAllB.setOnAction { this.selectAll(true) }
 		this.deselectAllB.setOnAction { this.selectAll(false) }
 
-		this.columnTF.setOnAction { this.search() }
 		this.constrainedCB.setOnAction { this.search() }
 		this.defaultCB.setOnAction { this.search() }
 		this.notNullCB.setOnAction { this.search() }
@@ -101,7 +99,7 @@ class ColumnSearch : ColumnSearchUi() {
 				if (foreignKeyCB.isSelected && column.isForeignKey) {
 					columns.add(column); continue
 				}
-				if (selfRefKeyCB.isSelected && column.foreignKey?.from?.table?.name == table.name) {
+				if (selfRefKeyCB.isSelected && column.foreignKey?.to?.table == table) {
 					columns.add(column); continue
 				}
 				if (notNullCB.isSelected && column.notNull) {
@@ -120,7 +118,7 @@ class ColumnSearch : ColumnSearchUi() {
 			}
 		}
 
-		columns.sortByDescending { matchRatio(it.name, columnTF.text) }
+		columns.sortByDescending { matchRatio(it.name, this.columnTableViewController.columnTF.text) }
 
 		columnTableViewController.columnTV.items.setAll(columns)
 

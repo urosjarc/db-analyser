@@ -8,6 +8,7 @@ import org.koin.core.component.inject
 class ClientRepo : Repository<Client>() {
     val dbRepo by this.inject<DbRepo>()
 
+
     init {
         this.dbRepo.onChose {
             val client = when (it.type) {

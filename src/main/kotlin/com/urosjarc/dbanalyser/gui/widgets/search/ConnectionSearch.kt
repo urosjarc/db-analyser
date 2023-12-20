@@ -1,9 +1,10 @@
 package com.urosjarc.dbanalyser.gui.widgets.search
 
+import com.urosjarc.dbanalyser.app.client.ClientService
 import com.urosjarc.dbanalyser.app.table.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.TableComboBox
-import com.urosjarc.dbanalyser.gui.parts.TableTreeView
+import com.urosjarc.dbanalyser.gui.parts.TableConnectionTreeView
 import com.urosjarc.dbanalyser.shared.startThread
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -22,7 +23,7 @@ open class ConnectionSearchUi : KoinComponent {
 	lateinit var endTableController: TableComboBox
 
 	@FXML
-	lateinit var tableTreeViewController: TableTreeView
+	lateinit var tableTreeViewController: TableConnectionTreeView
 
 	@FXML
 	lateinit var searchB: Button
@@ -34,6 +35,7 @@ open class ConnectionSearchUi : KoinComponent {
 class ConnectionSearch : ConnectionSearchUi() {
 
 	val tableRepo by this.inject<TableRepo>()
+	val clientService by this.inject<ClientService>()
 
 	@FXML
 	fun initialize() {
@@ -51,39 +53,7 @@ class ConnectionSearch : ConnectionSearchUi() {
 	}
 
 	fun chose(tableConnection: TableConnection) {
-		var node = tableConnection
-		val signs = mutableSetOf<String>()
-
-		val joins = mutableListOf<String>()
-		while (node.parent != null) {
-
-			val fkey = node.foreignKey
-			val start = if (node.isParent) fkey?.from else fkey?.to
-			val end = if (node.isParent) fkey?.to else fkey?.from
-
-			val startTable = start?.table
-			var startSign = startTable?.name?.filter { it.isUpperCase() }!!
-			val startColumn = start.name
-
-			val endTable = end?.table
-			val endSign = endTable?.name?.filter { it.isUpperCase() }
-			val endColumn = end?.name
-
-			joins.add(0, "\tJOIN ${startTable} ${startSign} ON ${startSign}.${startColumn} = ${endSign}.${endColumn}")
-
-			var i = 1
-			val originalStartSign = startSign
-			while (signs.contains(startSign)) startSign = "$originalStartSign${i++}"
-			signs.add(startSign)
-
-			node = node.parent!!
-		}
-
-		val select = mutableListOf("SELECT")
-		select.addAll(node.table.columns.map { "\t${it.name}" })
-		select.add("FROM ${node.table} ${node.table.name.filter { it.isUpperCase() }}")
-
-		this.connectionTA.text = (select + joins).joinToString(separator = "\n")
+		this.connectionTA.text = this.clientService.joinSql(endTableConnection = tableConnection, countRelations = false)
 	}
 
 }

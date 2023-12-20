@@ -4,7 +4,7 @@ import com.urosjarc.dbanalyser.app.column.ForeignKey
 
 
 class TableService(
-	val tableRepo: TableRepo
+	val tableRepo: TableRepo,
 ) {
 
 	fun parents(table: Table): MutableList<ForeignKey> = table.foreignKeys.toMutableList()

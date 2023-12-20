@@ -38,10 +38,25 @@ abstract class Client(db: Db) : KoinComponent {
 		try {
 			this.con!!.createStatement().use { statement ->
 				val rs = statement.executeQuery(sql)
-				while (rs.next()) onResultSet(rs)
+				while (rs.next()) {
+					onResultSet(rs)
+				}
 			}
 		} catch (e: SQLException) {
 			this.log.fatal(e.localizedMessage)
 		}
+	}
+
+	fun <T : Any> execOne(sql: String, onResultSet: (rs: ResultSet) -> T?): T? {
+		this.log.debug("EXE SQL: $sql")
+		try {
+			this.con!!.createStatement().use { statement ->
+				val rs = statement.executeQuery(sql)
+				if (rs.next()) return onResultSet(rs)
+			}
+		} catch (e: SQLException) {
+			this.log.fatal(e.localizedMessage)
+		}
+		return null
 	}
 }

@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.search.ColumnSearch">
-    <TextField fx:id="columnTF" alignment="CENTER" promptText="Column name" />
     <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="20.0" VBox.vgrow="NEVER">
         <CheckBox fx:id="primaryKeyCB" mnemonicParsing="false" selected="true" text="Primary key" />
         <CheckBox fx:id="foreignKeyCB" mnemonicParsing="false" selected="true" text="Foreign key" />

@@ -1,6 +1,7 @@
 package com.urosjarc.dbanalyser.app
 
 import com.urosjarc.dbanalyser.app.client.ClientRepo
+import com.urosjarc.dbanalyser.app.client.ClientService
 import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.app.logs.LogRepo
 import com.urosjarc.dbanalyser.app.logs.LogService
@@ -17,6 +18,7 @@ object App {
 		this.single<DbRepo> { DbRepo("db.json") }
 		this.single<LogRepo> { LogRepo("log_${Clock.System.now()}.json") }
 		this.single<ClientRepo> { ClientRepo() }
+		this.single<ClientService> { ClientService() }
 		this.single<TableRepo> { TableRepo() }
 		this.single<SchemaRepo> { SchemaRepo() }
 

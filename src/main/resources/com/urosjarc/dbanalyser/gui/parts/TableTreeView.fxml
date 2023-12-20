@@ -2,10 +2,11 @@
 
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
-<TreeTableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.TableTreeView">
+<TreeTableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.TableConnectionTreeView">
   <columns>
     <TreeTableColumn fx:id="nameTC" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Table" />
     <TreeTableColumn fx:id="fromTC" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="From" />
     <TreeTableColumn fx:id="toTC" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="To" />
+    <TreeTableColumn fx:id="maxRelationsTC" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Max relations" />
   </columns>
 </TreeTableView>

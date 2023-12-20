@@ -47,6 +47,7 @@ class ColumnTableView : ColumnTableViewUi() {
 	var forwardOnNumberClicks = 0
 	var forwardOnForeignColumnClick = false
 	var forwardOnColumnClick = false
+	var disableSearch = false
 
 	@FXML
 	fun initialize() {
@@ -72,9 +73,11 @@ class ColumnTableView : ColumnTableViewUi() {
 	fun update(table: Table) {
 		this.columnTV.items.setAll(table.columns)
 	}
+
 	private fun search() {
-		this.columnTV.items.sortByDescending { matchRatio(it.name, this.columnTF.text) }
+		if (!this.disableSearch) this.columnTV.items.sortByDescending { matchRatio(it.name, this.columnTF.text) }
 	}
+
 	fun chose(mouseEvent: MouseEvent) {
 		if (mouseEvent.clickCount == this.forwardOnNumberClicks) {
 			val column = this.columnTV.selectionModel.selectedItem ?: return
