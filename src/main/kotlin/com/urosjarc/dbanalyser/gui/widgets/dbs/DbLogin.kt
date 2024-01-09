@@ -3,7 +3,6 @@ package com.urosjarc.dbanalyser.gui.widgets.dbs
 import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.app.db.DbRepo
-import com.urosjarc.dbanalyser.shared.startThread
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.input.MouseEvent
@@ -66,7 +65,7 @@ class DbLogin : DbLoginUi() {
 		this.typeCB.value = db.type
 	}
 
-	private fun login() = startThread {
+	private fun login() {
 		val db = Db(
 			name = nameTF.text,
 			user = usernameTF.text,

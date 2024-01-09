@@ -47,7 +47,8 @@ class TableComboBox : TableComboBoxUi() {
 		this.searchThread = startThread(300) {
 			val tables = this.tableRepo.data.sortedByDescending { matchRatio(it.name, this.self.value ?: "") }
 			this.table = tables.firstOrNull()
-			Platform.runLater { this.self.items = FXCollections.observableList(tables.map { it.toString() }) }
+			val sortedTableNames = FXCollections.observableList(tables.map { it.toString() })
+			Platform.runLater { this.self.items = sortedTableNames } //SAVE!!!
 		}
 
 	}

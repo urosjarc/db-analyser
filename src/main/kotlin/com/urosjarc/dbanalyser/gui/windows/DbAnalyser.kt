@@ -55,7 +55,7 @@ class DbAnalyser : DbAnalyserUi() {
 	fun update(schemas: List<Schema>) = startThread {
 		val tableSize = schemas.sumOf { it.tables.size }
 		val columnSize = schemas.sumOf { sch -> sch.tables.sumOf { it.columns.size } }
-		Platform.runLater {
+		Platform.runLater { //SAFE!!!
 			this.tablesT.text = "Tables: $tableSize"
 			this.columnsT.text = "Columns: $columnSize"
 		}

@@ -93,7 +93,7 @@ class TableConnectionTreeView : TableConnectionTreeViewUi() {
 	fun update(startTable: Table, endTable: Table?) = startThread {
 		val tableConnection = this.tableService.paths(startTable, endTable, maxDepth = 2)
 
-		Platform.runLater {
+		Platform.runLater { //SAFE!!!
 			this.self.root = TableConnectionTreeItem(tableConnection)
 			this.self.root.isExpanded = true
 			val queue = mutableListOf(this.self.root)

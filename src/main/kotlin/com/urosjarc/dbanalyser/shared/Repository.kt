@@ -1,44 +1,49 @@
 package com.urosjarc.dbanalyser.shared
 
-import com.urosjarc.dbanalyser.app.logs.LogService
+import javafx.application.Platform
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 abstract class Repository<T : Any> : KoinComponent {
-	val log by this.inject<LogService>()
 	val data = mutableListOf<T>()
 	var selected = mutableListOf<T>()
 	var chosen: T? = null
 
-	private val onDataCb = mutableListOf<(t: List<T>) -> Unit>()
-	private val onSelectCb = mutableListOf<(t: List<T>) -> Unit>()
-	private val onChoseCb = mutableListOf<(t: T) -> Unit>()
-	private val onErrorCb = mutableListOf<(t: String) -> Unit>()
+	private val onDataCb = mutableListOf<Watcher<List<T>>>()
+	private val onSelectCb = mutableListOf<Watcher<List<T>>>()
+	private val onChoseCb = mutableListOf<Watcher<T>>()
+	private val onErrorCb = mutableListOf<Watcher<String>>()
 
-	fun onData(watcher: (t: List<T>) -> Unit) {
-		this.onDataCb.add(watcher)
+	private class Watcher<CT>(
+		val cb: (t: CT) -> Unit,
+		val runLater: Boolean
+	) {
+		fun run(t: CT) = if (this.runLater) Platform.runLater { this.cb(t) } else this.cb(t)
 	}
 
-	fun onSelect(watcher: (t: List<T>) -> Unit) {
-		this.onSelectCb.add(watcher)
+	fun onData(runLater: Boolean = false, cb: (t: List<T>) -> Unit) {
+		this.onDataCb.add(Watcher(cb = cb, runLater = runLater))
 	}
 
-	fun onChose(watcher: (t: T) -> Unit) {
-		this.onChoseCb.add(watcher)
+	fun onSelect(runLater: Boolean = false, cb: (t: List<T>) -> Unit) {
+		this.onSelectCb.add(Watcher(cb = cb, runLater = runLater))
 	}
 
-	fun onError(watcher: (t: String) -> Unit) {
-		this.onErrorCb.add(watcher)
+	fun onChose(runLater: Boolean = false, cb: (t: T) -> Unit) {
+		this.onChoseCb.add(Watcher(cb = cb, runLater = runLater))
+	}
+
+	fun onError(runLater: Boolean = false, cb: (t: String) -> Unit) {
+		this.onErrorCb.add(Watcher(cb = cb, runLater = runLater))
 	}
 
 	fun error(msg: String) {
-		this.onErrorCb.forEach { it(msg) }
+		this.onErrorCb.forEach { it.run(msg) }
 	}
 
 	fun set(t: List<T>) {
 		this.data.clear()
 		this.data.addAll(t)
-		this.onDataCb.forEach { it(t) }
+		this.onDataCb.forEach { it.run(t) }
 		this.save()
 	}
 
@@ -49,18 +54,18 @@ abstract class Repository<T : Any> : KoinComponent {
 		} else {
 			this.data.add(t)
 		}
-		this.onDataCb.forEach { it(this.data) }
+		this.onDataCb.forEach { it.run(this.data) }
 		this.save()
 	}
 
 	fun select(t: List<T>) {
 		this.selected = t.toMutableList()
-		this.onSelectCb.forEach { it(t) }
+		this.onSelectCb.forEach { it.run(t) }
 	}
 
 	fun chose(t: T) {
 		this.chosen = t
-		this.onChoseCb.forEach { it(t) }
+		this.onChoseCb.forEach { it.run(t) }
 	}
 
 	fun find(t: T): T? {

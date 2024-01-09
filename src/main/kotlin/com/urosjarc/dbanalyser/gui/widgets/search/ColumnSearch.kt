@@ -5,12 +5,10 @@ import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.shared.matchRatio
 import com.urosjarc.dbanalyser.shared.startThread
-import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
-import javafx.scene.control.TextField
 import javafx.scene.layout.FlowPane
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -132,14 +130,12 @@ class ColumnSearch : ColumnSearchUi() {
 			}
 		}
 
-		Platform.runLater {
-			this.typeFP.children.setAll(FXCollections.observableArrayList(baseTypes.map { type ->
-				CheckBox(type).also { cb ->
-					cb.isSelected = true
-					cb.setOnAction { this.search() }
-				}
-			}))
-			this.search()
-		}
+		this.typeFP.children.setAll(FXCollections.observableArrayList(baseTypes.map { type ->
+			CheckBox(type).also { cb ->
+				cb.isSelected = true
+				cb.setOnAction { this.search() }
+			}
+		}))
+		this.search()
 	}
 }

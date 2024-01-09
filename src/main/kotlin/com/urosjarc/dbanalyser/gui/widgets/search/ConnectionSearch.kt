@@ -40,16 +40,16 @@ class ConnectionSearch : ConnectionSearchUi() {
 	@FXML
 	fun initialize() {
 		this.searchB.setOnAction { this.search() }
-		this.tableTreeViewController.self.selectionModel.selectedItemProperty().addListener { _, _, newValue -> this.chose(newValue.value) }
+		this.tableTreeViewController.self.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
+			if (newValue != null) this.chose(newValue.value)
+		}
 	}
 
-	fun search() = startThread {
-		Platform.runLater {
-			val startTable = startTableController.table ?: return@runLater
-			val endTable = endTableController.table
-			tableTreeViewController.update(startTable = startTable, endTable = endTable)
-			tableRepo.chose(startTable)
-		}
+	fun search() {
+		val startTable = startTableController.table ?: return
+		val endTable = endTableController.table
+		tableTreeViewController.update(startTable = startTable, endTable = endTable)
+		tableRepo.chose(startTable)
 	}
 
 	fun chose(tableConnection: TableConnection) {
