@@ -36,9 +36,6 @@ javafx {
 }
 
 dependencies {
-    // Threading
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.7.3")
-
     // Dark style
     implementation("org.jfxtras:jmetro:11.6.14")
 
