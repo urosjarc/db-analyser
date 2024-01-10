@@ -1,6 +1,5 @@
 package com.urosjarc.dbanalyser.gui.widgets.queries
 
-import com.jakewharton.fliptables.FlipTableConverters
 import com.urosjarc.dbanalyser.app.client.ClientService
 import com.urosjarc.dbanalyser.app.query.Query
 import com.urosjarc.dbanalyser.app.query.QueryRepo
@@ -10,12 +9,8 @@ import javafx.scene.control.Button
 import javafx.scene.control.ComboBox
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
-import javafx.scene.text.Font
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
 
 open class QueryInfoUi : KoinComponent {
 	@FXML
@@ -74,7 +69,7 @@ class QueryInfo : QueryInfoUi() {
 		this.queryRepo.save(query)
 	}
 
-	private fun execute() {
+	private fun execute() = startThread {
 		val results = this.clientService.execute(sql = this.sqlTA.text)
 		this.resultTA.text = results
 	}
