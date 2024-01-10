@@ -40,8 +40,8 @@ class QueryTableView : QueryTableViewUi() {
 		this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.name) }
 
 		this.queryTV.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
-		setColumnWidth(this.typeTC, 50)
-		setColumnWidth(this.nameTC, 50)
+		setColumnWidth(this.typeTC, 25)
+		setColumnWidth(this.nameTC, 75)
 	}
 
 	fun update(queries: List<Query>) {
