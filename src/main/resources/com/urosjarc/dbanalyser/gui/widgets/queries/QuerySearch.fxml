@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<SplitPane dividerPositions="0.333" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.queries.QuerySearch">
+    <fx:include fx:id="queryTableView" source="../../parts/QueryTableView.fxml" />
+    <fx:include fx:id="queryInfo" source="./QueryInfo.fxml" />
+</SplitPane>

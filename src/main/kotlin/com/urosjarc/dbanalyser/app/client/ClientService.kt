@@ -1,8 +1,10 @@
 package com.urosjarc.dbanalyser.app.client
 
+import com.jakewharton.fliptables.FlipTableConverters
 import com.urosjarc.dbanalyser.app.table.TableConnection
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.sql.ResultSet
 
 class ClientService : KoinComponent {
 	val clientRepo by this.inject<ClientRepo>()
@@ -61,5 +63,22 @@ class ClientService : KoinComponent {
 			FROM ($countRelationsSql) X
 		""".trimIndent()
 		return this.clientRepo.chosen!!.execOne(sql) { it.getInt(1) } ?: -1
+	}
+
+	fun execute(sql: String): String {
+		val comments = sql.split("\n")
+			.filter { it.startsWith("--") }
+			.map { it.replace("--", "") }
+			.toMutableList()
+
+		var text = ""
+
+		this.clientRepo.chosen?.execMany(sql=sql) {
+			val table = FlipTableConverters.fromResultSet(it)
+			val comment = comments.removeFirstOrNull()
+			text += "$comment\n$table\n\n"
+		}
+
+		return text
 	}
 }

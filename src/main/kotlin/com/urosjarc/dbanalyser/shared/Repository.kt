@@ -47,15 +47,12 @@ abstract class Repository<T : Any> : KoinComponent {
 		this.save()
 	}
 
-	open fun save(t: T) {
-		if (this.data.contains(t)) {
-			val i = this.data.indexOf(t)
-			this.data[i] = t
-		} else {
-			this.data.add(t)
-		}
+	open fun save(t: T): T {
+		val old = this.data.firstOrNull { t == it }
+		if (old == null) this.data.add(t) else return old
 		this.onDataCb.forEach { it.run(this.data) }
 		this.save()
+		return t
 	}
 
 	fun select(t: List<T>) {

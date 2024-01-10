@@ -1,15 +1,14 @@
 package com.urosjarc.dbanalyser.app.client
 
+import com.jakewharton.fliptables.FlipTableConverters
 import com.urosjarc.dbanalyser.app.db.Db
 import com.urosjarc.dbanalyser.app.logs.LogService
 import com.urosjarc.dbanalyser.app.schema.Schema
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.sql.Connection
-import java.sql.DriverManager
-import java.sql.ResultSet
-import java.sql.SQLException
+import java.sql.*
 import java.util.*
+
 
 abstract class Client(db: Db) : KoinComponent {
 	val log by this.inject<LogService>()
@@ -44,6 +43,29 @@ abstract class Client(db: Db) : KoinComponent {
 			}
 		} catch (e: SQLException) {
 			this.log.fatal(e.localizedMessage)
+		}
+	}
+
+	fun execMany(sql: String, onNewResultSet: (rs: ResultSet) -> Unit) {
+		try {
+			val stmt: Statement = this.con!!.createStatement()
+			var isResultSet = stmt.execute(sql)
+
+			var count = 0
+			while (true) {
+				if (isResultSet) {
+					val rs = stmt.resultSet
+					onNewResultSet(rs)
+				} else {
+					if (stmt.updateCount == -1) break
+					this.log.info("Result $count is just a count: ${stmt.updateCount}")
+				}
+				count++
+				isResultSet = stmt.moreResults
+			}
+
+		} catch (e: SQLException) {
+			this.log.err(e.message.toString())
 		}
 	}
 

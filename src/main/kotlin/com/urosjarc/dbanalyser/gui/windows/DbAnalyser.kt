@@ -4,6 +4,7 @@ import com.urosjarc.dbanalyser.app.schema.Schema
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.gui.widgets.dbs.DbLogin
+import com.urosjarc.dbanalyser.gui.widgets.queries.QuerySearch
 import com.urosjarc.dbanalyser.gui.widgets.search.ConnectionSearch
 import com.urosjarc.dbanalyser.gui.widgets.search.TableInfo
 import com.urosjarc.dbanalyser.shared.startThread
@@ -22,6 +23,9 @@ abstract class DbAnalyserUi : KoinComponent {
 
 	@FXML
 	lateinit var tableInfoController: TableInfo
+
+	@FXML
+	lateinit var querySearchController: QuerySearch
 
 	@FXML
 	lateinit var columnTableViewController: ColumnTableView

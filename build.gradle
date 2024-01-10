@@ -47,6 +47,9 @@ dependencies {
     //Fuzzy search
     implementation("me.xdrop:fuzzywuzzy:1.4.0")
 
+    //Table prrity pring
+    implementation("com.jakewharton.fliptables:fliptables:1.1.0")
+
     //Time
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
 

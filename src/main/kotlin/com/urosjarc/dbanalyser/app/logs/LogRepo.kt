@@ -22,8 +22,9 @@ class LogRepo(val fileName: String) : Repository<Log>() {
         file.writeText(Json.encodeToString(this.data))
     }
 
-    override fun save(t: Log){
-        super.save(t)
-        this.chose(t)
+    override fun save(t: Log): Log {
+        val old = super.save(t)
+        this.chose(old)
+        return old
     }
 }

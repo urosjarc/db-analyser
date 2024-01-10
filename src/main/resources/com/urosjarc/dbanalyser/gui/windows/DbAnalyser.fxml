@@ -29,4 +29,7 @@
             <fx:include fx:id="tableInfo" source="../widgets/search/TableInfo.fxml" />
         </SplitPane>
     </Tab>
+    <Tab text="Queries">
+        <fx:include fx:id="querySearch" source="../widgets/queries/QuerySearch.fxml" />
+    </Tab>
 </TabPane>

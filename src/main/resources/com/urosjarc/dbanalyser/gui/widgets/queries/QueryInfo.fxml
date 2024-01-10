@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.queries.QueryInfo">
+   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+      <HBox maxWidth="1.7976931348623157E308">
+         <ComboBox fx:id="typeCB" maxWidth="1.7976931348623157E308" />
+         <TextField fx:id="nameTF" maxWidth="1.7976931348623157E308" minHeight="28.0" promptText="Query name..." HBox.hgrow="ALWAYS" />
+         <HBox maxWidth="1.7976931348623157E308">
+            <Button fx:id="saveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save" HBox.hgrow="ALWAYS" />
+            <Button fx:id="deleteB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Delete" HBox.hgrow="ALWAYS" />
+         </HBox>
+      </HBox>
+      <TextArea fx:id="sqlTA" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="SQL statement..." style="-fx-font-family: Monospaced;" VBox.vgrow="ALWAYS" />
+   </VBox>
+   <VBox prefHeight="200.0" prefWidth="100.0">
+      <TextArea fx:id="resultTA" editable="false" maxWidth="1.7976931348623157E308" promptText="Results..." style="-fx-font-family: Monospaced;" VBox.vgrow="ALWAYS" />
+      <Button fx:id="executeB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Execute" />
+   </VBox>
+</SplitPane>

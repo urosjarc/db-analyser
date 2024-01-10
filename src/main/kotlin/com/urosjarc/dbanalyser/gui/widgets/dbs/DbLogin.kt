@@ -73,7 +73,7 @@ class DbLogin : DbLoginUi() {
 			url = urlTF.text,
 			type = typeCB.value
 		)
-		dbRepo.save(db)
-		dbRepo.chose(db)
+		val saved = this.dbRepo.save(db)
+		dbRepo.chose(saved)
 	}
 }
