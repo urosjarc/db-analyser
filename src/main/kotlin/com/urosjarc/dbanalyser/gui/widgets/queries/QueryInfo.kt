@@ -42,15 +42,29 @@ class QueryInfo : QueryInfoUi() {
 
 	val queryRepo by this.inject<QueryRepo>()
 	val clientService by this.inject<ClientService>()
+	var lastResults: MutableList<QueryResult> = mutableListOf()
 
 	@FXML
 	fun initialize() {
 		this.langCB.items.setAll(QueryResult.Header.Lang.values().toMutableList())
+		this.langCB.value = QueryResult.Header.Lang.JAVA
 		this.queryRepo.onChose { this.update(it) }
 		this.typeCB.items.setAll(Query.Type.values().toMutableList())
 		this.executeB.setOnAction { this.execute() }
 		this.saveB.setOnAction { this.save() }
 		this.deleteB.setOnAction { this.delete() }
+		this.langCB.setOnAction { this.updateDTO() }
+	}
+
+	private fun updateDTO()  {
+		val lang: QueryResult.Header.Lang = this.langCB.value ?: QueryResult.Header.Lang.KOTLIN
+		this.dtoTA.text = this.lastResults.map {
+			when (lang) {
+				QueryResult.Header.Lang.JAVA -> it.javaDTO()
+				QueryResult.Header.Lang.TYPESCRIPT -> it.typescriptDTO()
+				QueryResult.Header.Lang.KOTLIN -> it.kotlinDTO()
+			}
+		}.joinToString("\n\n")
 	}
 
 	private fun update(query: Query) {
@@ -74,16 +88,9 @@ class QueryInfo : QueryInfoUi() {
 	}
 
 	private fun execute() {
-		val results = this.clientService.execute(sql = this.sqlTA.text)
-		this.resultTA.text = results.map { it.data }.joinToString("\n")
-		val lang: QueryResult.Header.Lang = this.langCB.value ?: QueryResult.Header.Lang.KOTLIN
-		this.dtoTA.text = results.map {
-			when (lang) {
-				QueryResult.Header.Lang.JAVA -> it.javaDTO()
-				QueryResult.Header.Lang.TYPESCRIPT -> it.typescriptDTO()
-				QueryResult.Header.Lang.KOTLIN -> it.kotlinDTO()
-			}
-		}.joinToString("\n\n")
+		this.lastResults = this.clientService.execute(sql = this.sqlTA.text)
+		this.resultTA.text = this.lastResults.map { it.data }.joinToString("\n")
+		this.updateDTO()
 	}
 
 }
