@@ -1,6 +1,7 @@
-package com.urosjarc.dbanalyser.app.table
+package com.urosjarc.dbanalyser.app.tableConnection
 
 import com.urosjarc.dbanalyser.app.column.ForeignKey
+import com.urosjarc.dbanalyser.app.table.Table
 import javafx.beans.property.SimpleIntegerProperty
 
 class TableConnection(

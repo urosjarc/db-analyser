@@ -3,12 +3,9 @@ package com.urosjarc.dbanalyser.gui.widgets.queries
 import com.urosjarc.dbanalyser.app.client.ClientService
 import com.urosjarc.dbanalyser.app.query.Query
 import com.urosjarc.dbanalyser.app.query.QueryRepo
-import com.urosjarc.dbanalyser.shared.startThread
+import com.urosjarc.dbanalyser.app.query.QueryResult
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.control.ComboBox
-import javafx.scene.control.TextArea
-import javafx.scene.control.TextField
+import javafx.scene.control.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -33,6 +30,12 @@ open class QueryInfoUi : KoinComponent {
 
 	@FXML
 	lateinit var typeCB: ComboBox<Query.Type>
+
+	@FXML
+	lateinit var dtoTA: TextArea
+
+	@FXML
+	lateinit var langCB: ChoiceBox<QueryResult.Header.Lang>
 }
 
 class QueryInfo : QueryInfoUi() {
@@ -42,6 +45,7 @@ class QueryInfo : QueryInfoUi() {
 
 	@FXML
 	fun initialize() {
+		this.langCB.items.setAll(QueryResult.Header.Lang.values().toMutableList())
 		this.queryRepo.onChose { this.update(it) }
 		this.typeCB.items.setAll(Query.Type.values().toMutableList())
 		this.executeB.setOnAction { this.execute() }
@@ -69,9 +73,17 @@ class QueryInfo : QueryInfoUi() {
 		this.queryRepo.save(query)
 	}
 
-	private fun execute() = startThread {
+	private fun execute() {
 		val results = this.clientService.execute(sql = this.sqlTA.text)
-		this.resultTA.text = results
+		this.resultTA.text = results.map { it.data }.joinToString("\n")
+		val lang: QueryResult.Header.Lang = this.langCB.value ?: QueryResult.Header.Lang.KOTLIN
+		this.dtoTA.text = results.map {
+			when (lang) {
+				QueryResult.Header.Lang.JAVA -> it.javaDTO()
+				QueryResult.Header.Lang.TYPESCRIPT -> it.typescriptDTO()
+				QueryResult.Header.Lang.KOTLIN -> it.kotlinDTO()
+			}
+		}.joinToString("\n\n")
 	}
 
 }

@@ -3,16 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ChildConnectionTableView">
-   <children>
-      <TextField fx:id="tableTF" alignment="CENTER" maxWidth="1.7976931348623157E308" promptText="Table..." />
-      <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-          <columns>
-              <TableColumn fx:id="schemaTC" prefWidth="75.0" text="Schema" />
-              <TableColumn fx:id="tableTC" prefWidth="75.0" text="Table" />
-              <TableColumn fx:id="columnTC" prefWidth="75.0" text="Column" />
-              <TableColumn fx:id="toTC" prefWidth="75.0" text="To" />
-          </columns>
-      </TableView>
-   </children>
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ChildConnectionTableView">
+    <TextField fx:id="tableTF" alignment="CENTER" maxWidth="1.7976931348623157E308" promptText="Table..."/>
+    <TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="schemaTC" prefWidth="75.0" text="Schema"/>
+            <TableColumn fx:id="tableTC" prefWidth="75.0" text="Table"/>
+            <TableColumn fx:id="columnTC" prefWidth="75.0" text="Column"/>
+            <TableColumn fx:id="toTC" prefWidth="75.0" text="To"/>
+        </columns>
+    </TableView>
 </VBox>

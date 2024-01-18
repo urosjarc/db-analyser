@@ -36,15 +36,20 @@ class TableComboBox : TableComboBoxUi() {
 		if (keyEvent.text.firstOrNull()?.isLetterOrDigit() == true) this.search()
 	}
 
+	fun select(table: Table){
+		this.table = table
+		this.self.value = table.toString()
+	}
+
 	fun select(text: String?) {
-		this.table = this.tableRepo.data.firstOrNull { it.toString() == text }
-		if (this.table != null) this.self.value = this.table.toString()
+		val table = this.tableRepo.data.firstOrNull { it.toString() == text }
+		if (table != null) this.select(table=table)
 	}
 
 	private fun search() {
 		this.self.show()
 		this.searchThread?.interrupt()
-		this.searchThread = startThread(300) {
+		this.searchThread = startThread(sleep = 300) {
 			val tables = this.tableRepo.data.sortedByDescending { matchRatio(it.name, this.self.value ?: "") }
 			this.table = tables.firstOrNull()
 			val sortedTableNames = FXCollections.observableList(tables.map { it.toString() })

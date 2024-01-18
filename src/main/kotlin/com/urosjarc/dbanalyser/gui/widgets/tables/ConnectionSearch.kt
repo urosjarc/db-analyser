@@ -1,15 +1,12 @@
-package com.urosjarc.dbanalyser.gui.widgets.search
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
-import com.urosjarc.dbanalyser.app.client.ClientService
-import com.urosjarc.dbanalyser.app.table.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnectionRepo
 import com.urosjarc.dbanalyser.gui.parts.TableComboBox
 import com.urosjarc.dbanalyser.gui.parts.TableConnectionTreeView
-import com.urosjarc.dbanalyser.shared.startThread
-import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Button
-import javafx.scene.control.TextArea
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -27,18 +24,19 @@ open class ConnectionSearchUi : KoinComponent {
 
 	@FXML
 	lateinit var searchB: Button
-
-	@FXML
-	lateinit var connectionTA: TextArea
 }
 
 class ConnectionSearch : ConnectionSearchUi() {
 
 	val tableRepo by this.inject<TableRepo>()
-	val clientService by this.inject<ClientService>()
+	val tableConnectionRepo by this.inject<TableConnectionRepo>()
 
 	@FXML
 	fun initialize() {
+		this.tableConnectionRepo.onChose {
+			this.startTableController.select(table = it.table)
+			this.search()
+		}
 		this.searchB.setOnAction { this.search() }
 		this.tableTreeViewController.self.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
 			if (newValue != null) this.chose(newValue.value)
@@ -46,14 +44,13 @@ class ConnectionSearch : ConnectionSearchUi() {
 	}
 
 	fun search() {
-		val startTable = startTableController.table ?: return
+		val startTable = startTableController.table ?: this.tableRepo.chosen ?: return
 		val endTable = endTableController.table
 		tableTreeViewController.update(startTable = startTable, endTable = endTable)
 		tableRepo.chose(startTable)
 	}
 
 	fun chose(tableConnection: TableConnection) {
-		this.connectionTA.text = this.clientService.joinSql(endTableConnection = tableConnection, countRelations = false)
 	}
 
 }

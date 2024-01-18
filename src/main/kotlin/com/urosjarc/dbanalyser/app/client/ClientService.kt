@@ -1,15 +1,66 @@
 package com.urosjarc.dbanalyser.app.client
 
-import com.jakewharton.fliptables.FlipTableConverters
-import com.urosjarc.dbanalyser.app.table.TableConnection
+import com.urosjarc.dbanalyser.app.query.QueryResult
+import com.urosjarc.dbanalyser.app.table.Table
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
+import com.urosjarc.dbanalyser.shared.FlipTableConverters
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.sql.ResultSet
+import java.sql.ResultSetMetaData
 
 class ClientService : KoinComponent {
 	val clientRepo by this.inject<ClientRepo>()
 
-	fun joinSql(endTableConnection: TableConnection, countRelations: Boolean): String {
+	fun countMaxRelations(endTableConnection: TableConnection): Int {
+		val countRelationsSql = this.selectSql(endTableConnection = endTableConnection, countRelations = true)
+		val sql = """
+			SELECT MAX(X.count)
+			FROM ($countRelationsSql) X
+		""".trimIndent()
+		return this.clientRepo.chosen!!.execOne(sql) { it.getInt(1) } ?: -1
+	}
+
+	fun execute(sql: String): MutableList<QueryResult> {
+		val comments = sql.split("\n")
+			.filter { it.startsWith("--") }
+			.map { it.replace("--", "") }
+			.toMutableList()
+
+		var queries = mutableListOf<QueryResult>()
+
+		this.clientRepo.chosen?.execMany(sql = sql) {
+			val table = FlipTableConverters.fromResultSet(it)
+			val comment = comments.removeFirstOrNull()
+			queries.add(
+				QueryResult(
+					title = (comment ?: "DTO").replace(" ", ""),
+					comment = comment ?: "DTO",
+					data = "$comment\n$table\n\n",
+					headers = this.getHeaders(resultSet = it),
+				)
+			)
+		}
+
+		return queries
+	}
+
+	fun getHeaders(resultSet: ResultSet): MutableList<QueryResult.Header> {
+		val headers = mutableListOf<QueryResult.Header>()
+		val metadata: ResultSetMetaData = resultSet.metaData
+		val columnCount: Int = metadata.columnCount
+		for (i in 1..columnCount) {
+			headers.add(
+				QueryResult.Header(
+					name = metadata.getColumnName(i),
+					type = metadata.getColumnTypeName(i),
+				)
+			)
+		}
+		return headers
+	}
+
+	fun selectSql(endTableConnection: TableConnection, countRelations: Boolean): String {
 		var node = endTableConnection
 		val takenSigns = mutableSetOf<String>()
 
@@ -49,6 +100,8 @@ class ClientService : KoinComponent {
 		}
 
 		return """
+			-- SELECT: ${node.table}
+			
 			SELECT
 				${columnsSql.joinToString(",\n" + "\t".repeat(4))}
 			FROM ${node.table} "$startTableShortName"
@@ -56,29 +109,17 @@ class ClientService : KoinComponent {
 		""".trimIndent()
 	}
 
-	fun countMaxRelations(endTableConnection: TableConnection): Int {
-		val countRelationsSql = this.joinSql(endTableConnection = endTableConnection, countRelations = true)
-		val sql = """
-			SELECT MAX(X.count)
-			FROM ($countRelationsSql) X
+	fun insertSql(table: Table): String {
+		val columnsSql = table.columns.map { it.name }
+		val columns = columnsSql.joinToString(", ")
+
+		return """
+			-- INSERT: $table
+			
+			INSERT INTO $table
+				($columns)
+			VALUES
+				($columns);
 		""".trimIndent()
-		return this.clientRepo.chosen!!.execOne(sql) { it.getInt(1) } ?: -1
-	}
-
-	fun execute(sql: String): String {
-		val comments = sql.split("\n")
-			.filter { it.startsWith("--") }
-			.map { it.replace("--", "") }
-			.toMutableList()
-
-		var text = ""
-
-		this.clientRepo.chosen?.execMany(sql=sql) {
-			val table = FlipTableConverters.fromResultSet(it)
-			val comment = comments.removeFirstOrNull()
-			text += "$comment\n$table\n\n"
-		}
-
-		return text
 	}
 }

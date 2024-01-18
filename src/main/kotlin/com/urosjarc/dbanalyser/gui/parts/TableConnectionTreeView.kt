@@ -2,7 +2,7 @@ package com.urosjarc.dbanalyser.gui.parts
 
 import com.urosjarc.dbanalyser.app.client.ClientService
 import com.urosjarc.dbanalyser.app.table.Table
-import com.urosjarc.dbanalyser.app.table.TableConnection
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.shared.setColumnWidth

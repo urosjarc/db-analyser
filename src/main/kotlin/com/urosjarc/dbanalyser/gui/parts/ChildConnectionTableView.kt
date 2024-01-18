@@ -59,8 +59,8 @@ class ChildConnectionTableView : BackConnectionTableViewUi() {
 
 	private fun chose(mouseEvent: MouseEvent) {
 		if (mouseEvent.clickCount == 2) {
-			val column = this.self.selectionModel.selectedItem
-			this.tableRepo.chose(column.from.table)
+			val column: ForeignKey? = this.self.selectionModel.selectedItem
+			if (column != null) this.tableRepo.chose(column.from.table)
 		}
 	}
 

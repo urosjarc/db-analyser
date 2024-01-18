@@ -5,19 +5,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.5" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.search.TableInfo">
+<SplitPane dividerPositions="0.5" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.tables.TableInfo">
     <VBox prefHeight="200.0" prefWidth="100.0">
         <HBox maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
-            <Button fx:id="undoB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="undoB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS" />
             <Label fx:id="nameL" alignment="CENTER" maxWidth="1.7976931348623157E308" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                 <padding>
-                    <Insets bottom="5.0" top="5.0"/>
+                    <Insets bottom="5.0" top="5.0" />
                 </padding>
                 <font>
-                    <Font name="System Bold" size="18.0"/>
+                    <Font name="System Bold" size="18.0" />
                 </font>
             </Label>
-            <Button fx:id="redoB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="redoB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" HBox.hgrow="ALWAYS" />
+        </HBox>
+        <HBox maxWidth="1.7976931348623157E308">
+         <Button fx:id="connectionsB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Connections" HBox.hgrow="ALWAYS" />
+         <MenuButton alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Query" HBox.hgrow="ALWAYS">
+           <items>
+             <MenuItem fx:id="selectMI" mnemonicParsing="false" text="SELECT" />
+             <MenuItem fx:id="insertMI" mnemonicParsing="false" text="INSERT" />
+           </items>
+         </MenuButton>
         </HBox>
         <fx:include fx:id="columnTableView" source="../../parts/ColumnTableView.fxml" VBox.vgrow="ALWAYS" />
     </VBox>

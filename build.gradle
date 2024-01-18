@@ -23,6 +23,12 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+sourceSets {
+    named("main") {
+        java.srcDir("src/main/kotlin")
+    }
+}
+
 application {
     mainClass = 'com.urosjarc.dbanalyser.MainKt'
 }

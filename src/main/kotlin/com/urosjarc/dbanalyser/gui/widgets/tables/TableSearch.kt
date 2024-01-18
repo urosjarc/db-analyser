@@ -1,4 +1,4 @@
-package com.urosjarc.dbanalyser.gui.widgets.search
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo

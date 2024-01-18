@@ -9,6 +9,7 @@ import com.urosjarc.dbanalyser.app.query.QueryRepo
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnectionRepo
 import kotlinx.datetime.Clock
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -21,6 +22,7 @@ object App {
 		this.single<ClientRepo> { ClientRepo() }
 		this.single<ClientService> { ClientService() }
 		this.single<TableRepo> { TableRepo() }
+		this.single<TableConnectionRepo> { TableConnectionRepo() }
 		this.single<SchemaRepo> { SchemaRepo() }
 		this.single<QueryRepo> { QueryRepo() }
 

@@ -25,7 +25,6 @@ data class Table(
 		return sign
 	}
 
-//	val shortName get() = this.name.filter { it.isUpperCase() }
 	val primaryKey get() = this.columns.filter { it.primaryKey }.firstOrNull()
 	val foreignKeys get() = this.columns.mapNotNull { it.foreignKey }
 }

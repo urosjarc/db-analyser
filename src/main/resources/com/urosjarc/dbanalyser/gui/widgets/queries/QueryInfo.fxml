@@ -16,7 +16,15 @@
       <TextArea fx:id="sqlTA" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="SQL statement..." style="-fx-font-family: Monospaced;" VBox.vgrow="ALWAYS" />
       <Button fx:id="executeB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Execute" />
    </VBox>
-   <VBox prefHeight="200.0" prefWidth="100.0">
-      <TextArea fx:id="resultTA" editable="false" maxWidth="1.7976931348623157E308" promptText="Results..." style="-fx-font-family: Monospaced;" VBox.vgrow="ALWAYS" />
-   </VBox>
+   <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+      <Tab text="Results">
+            <TextArea fx:id="resultTA" editable="false" maxWidth="1.7976931348623157E308" promptText="Results..." style="-fx-font-family: Monospaced;" />
+      </Tab>
+      <Tab text="DTOs">
+         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <ChoiceBox fx:id="langCB" maxWidth="1.7976931348623157E308" />
+            <TextArea fx:id="dtoTA" editable="false" maxWidth="1.7976931348623157E308" promptText="Results..." style="-fx-font-family: Monospaced;" VBox.vgrow="ALWAYS" />
+         </VBox>
+      </Tab>
+   </TabPane>
 </SplitPane>

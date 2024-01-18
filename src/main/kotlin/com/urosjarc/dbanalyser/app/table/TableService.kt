@@ -1,6 +1,7 @@
 package com.urosjarc.dbanalyser.app.table
 
 import com.urosjarc.dbanalyser.app.column.ForeignKey
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
 
 
 class TableService(

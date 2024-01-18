@@ -1,11 +1,11 @@
-package com.urosjarc.dbanalyser.gui.widgets.search
+package com.urosjarc.dbanalyser.gui.widgets.tables
 
 import com.urosjarc.dbanalyser.app.column.Column
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.shared.matchRatio
 import com.urosjarc.dbanalyser.shared.startThread
-import javafx.collections.FXCollections
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
@@ -130,12 +130,15 @@ class ColumnSearch : ColumnSearchUi() {
 			}
 		}
 
-		this.typeFP.children.setAll(FXCollections.observableArrayList(baseTypes.map { type ->
-			CheckBox(type).also { cb ->
-				cb.isSelected = true
-				cb.setOnAction { this.search() }
-			}
-		}))
-		this.search()
+		Platform.runLater {
+			this.typeFP.children.setAll(baseTypes.map { type ->
+				CheckBox(type).also { cb ->
+					cb.isSelected = true
+					cb.setOnAction { this.search() }
+				}
+			}.toMutableList())
+		}
+
+		columnTableViewController.columnTV.items.setAll(this.tableRepo.data.flatMap { it.columns })
 	}
 }

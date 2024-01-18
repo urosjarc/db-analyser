@@ -1,5 +1,6 @@
 package com.urosjarc.dbanalyser.shared
 
+import javafx.application.Platform
 import javafx.concurrent.Task
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
@@ -35,17 +36,20 @@ fun setCopy(label: Label) {
 		label.text = "(Copied)"
 	}
 	label.setOnMouseReleased {
-		label.text = oldText
+		startThread(sleep = 500) {
+			Platform.runLater { label.text = oldText }
+		}
 	}
 }
 
-fun startThread(sleep: Long = 0, repeat: Boolean = false, workCb: () -> Unit): Thread {
+fun startThread(sleep: Long = 0, interval: Long = 0, repeat: Boolean = false, workCb: () -> Unit): Thread {
 	val task: Task<Unit> = object : Task<Unit>() {
 		@Throws(Exception::class)
 		override fun call() {
+			Thread.sleep(sleep)
 			workCb()
 			while (repeat) {
-				Thread.sleep(sleep)
+				Thread.sleep(interval)
 				workCb()
 			}
 		}

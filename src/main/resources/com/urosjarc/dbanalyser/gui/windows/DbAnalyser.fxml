@@ -4,32 +4,32 @@
 <?import javafx.scene.layout.*?>
 
 <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.windows.DbAnalyser">
-    <Tab text="Db">
+    <Tab fx:id="dbT" text="Db">
         <SplitPane dividerPositions="0.3076923076923077" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <fx:include fx:id="dbLogin" source="../widgets/dbs/DbLogin.fxml" />
             <fx:include fx:id="dbLogs" source="../widgets/dbs/AppLogs.fxml" />
         </SplitPane>
     </Tab>
-    <Tab text="Schemas">
+    <Tab fx:id="schemasT" text="Schemas">
         <fx:include fx:id="schemaSearch" source="../widgets/schemas/SchemaSearch.fxml" />
     </Tab>
-    <Tab text="Search">
+    <Tab fx:id="tablesParentT" text="Tables">
         <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-            <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tablesTP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
                 <Tab fx:id="tablesT" text="Tables">
-                    <fx:include fx:id="tableSearch" source="../widgets/search/TableSearch.fxml" />
+                    <fx:include fx:id="tableSearch" source="../widgets/tables/TableSearch.fxml" />
                 </Tab>
                 <Tab fx:id="columnsT" text="Columns">
-                    <fx:include fx:id="columnSearch" source="../widgets/search/ColumnSearch.fxml" />
+                    <fx:include fx:id="columnSearch" source="../widgets/tables/ColumnSearch.fxml" />
                 </Tab>
                 <Tab fx:id="connectionsT" text="Connections">
-                    <fx:include fx:id="connectionSearch" source="../widgets/search/ConnectionSearch.fxml" />
+                    <fx:include fx:id="connectionSearch" source="../widgets/tables/ConnectionSearch.fxml" />
                 </Tab>
             </TabPane>
-            <fx:include fx:id="tableInfo" source="../widgets/search/TableInfo.fxml" />
+            <fx:include fx:id="tableInfo" source="../widgets/tables/TableInfo.fxml" />
         </SplitPane>
     </Tab>
-    <Tab text="Queries">
+    <Tab fx:id="queriesT" text="Queries">
         <fx:include fx:id="querySearch" source="../widgets/queries/QuerySearch.fxml" />
     </Tab>
 </TabPane>

@@ -4,18 +4,17 @@
 <?import javafx.scene.layout.*?>
 
 
-<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ColumnTableView">
-   <children>
-      <TextField fx:id="columnTF" alignment="CENTER" promptText="Column..." />
-      <TableView fx:id="columnTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-           <columns>
-               <TableColumn fx:id="keyTC" prefWidth="75.0" text="Constraints" />
-               <TableColumn fx:id="typeTC" prefWidth="75.0" text="Type" />
-               <TableColumn fx:id="schemaTC" prefWidth="75.0" text="Schema" />
-               <TableColumn fx:id="tableTC" prefWidth="75.0" text="Table" />
-               <TableColumn fx:id="columnTC" prefWidth="75.0" text="Column" />
-               <TableColumn fx:id="toTC" prefWidth="75.0" text="To" />
-           </columns>
-       </TableView>
-   </children>
+<VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.parts.ColumnTableView">
+    <TextField fx:id="columnTF" alignment="CENTER" promptText="Column..."/>
+    <TableView fx:id="columnTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="keyTC" prefWidth="75.0" text="Constraints"/>
+            <TableColumn fx:id="typeTC" prefWidth="75.0" text="Type"/>
+            <TableColumn fx:id="schemaTC" prefWidth="75.0" text="Schema"/>
+            <TableColumn fx:id="tableTC" prefWidth="75.0" text="Table"/>
+            <TableColumn fx:id="columnTC" prefWidth="75.0" text="Column"/>
+            <TableColumn fx:id="toTC" prefWidth="75.0" text="To"/>
+        </columns>
+    </TableView>
 </VBox>
