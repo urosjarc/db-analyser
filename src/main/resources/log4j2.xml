@@ -10,13 +10,13 @@
 
         <RollingRandomAccessFile name="File"
                                  append="true"
-                                 fileName="logs/today.log"
-                                 filePattern="logs/%d{yyyy_MM_dd}.log"
+                                 fileName="logs/last.log"
+                                 filePattern="logs/%d{yyyy_MM_dd_HH_mm_ss}.log"
                                  bufferedIO="true"
                                  immediateFlush="false">
             <PatternLayout pattern="%30file:%-3line | %-5level | %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy/>
+                <OnStartupTriggeringPolicy/>
             </Policies>
         </RollingRandomAccessFile>
 

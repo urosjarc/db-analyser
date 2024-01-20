@@ -79,7 +79,7 @@ abstract class Repository<T : Any>() : KoinComponent {
 		this.onSelectNotify()
 	}
 
-	fun chose(t: T?) {
+	fun chose(t: T? = null) {
 		this.resetHistory(all = false)
 		this.chosen?.let { this.history.add(it) }
 		this.chosen = t

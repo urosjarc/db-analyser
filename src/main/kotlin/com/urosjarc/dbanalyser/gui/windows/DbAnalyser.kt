@@ -1,5 +1,6 @@
 package com.urosjarc.dbanalyser.gui.windows
 
+import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.app.query.QueryRepo
 import com.urosjarc.dbanalyser.app.schema.Schema
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
@@ -61,7 +62,7 @@ class DbAnalyser : DbAnalyserUi() {
 		this.tablesTP.selectionModel.select(this.tablesT)
 		val tableSize = schemas.sumOf { it.tables.size }
 		val columnSize = schemas.sumOf { sch -> sch.tables.sumOf { it.columns.size } }
-		Platform.runLater { //SAFE!!!
+		Platform.runLater {
 			this.schemasT.text = "Schemas: ${schemas.size}"
 			this.tablesT.text = "Tables: $tableSize"
 			this.tablesParentT.text = this.tablesT.text

@@ -3,4 +3,5 @@ build/
 .idea
 
 db.json
-log_*.json
+logs
+data/*.sql

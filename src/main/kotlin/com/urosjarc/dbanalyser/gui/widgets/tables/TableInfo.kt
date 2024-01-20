@@ -6,6 +6,7 @@ import com.urosjarc.dbanalyser.app.query.QueryRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
 import com.urosjarc.dbanalyser.app.tableConnection.TableConnectionRepo
+import com.urosjarc.dbanalyser.gui.events.ShowConnectionsEvent
 import com.urosjarc.dbanalyser.gui.parts.ChildConnectionTableView
 import com.urosjarc.dbanalyser.gui.parts.ColumnTableView
 import com.urosjarc.dbanalyser.gui.parts.ParentConnectionTableView
@@ -54,6 +55,7 @@ class TableInfo : TableInfoUi() {
 	val tableConnectionRepo by this.inject<TableConnectionRepo>()
 	val clientService by this.inject<ClientService>()
 	val queryRepo by this.inject<QueryRepo>()
+	val showConnectionsEvent by this.inject<ShowConnectionsEvent>()
 
 	@FXML
 	fun initialize() {
@@ -90,6 +92,7 @@ class TableInfo : TableInfoUi() {
 				foreignKey = null
 			)
 			this.tableConnectionRepo.chose(con)
+			this.showConnectionsEvent.chose()
 		}
 	}
 
