@@ -2,15 +2,17 @@ package com.urosjarc.dbanalyser.app.query
 
 import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.shared.Repository
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.inject
 
 class QueryRepo : Repository<Query>() {
 
 	val dbRepo by this.inject<DbRepo>()
+	override val log = this.logger()
 
 	init {
 		this.dbRepo.onChose {
-			this.set(it.queries)
+			this.set(it?.queries ?: listOf())
 		}
 	}
 

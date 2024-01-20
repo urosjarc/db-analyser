@@ -1,9 +1,11 @@
 package com.urosjarc.dbanalyser.shared
 
 import javafx.application.Platform
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 
-abstract class Repository<T : Any> : KoinComponent {
+abstract class Repository<T : Any>() : KoinComponent {
+	open val log = this.logger()
 	val data = mutableListOf<T>()
 	var selected = mutableListOf<T>()
 	var history = mutableListOf<T>()
@@ -12,14 +14,22 @@ abstract class Repository<T : Any> : KoinComponent {
 
 	private val onDataCb = mutableListOf<Watcher<List<T>>>()
 	private val onSelectCb = mutableListOf<Watcher<List<T>>>()
-	private val onChoseCb = mutableListOf<Watcher<T>>()
-	private val onErrorCb = mutableListOf<Watcher<String>>()
+	private val onChoseCb = mutableListOf<Watcher<T?>>()
+	private val onResetCb = mutableListOf<Watcher<List<T>>>()
 
 	private class Watcher<CT>(
 		val cb: (t: CT) -> Unit,
 		val runLater: Boolean
 	) {
 		fun run(t: CT) = if (this.runLater) Platform.runLater { this.cb(t) } else this.cb(t)
+	}
+
+	fun onReset(runLater: Boolean = false, cb: (t: List<T>) -> Unit) {
+		this.onResetCb.add(Watcher(cb = cb, runLater = runLater))
+	}
+
+	fun onResetNotify() {
+		this.onResetCb.forEach { it.run(this.data) }
 	}
 
 	fun onData(runLater: Boolean = false, cb: (t: List<T>) -> Unit) {
@@ -38,24 +48,17 @@ abstract class Repository<T : Any> : KoinComponent {
 		this.onSelectCb.forEach { it.run(this.selected) }
 	}
 
-	fun onChose(runLater: Boolean = false, cb: (t: T) -> Unit) {
+	fun onChose(runLater: Boolean = false, cb: (t: T?) -> Unit) {
 		this.onChoseCb.add(Watcher(cb = cb, runLater = runLater))
 	}
 
 	fun onChoseNotify() {
 		val chosen = this.chosen
-		if (chosen != null) this.onChoseCb.forEach { it.run(chosen) }
-	}
-
-	fun onError(runLater: Boolean = false, cb: (t: String) -> Unit) {
-		this.onErrorCb.add(Watcher(cb = cb, runLater = runLater))
-	}
-
-	fun error(msg: String) {
-		this.onErrorCb.forEach { it.run(msg) }
+		this.onChoseCb.forEach { it.run(chosen) }
 	}
 
 	fun set(t: List<T>) {
+		if (!t.contains(this.chosen)) this.chose(null)
 		this.data.clear()
 		this.data.addAll(t)
 		this.resetHistory(all = true)
@@ -76,7 +79,7 @@ abstract class Repository<T : Any> : KoinComponent {
 		this.onSelectNotify()
 	}
 
-	fun chose(t: T) {
+	fun chose(t: T?) {
 		this.resetHistory(all = false)
 		this.chosen?.let { this.history.add(it) }
 		this.chosen = t
@@ -84,7 +87,12 @@ abstract class Repository<T : Any> : KoinComponent {
 	}
 
 	fun find(t: T): T? {
-		return this.data.filter { it == t }.firstOrNull()
+		return this.data.firstOrNull { it == t }
+	}
+
+	fun reset() {
+		this.set(listOf())
+		this.onResetNotify()
 	}
 
 	fun delete(t: T) {
@@ -92,11 +100,15 @@ abstract class Repository<T : Any> : KoinComponent {
 		this.history.removeAll { it == t }
 		this.future.removeAll { it == t }
 
-		if (this.data.removeAll { it == t }) this.onDataNotify()
-		if (this.selected.removeAll { it == t }) this.onSelectNotify()
+		if (this.data.removeAll { it == t }) {
+			this.onDataNotify()
+			this.save()
+		}
+		if (this.selected.removeAll { it == t }) {
+			this.onSelectNotify()
+		}
 		if (this.chosen == t) {
-			this.chosen = null
-			this.onChoseNotify()
+			this.chose(null)
 		}
 	}
 

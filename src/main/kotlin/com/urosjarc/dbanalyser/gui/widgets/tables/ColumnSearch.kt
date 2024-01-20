@@ -10,6 +10,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.CheckBox
 import javafx.scene.layout.FlowPane
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -51,10 +52,12 @@ open class ColumnSearchUi : KoinComponent {
 
 class ColumnSearch : ColumnSearchUi() {
 
+	val log = this.logger()
 	val tableRepo by this.inject<TableRepo>()
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		this.columnTableViewController.also {
 			it.forwardOnColumnClick = true
 			it.forwardOnNumberClicks = 1

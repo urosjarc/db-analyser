@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -42,6 +43,7 @@ open class ColumnTableViewUi : KoinComponent {
 }
 
 class ColumnTableView : ColumnTableViewUi() {
+	val log = this.logger()
 	val tableRepo by this.inject<TableRepo>()
 
 	var forwardOnNumberClicks = 0
@@ -51,6 +53,7 @@ class ColumnTableView : ColumnTableViewUi() {
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		this.columnTV.setOnMouseClicked { this.chose(it) }
 		this.columnTF.setOnAction { this.search() }
 
@@ -70,8 +73,8 @@ class ColumnTableView : ColumnTableViewUi() {
 		setColumnWidth(this.toTC, 30)
 	}
 
-	fun update(table: Table) {
-		this.columnTV.items.setAll(table.columns)
+	fun update(table: Table?) {
+		this.columnTV.items.setAll(table?.columns ?: listOf())
 	}
 
 	private fun search() {

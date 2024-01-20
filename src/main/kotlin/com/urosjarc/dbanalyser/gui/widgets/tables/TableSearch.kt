@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -54,11 +55,13 @@ open class TableSearchUi : KoinComponent {
 }
 
 class TableSearch : TableSearchUi() {
+	val log = this.logger()
 	val tableRepo by this.inject<TableRepo>()
 	val tableService by this.inject<TableService>()
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		this.tableRepo.onData { this.update() }
 		this.modelTV.setOnMouseClicked { this.chose(it) }
 		this.tableTF.setOnAction { this.search() }

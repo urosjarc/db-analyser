@@ -9,11 +9,12 @@ import kotlinx.serialization.Serializable
 data class Table(
 	val schema: Schema?,
 	val name: String,
-	val created: Instant,
-	val modified: Instant,
-	val columns: MutableList<Column> = mutableListOf()
+	val created: Instant?,
+	val modified: Instant?,
+	val columns: MutableList<Column> = mutableListOf(),
+	val escaping: Char
 ) {
-	override fun toString(): String = "${this.schema?.name}.${this.name}"
+	override fun toString(): String = """${this.schema?.name}.${escaping}${this.name}${escaping}"""
 	override fun hashCode(): Int = this.toString().hashCode()
 	override fun equals(other: Any?): Boolean = other.hashCode() == this.hashCode()
 

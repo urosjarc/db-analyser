@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -28,12 +29,14 @@ open class QueryTableViewUi : KoinComponent {
 }
 
 class QueryTableView : QueryTableViewUi() {
+	val log = this.logger()
 	val queryRepo by this.inject<QueryRepo>()
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		this.queryRepo.onData { this.update(it) }
-		this.queryTV.setOnMouseClicked { this.chose(it) }
+		this.queryTV.setOnMousePressed { this.chose(it) }
 		this.queryTF.setOnAction { this.search() }
 
 		this.typeTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.type.name) }
@@ -54,6 +57,7 @@ class QueryTableView : QueryTableViewUi() {
 
 	fun chose(mouseEvent: MouseEvent) {
 		val query: Query = this.queryTV.selectionModel.selectedItem ?: return
-		this.queryRepo.chose(query)
+		if (mouseEvent.isPrimaryButtonDown) this.queryRepo.chose(query)
+		if (mouseEvent.isSecondaryButtonDown) this.queryRepo.delete(query)
 	}
 }

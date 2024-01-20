@@ -8,13 +8,13 @@ class TableService(
 	val tableRepo: TableRepo,
 ) {
 
-	fun parents(table: Table): MutableList<ForeignKey> = table.foreignKeys.toMutableList()
+	fun parents(table: Table?): MutableList<ForeignKey> = table?.foreignKeys?.toMutableList() ?: mutableListOf()
 
-	fun children(table: Table): MutableList<ForeignKey> {
+	fun children(table: Table?): MutableList<ForeignKey> {
 		val fkeys = mutableListOf<ForeignKey>()
 		this.tableRepo.data.filter { it != table }.forEach { otherTable ->
 			otherTable.foreignKeys.forEach { foreignKey ->
-				if (foreignKey.to.table.name == table.name) {
+				if (foreignKey.to.table.name == table?.name) {
 					fkeys.add(foreignKey)
 				}
 			}

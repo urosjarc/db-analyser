@@ -9,6 +9,7 @@ import javafx.scene.input.Clipboard
 import javafx.scene.input.ClipboardContent
 import kotlinx.datetime.Instant
 import me.xdrop.fuzzywuzzy.FuzzySearch
+import org.apache.logging.log4j.kotlin.logger
 import java.sql.Timestamp
 
 fun matchRatio(first: String, second: String): Int = FuzzySearch.weightedRatio(first, second)
@@ -43,15 +44,24 @@ fun setCopy(label: Label) {
 }
 
 fun startThread(sleep: Long = 0, interval: Long = 0, repeat: Boolean = false, workCb: () -> Unit): Thread {
+
 	val task: Task<Unit> = object : Task<Unit>() {
+		val log = logger(Thread.currentThread().name)
+
 		@Throws(Exception::class)
 		override fun call() {
 			Thread.sleep(sleep)
-			workCb()
+			this.work()
 			while (repeat) {
 				Thread.sleep(interval)
-				workCb()
+				this.work()
 			}
+		}
+
+		fun work() = try {
+			workCb()
+		} catch (e: Throwable) {
+			this.log.fatal(e)
 		}
 	}
 	return Thread(task).also {

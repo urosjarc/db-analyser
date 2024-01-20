@@ -12,6 +12,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -36,11 +37,13 @@ open class BackConnectionTableViewUi : KoinComponent {
 }
 
 class ChildConnectionTableView : BackConnectionTableViewUi() {
+	val log = this.logger()
 	val tableRepo by this.inject<TableRepo>()
 	val tableService by this.inject<TableService>()
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		this.tableRepo.onChose { this.update(it) }
 		this.self.setOnMouseClicked { this.chose(it) }
 		this.tableTF.setOnAction { this.search() }
@@ -68,7 +71,7 @@ class ChildConnectionTableView : BackConnectionTableViewUi() {
 		this.self.items.sortByDescending { matchRatio(it.from.table.name, this.tableTF.text) }
 	}
 
-	fun update(table: Table) {
+	fun update(table: Table?) {
 		this.self.items.setAll(this.tableService.children(table = table))
 	}
 }

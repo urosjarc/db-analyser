@@ -1,9 +1,11 @@
 package com.urosjarc.dbanalyser.app.client
 
+import com.urosjarc.dbanalyser.app.query.QueryHeader
 import com.urosjarc.dbanalyser.app.query.QueryResult
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
 import com.urosjarc.dbanalyser.shared.FlipTableConverters
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.sql.ResultSet
@@ -11,6 +13,7 @@ import java.sql.ResultSetMetaData
 
 class ClientService : KoinComponent {
 	val clientRepo by this.inject<ClientRepo>()
+	val log = this.logger()
 
 	fun countMaxRelations(endTableConnection: TableConnection): Int {
 		val countRelationsSql = this.selectSql(endTableConnection = endTableConnection, countRelations = true)
@@ -27,31 +30,36 @@ class ClientService : KoinComponent {
 			.map { it.replace("--", "") }
 			.toMutableList()
 
-		var queries = mutableListOf<QueryResult>()
+		val queries = mutableListOf<QueryResult>()
 
 		this.clientRepo.chosen?.execMany(sql = sql) {
-			val table = FlipTableConverters.fromResultSet(it)
-			val comment = comments.removeFirstOrNull()
-			queries.add(
-				QueryResult(
-					title = (comment ?: "DTO").replace(" ", ""),
-					comment = comment ?: "DTO",
-					data = "$comment\n$table\n\n",
-					headers = this.getHeaders(resultSet = it),
+			try {
+				val table = FlipTableConverters.fromResultSet(it)
+				val comment = comments.removeFirstOrNull()
+				this.log.debug("\n$table\n")
+				queries.add(
+					QueryResult(
+						title = (comment ?: "DTO").replace(" ", ""),
+						comment = comment ?: "DTO",
+						data = "$comment\n$table\n\n",
+						headers = this.getHeaders(resultSet = it),
+					)
 				)
-			)
+			} catch (e: Throwable) {
+				this.log.error(e)
+			}
 		}
 
 		return queries
 	}
 
-	fun getHeaders(resultSet: ResultSet): MutableList<QueryResult.Header> {
-		val headers = mutableListOf<QueryResult.Header>()
+	private fun getHeaders(resultSet: ResultSet): MutableList<QueryHeader> {
+		val headers = mutableListOf<QueryHeader>()
 		val metadata: ResultSetMetaData = resultSet.metaData
 		val columnCount: Int = metadata.columnCount
 		for (i in 1..columnCount) {
 			headers.add(
-				QueryResult.Header(
+				QueryHeader(
 					name = metadata.getColumnName(i),
 					type = metadata.getColumnTypeName(i),
 				)
@@ -63,6 +71,7 @@ class ClientService : KoinComponent {
 	fun selectSql(endTableConnection: TableConnection, countRelations: Boolean): String {
 		var node = endTableConnection
 		val takenSigns = mutableSetOf<String>()
+		val I = endTableConnection.table.escaping
 
 		val joinsSql = mutableListOf<String>()
 		var columnsSql = mutableListOf<String>()
@@ -82,17 +91,17 @@ class ClientService : KoinComponent {
 
 			takenSigns.add(startSign)
 
-			joinsSql.add(0, """JOIN ${startTable} "${startSign}" ON "${startSign}".${startColumn} = "${endSign}".${endColumn}""")
-			startTable.columns.forEach { columnsSql.add(""""$startSign".${it.name}""") }
+			joinsSql.add(0, "JOIN ${startTable} $I${startSign}$I ON $I${startSign}$I.$I${startColumn}$I = $I${endSign}$I.$I${endColumn}$I")
+			startTable.columns.forEach { columnsSql.add("$I$startSign$I.$I${it.name}$I") }
 
 			node = node.parent!!
 		}
 
 		val startTableShortName = node.table.uniqueShortName(taken = takenSigns)
 		takenSigns.add(startTableShortName)
-		columnsSql.addAll(0, node.table.columns.map { """"${startTableShortName}".${it.name}""" })
+		columnsSql.addAll(0, node.table.columns.map { "$I${startTableShortName}$I.$I${it.name}$I" })
 
-		val primaryKey = """"${startTableShortName}".${node.table.primaryKey?.name}"""
+		val primaryKey = "$I${startTableShortName}$I.$I${node.table.primaryKey?.name}$I"
 
 		if (countRelations) {
 			columnsSql = mutableListOf("COUNT(1) as count")
@@ -104,7 +113,7 @@ class ClientService : KoinComponent {
 			
 			SELECT
 				${columnsSql.joinToString(",\n" + "\t".repeat(4))}
-			FROM ${node.table} "$startTableShortName"
+			FROM ${node.table} $I$startTableShortName$I
 				${joinsSql.joinToString("\n" + "\t".repeat(4))}
 		""".trimIndent()
 	}

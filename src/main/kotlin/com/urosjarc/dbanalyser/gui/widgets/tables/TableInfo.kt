@@ -13,8 +13,8 @@ import com.urosjarc.dbanalyser.shared.setCopy
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.control.MenuButton
 import javafx.scene.control.MenuItem
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -49,7 +49,7 @@ open class TableInfoUi : KoinComponent {
 }
 
 class TableInfo : TableInfoUi() {
-
+	val log = this.logger()
 	val tableRepo by this.inject<TableRepo>()
 	val tableConnectionRepo by this.inject<TableConnectionRepo>()
 	val clientService by this.inject<ClientService>()
@@ -57,11 +57,13 @@ class TableInfo : TableInfoUi() {
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		setCopy(label = this.nameL)
 		this.redoB.setOnAction { this.redo() }
 		this.undoB.setOnAction { this.undo() }
 		this.insertMI.setOnAction { this.query(type = Query.Type.INSERT) }
 		this.selectMI.setOnAction { this.query(type = Query.Type.SELECT) }
+		this.connectionsB.setOnAction { this.connection() }
 
 		this.columnTableViewController.also {
 			it.tableTC.isVisible = false
@@ -72,7 +74,7 @@ class TableInfo : TableInfoUi() {
 
 		this.columnTableViewController.let { ctrl ->
 			ctrl.tableRepo.onChose {
-				this.nameL.text = it.toString()
+				this.nameL.text = it?.toString() ?: ""
 				this.update()
 				ctrl.update(it)
 			}

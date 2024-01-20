@@ -6,10 +6,13 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import jfxtras.styles.jmetro.JMetro
 import jfxtras.styles.jmetro.Style
+import org.apache.logging.log4j.kotlin.logger
 
 class Gui : Application() {
-    override fun start(stage: Stage) {
+    val log = this.logger()
 
+    override fun start(stage: Stage) {
+        this.log.info("Main application start")
         val fxmlLoader = FXMLLoader(Gui::class.java.getResource("windows/DbAnalyser.fxml"))
         val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
         val jMetro = JMetro(Style.DARK)

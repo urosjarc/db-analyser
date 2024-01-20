@@ -15,8 +15,9 @@ class TableConnection(
 ) {
 
 	override fun toString(): String {
-		return "${this.foreignKey?.from} -> ${this.foreignKey?.to}"
+		return "${this.start()?.table} -> ${this.table}"
 	}
+
 	override fun hashCode(): Int = this.toString().hashCode()
 	override fun equals(other: Any?): Boolean = other.hashCode() == this.hashCode()
 
@@ -47,6 +48,16 @@ class TableConnection(
 			node = node.parent
 		}
 		return count
+	}
+
+	fun start(): TableConnection? {
+		var count = 0
+		var node: TableConnection? = this
+		while (node?.parent != null) {
+			count++
+			node = node.parent
+		}
+		return node
 	}
 
 	fun connectionName(from: Boolean): String = this.foreignKey?.let {

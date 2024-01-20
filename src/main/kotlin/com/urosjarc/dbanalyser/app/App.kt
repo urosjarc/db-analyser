@@ -10,7 +10,7 @@ import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
 import com.urosjarc.dbanalyser.app.tableConnection.TableConnectionRepo
-import kotlinx.datetime.Clock
+import com.urosjarc.dbanalyser.gui.events.ShowConnectionsEvent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
@@ -18,10 +18,11 @@ import org.koin.dsl.module
 object App {
 	fun modul() = module {
 		this.single<DbRepo> { DbRepo("db.json") }
-		this.single<LogRepo> { LogRepo("log_${Clock.System.now()}.json") }
+		this.single<LogRepo> { LogRepo() }
 		this.single<ClientRepo> { ClientRepo() }
 		this.single<ClientService> { ClientService() }
 		this.single<TableRepo> { TableRepo() }
+		this.single<ShowConnectionsEvent> { ShowConnectionsEvent() }
 		this.single<TableConnectionRepo> { TableConnectionRepo() }
 		this.single<SchemaRepo> { SchemaRepo() }
 		this.single<QueryRepo> { QueryRepo() }

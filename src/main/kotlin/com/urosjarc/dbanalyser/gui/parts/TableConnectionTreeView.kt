@@ -2,9 +2,9 @@ package com.urosjarc.dbanalyser.gui.parts
 
 import com.urosjarc.dbanalyser.app.client.ClientService
 import com.urosjarc.dbanalyser.app.table.Table
-import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
+import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
 import com.urosjarc.dbanalyser.shared.setColumnWidth
 import com.urosjarc.dbanalyser.shared.startThread
 import javafx.application.Platform
@@ -15,6 +15,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeTableColumn
 import javafx.scene.control.TreeTableView
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -72,11 +73,13 @@ open class TableConnectionTreeViewUi : KoinComponent {
 }
 
 class TableConnectionTreeView : TableConnectionTreeViewUi() {
+	val log = this.logger()
 	val tableService by this.inject<TableService>()
 	val tableRepo by this.inject<TableRepo>()
 
 	@FXML
 	fun initialize() {
+		this.log.info(this.javaClass)
 		this.self.selectionModel.selectedItemProperty().addListener { _, _, newValue -> this.chose(newValue) }
 		this.nameTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.table.toString()) }
 		this.fromTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.value.connectionName(from = true)) }
@@ -90,7 +93,13 @@ class TableConnectionTreeView : TableConnectionTreeViewUi() {
 		setColumnWidth(this.maxRelationsTC, 10)
 	}
 
-	fun update(startTable: Table, endTable: Table?) = startThread {
+	fun update(startTable: Table?, endTable: Table?) = startThread {
+		if (startTable == null) {
+			Platform.runLater {
+				this.self.root = null
+			}
+			return@startThread
+		}
 		val tableConnection = this.tableService.paths(startTable, endTable, maxDepth = 2)
 
 		Platform.runLater { //SAFE!!!

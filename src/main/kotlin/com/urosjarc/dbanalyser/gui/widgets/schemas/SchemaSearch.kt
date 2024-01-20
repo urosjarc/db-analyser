@@ -12,6 +12,7 @@ import javafx.scene.control.SelectionMode
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -53,13 +54,13 @@ open class SchemaSearchUi : KoinComponent {
 }
 
 class SchemaSearch : SchemaSearchUi() {
-
+	val log = this.logger()
 	val schemaRepo by this.inject<SchemaRepo>()
 	val tableService by this.inject<TableService>()
 
 	@FXML
 	fun initialize() {
-
+		this.log.info(this.javaClass)
 		this.schemaRepo.onData { this.update() }
 		this.schemaTF.setOnAction { this.search() }
 		this.modelTV.selectionModel.selectedItemProperty().addListener { _, _, _ -> this.select() }

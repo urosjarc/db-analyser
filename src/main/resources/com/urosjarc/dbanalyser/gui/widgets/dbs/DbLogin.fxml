@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+
 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.dbs.DbLogin">
     <TextField fx:id="nameTF" promptText="Name..." />
-    <TextField fx:id="urlTF" promptText="Address..." />
+   <HBox maxWidth="1.7976931348623157E308">
+      <children>
+          <TextField fx:id="urlTF" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Address..." HBox.hgrow="ALWAYS" />
+         <Button fx:id="filesB" maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="Files" HBox.hgrow="ALWAYS" />
+      </children>
+   </HBox>
     <TextField fx:id="usernameTF" promptText="Username..." />
     <PasswordField fx:id="passwordTF" promptText="Password..." />
     <ChoiceBox fx:id="typeCB" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
-    <Button fx:id="loginB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Login" VBox.vgrow="ALWAYS" />
+    <HBox maxWidth="1.7976931348623157E308">
+      <Button fx:id="saveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save" HBox.hgrow="ALWAYS" />
+        <Button fx:id="loginB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Login" HBox.hgrow="ALWAYS" />
+      <Button fx:id="clearB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Clear" HBox.hgrow="ALWAYS" />
+        <Button fx:id="deleteB" mnemonicParsing="false" text="Delete" HBox.hgrow="ALWAYS" />
+    </HBox>
     <ListView fx:id="dbLV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
 </VBox>
