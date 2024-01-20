@@ -150,7 +150,7 @@ abstract class Client(private val db: Db) : KoinComponent {
 	}
 
 	fun exec(sql: String, onResultSet: (rs: ResultSet) -> Unit) {
-		this.log.info("\n\n$sql\n\n")
+		this.log.debug("\n\n$sql\n\n")
 		try {
 			this.con!!.createStatement().use { statement ->
 				val rs = statement.executeQuery(sql)
@@ -164,7 +164,7 @@ abstract class Client(private val db: Db) : KoinComponent {
 	}
 
 	fun execMany(sql: String, onNewResultSet: (rs: ResultSet) -> Unit) {
-		this.log.info("\n\n$sql\n\n")
+		this.log.debug("\n\n$sql\n\n")
 		try {
 			val stmt: Statement = this.con!!.createStatement()
 			var isResultSet = stmt.execute(sql)
@@ -185,7 +185,7 @@ abstract class Client(private val db: Db) : KoinComponent {
 	}
 
 	fun <T : Any> execOne(sql: String, onResultSet: (rs: ResultSet) -> T?): T? {
-		this.log.info("\n\n$sql\n\n")
+		this.log.debug("\n\n$sql\n\n")
 		try {
 			this.con!!.createStatement().use { statement ->
 				val rs = statement.executeQuery(sql)
