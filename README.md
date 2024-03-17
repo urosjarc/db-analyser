@@ -19,21 +19,6 @@
 <img height="100" src="https://github.com/urosjarc/db-analyser/assets/8678755/7ab3f622-a80e-474b-946b-5648358d3634" width="15%"></img>
 </div>
 
-<h3 align="center" width="100%">Video tutorial</h3>
-
-<video
-class="d-block rounded-bottom-2 border-top width-fit"
-controls="controls"
-data-canonical-src="https://private-user-images.githubusercontent.com/8678755/298256313-4c1389a7-f602-4a9a-b840-125044637806.mp4"
-src="https://private-user-images.githubusercontent.com/8678755/298256313-4c1389a7-f602-4a9a-b840-125044637806.mp4"
-style="max-height:640px; min-height: 200px"
-volume=1
-muted=false
-width="100%">
-</video>
-
-<h3>Unmute me :point_right: :point_right: :point_right: </h3>
-
 <h3 align="center" width="100%">Motivation</h3>
 
 <p align="center">
