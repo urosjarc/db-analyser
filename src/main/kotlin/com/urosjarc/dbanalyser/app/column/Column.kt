@@ -31,7 +31,7 @@ data class Column(
 
 	val hasDefaultValue get() = this.defaultValue != null
 
-	val baseType get() = this.type.split("(").first()
+	val baseType get() = this.type.split("(").first().split(" ").first()
 
 	val connection get() = if (this.isForeignKey) this.foreignKey?.to.toString() else ""
 }

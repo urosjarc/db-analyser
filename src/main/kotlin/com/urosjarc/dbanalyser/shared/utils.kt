@@ -1,5 +1,6 @@
 package com.urosjarc.dbanalyser.shared
 
+import com.urosjarc.dbanalyser.app.table.Table
 import javafx.application.Platform
 import javafx.concurrent.Task
 import javafx.scene.control.Label
@@ -68,4 +69,25 @@ fun startThread(sleep: Long = 0, interval: Long = 0, repeat: Boolean = false, wo
 		it.isDaemon = true
 		it.start()
 	}
+}
+fun dbdiagram_io(tables: List<Table>): String {
+	val lines = mutableListOf<String>()
+	val refs = mutableListOf<String>()
+	tables.forEach { table ->
+		val schema = table.schema!!.name.split(".").last()
+		lines.add("Table $schema.${table.name} {")
+		table.columns.forEach { column ->
+			val primaryKey = if(column.primaryKey) " [primary key]" else ""
+			lines.add("\t${column.name} ${column.baseType}$primaryKey")
+			if(column.isForeignKey){
+				val fromSchema = column.table.schema!!.name.split(".").last()
+				val fk = column.foreignKey!!
+				val toSchema = fk.to.table.schema!!.name.split(".").last()
+				refs.add("Ref: $fromSchema.${column.table.name}.${column.name} > $toSchema.${fk.to.table.name}.${fk.to.name}")
+			}
+		}
+		lines.add("}\n")
+	}
+
+	return (lines + refs).joinToString("\n")
 }
