@@ -13,7 +13,7 @@ data class Db(
 	var type: Type,
 	var queries: MutableList<Query> = mutableListOf()
 ) {
-	enum class Type { SQLITE, MS_SQL, POSTGRESQL, MYSQL }
+	enum class Type { SQLITE, MS_SQL, POSTGRESQL, MYSQL, ORACLE }
 
 	override fun hashCode(): Int {
 		return "${this.type}${this.name}".hashCode()

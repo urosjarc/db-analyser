@@ -31,7 +31,7 @@ abstract class Client(private val db: Db) : KoinComponent {
 
 		try {
 			this.logService.info("Db selected: $db")
-			this.con = DriverManager.getConnection(db.url, info)
+			Class.forName("oracle.jdbc.driver.OracleDriver");  /*added this line*/			this.con = DriverManager.getConnection(db.url, info)
 			this.logService.info("Db connected: $db")
 		} catch (e: SQLException) {
 			this.logService.err(e)
@@ -74,6 +74,7 @@ abstract class Client(private val db: Db) : KoinComponent {
 						Db.Type.MS_SQL -> '"'
 						Db.Type.POSTGRESQL -> '"'
 						Db.Type.MYSQL -> '`'
+						Db.Type.ORACLE -> '"'
 					}
 				)
 				tables["$schema.$name"] = table
