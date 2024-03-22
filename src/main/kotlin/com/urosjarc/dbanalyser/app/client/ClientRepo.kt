@@ -27,6 +27,7 @@ class ClientRepo : Repository<Client>() {
 					Db.Type.ORACLE -> OracleClient(it)
 					Db.Type.DB2 -> Db2Client(it)
 					Db.Type.H2 -> H2Client(it)
+					Db.Type.DERBY -> DerbyClient(it)
 				}
 				if (client.inited()) {
 					this.logService.info("Client connected active!")

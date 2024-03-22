@@ -30,8 +30,6 @@ abstract class Client(private val db: Db) : KoinComponent {
 
         try {
             this.logService.info("Db selected: $db")
-            Class.forName("oracle.jdbc.driver.OracleDriver")
-            Class.forName ("org.mariadb.jdbc.Driver")
             this.con = DriverManager.getConnection(db.url, info)
             this.logService.info("Db connected: $db")
         } catch (e: SQLException) {
@@ -79,6 +77,7 @@ abstract class Client(private val db: Db) : KoinComponent {
                         Db.Type.ORACLE -> '"'
                         Db.Type.DB2 -> '"'
                         Db.Type.H2 -> '"'
+                        Db.Type.DERBY -> '"'
                     }
                 )
                 tables["$schema.$name"] = table
