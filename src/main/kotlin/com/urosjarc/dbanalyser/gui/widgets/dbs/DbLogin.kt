@@ -69,9 +69,10 @@ class DbLogin : DbLoginUi() {
 
 	fun files() {
 		FileChooser().also {
-			it.title = "File Path"
+			it.title = "Database Path"
 			it.extensionFilters.addAll(
 				FileChooser.ExtensionFilter("SQLite", "*.sqlite"),
+				FileChooser.ExtensionFilter("SQLite", "*.h2")
 			)
 			it.showOpenDialog(null)?.let { file ->
 				this.nameTF.text = file.nameWithoutExtension
