@@ -78,6 +78,7 @@ abstract class Client(private val db: Db) : KoinComponent {
                         Db.Type.MARIA -> '`'
                         Db.Type.ORACLE -> '"'
                         Db.Type.DB2 -> '"'
+                        Db.Type.H2 -> '"'
                     }
                 )
                 tables["$schema.$name"] = table
