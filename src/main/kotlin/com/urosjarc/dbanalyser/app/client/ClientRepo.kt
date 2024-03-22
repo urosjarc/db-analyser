@@ -23,7 +23,9 @@ class ClientRepo : Repository<Client>() {
 					Db.Type.MS_SQL -> MsSqlClient(it)
 					Db.Type.POSTGRESQL -> PostgreSqlClient(it)
 					Db.Type.MYSQL -> MySqlClient(it)
+					Db.Type.MARIA -> MariaClient(it)
 					Db.Type.ORACLE -> OracleClient(it)
+					Db.Type.DB2 -> Db2Client(it)
 				}
 				if (client.inited()) {
 					this.logService.info("Client connected active!")
