@@ -10,7 +10,7 @@ data class QueryResult(
 	val headers: List<QueryHeader>
 ) {
 
-	enum class Lang { JAVA, TYPESCRIPT, KOTLIN }
+	enum class Lang { KOTLIN, JAVA, TYPESCRIPT }
 
 	fun javaDTO(): String {
 		val headerStr = this.headers.map {

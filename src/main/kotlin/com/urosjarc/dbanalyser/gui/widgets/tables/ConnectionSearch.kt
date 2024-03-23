@@ -53,7 +53,8 @@ class ConnectionSearch : ConnectionSearchUi() {
 	fun query() {
 		this.tableTreeViewController.self.selectionModel.selectedItem?.value?.let {
 			val sql = this.clientService.selectSql(endTableConnection = it, countRelations = false)
-			val query = Query(name = it.toString(), type = Query.Type.SELECT, sql = sql)
+			val dbMessiahSql = this.clientService.selectDbMessiahSql(endTableConnection = it)
+			val query = Query(name = it.toString(), type = Query.Type.SELECT, sql = sql, dbMessiahSql = dbMessiahSql)
 			this.queryRepo.save(query)
 		}
 	}
