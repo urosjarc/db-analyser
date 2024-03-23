@@ -39,6 +39,18 @@ open class DerbyClient(db: Db) : Client(db) {
 
     override fun foreignKeyResults(tables: MutableMap<String, Table>, onResultSet: (rs: ResultSet) -> Unit) = this.exec(
         """
+            select 
+                FS.SCHEMANAME as "fromScheme",
+                FT.TABLENAME  as "fromTable",
+                TS.SCHEMANAME as "toScheme",
+                TT.TABLENAME  as "toTable"
+            from sys.SYSFOREIGNKEYS FK
+                join SYS.SYSCONSTRAINTS S0 on FK.CONSTRAINTID = S0.CONSTRAINTID
+                join SYS.SYSCONSTRAINTS S1 on FK.KEYCONSTRAINTID = S1.CONSTRAINTID
+                join sys.SYSTABLES FT on S0.TABLEID = FT.TABLEID
+                join sys.SYSSCHEMAS FS on FS.SCHEMAID = S0.SCHEMAID
+                join sys.SYSTABLES TT on S1.TABLEID = TT.TABLEID
+                join sys.SYSSCHEMAS TS on TS.SCHEMAID = S1.SCHEMAID;
         """.trimIndent(), onResultSet = onResultSet
     )
 
