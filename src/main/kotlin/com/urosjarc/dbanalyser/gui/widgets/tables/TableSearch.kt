@@ -1,12 +1,10 @@
 package com.urosjarc.dbanalyser.gui.widgets.tables
 
+import com.urosjarc.dbanalyser.app.schema.SchemaRepo
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.table.TableRepo
 import com.urosjarc.dbanalyser.app.table.TableService
-import com.urosjarc.dbanalyser.shared.dbdiagram_io
-import com.urosjarc.dbanalyser.shared.matchRatio
-import com.urosjarc.dbanalyser.shared.setColumnWidth
-import com.urosjarc.dbanalyser.shared.startThread
+import com.urosjarc.dbanalyser.shared.*
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
@@ -15,12 +13,11 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.input.MouseEvent
-import javafx.stage.DirectoryChooser
+import javafx.stage.FileChooser
 import kotlinx.datetime.Clock
 import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.File
 
 
 open class TableSearchUi : KoinComponent {
@@ -35,7 +32,10 @@ open class TableSearchUi : KoinComponent {
     }
 
     @FXML
-    lateinit var exportB: Button
+    lateinit var exportDbDiagramIoB: Button
+
+    @FXML
+    lateinit var exportPlantUmlB: Button
 
     @FXML
     lateinit var tableTF: TextField
@@ -66,6 +66,7 @@ open class TableSearchUi : KoinComponent {
 class TableSearch : TableSearchUi() {
     val log = this.logger()
     val tableRepo by this.inject<TableRepo>()
+    val schemaRepo by this.inject<SchemaRepo>()
     val tableService by this.inject<TableService>()
 
     @FXML
@@ -74,7 +75,8 @@ class TableSearch : TableSearchUi() {
         this.tableRepo.onData { this.update() }
         this.modelTV.setOnMouseClicked { this.chose(it) }
         this.tableTF.setOnAction { this.search() }
-        this.exportB.setOnAction { this.export() }
+        this.exportDbDiagramIoB.setOnAction { this.exportDbDiagramIo() }
+        this.exportPlantUmlB.setOnAction { this.exportPlantUML() }
 
         this.schemaTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.schemaTC) }
         this.tableTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.tableTC) }
@@ -108,14 +110,30 @@ class TableSearch : TableSearchUi() {
         modelTV.items.sortByDescending { matchRatio(it.tableTC, tableTF.text) }
     }
 
-    private fun export() {
+    private fun exportDbDiagramIo() {
+        val instant = Clock.System.now()
+        FileChooser().also {
+            it.title = "Save dbdiagram.io export"
+            it.initialFileName = "export_${instant.epochSeconds}.dbdiagramio"
+            it.showSaveDialog(null)?.let { file ->
+                if (!file.exists()) {
+                    val export = dbdiagram_io(this.tableRepo.data)
+                    file.writeText(export)
+                }
+            }
+        }
+    }
 
-        DirectoryChooser().also {
-            it.title = "Save export"
-            it.showDialog(null)?.let { file ->
-                val export = dbdiagram_io(this.tableRepo.data)
-                val instant = Clock.System.now()
-                File(file, "$instant.txt").writeText(export)
+    private fun exportPlantUML() {
+        val instant = Clock.System.now()
+        FileChooser().also {
+            it.title = "Save PlantUML export"
+            it.initialFileName = "export_${instant.epochSeconds}.plantuml"
+            it.showSaveDialog(null)?.let { file ->
+                if (!file.exists()) {
+                    val export = plantUML(this.schemaRepo.selected)
+                    file.writeText(export)
+                }
             }
         }
     }

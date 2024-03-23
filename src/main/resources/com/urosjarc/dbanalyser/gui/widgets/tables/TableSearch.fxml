@@ -6,7 +6,8 @@
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.dbanalyser.gui.widgets.tables.TableSearch">
     <HBox VBox.vgrow="NEVER">
         <children>
-            <Button fx:id="exportB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="dbdiagram.io" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="exportDbDiagramIoB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="dbdiagram.io" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="exportPlantUmlB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="PlantUML" HBox.hgrow="ALWAYS"/>
         </children>
     </HBox>
     <TextField fx:id="tableTF" alignment="CENTER" maxWidth="1.7976931348623157E308" promptText="Table name..."/>
