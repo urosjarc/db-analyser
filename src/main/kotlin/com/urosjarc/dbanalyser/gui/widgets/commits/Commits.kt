@@ -48,7 +48,7 @@ class Changes : ChangesUi() {
         this.commitRepo.onData { this.update(it) }
         this.commitRepo.onChose { this.chose(commit = it) }
         this.commitB.setOnAction { this.commit() }
-        this.commitsLV.setOnMouseClicked { this.commitClicked(it) }
+        this.commitsLV.setOnMouseClicked { this.commitClicked() }
         this.deleteB.setOnAction { this.commitDelete() }
         this.update(this.commitRepo.data)
     }
@@ -63,7 +63,7 @@ class Changes : ChangesUi() {
         this.commitRepo.delete(commit)
     }
 
-    fun commitClicked(mouseEvent: MouseEvent) {
+    fun commitClicked() {
         val commit: Commit = this.commitsLV.selectionModel.selectedItem ?: return
         this.commitRepo.chose(commit)
     }
@@ -71,7 +71,6 @@ class Changes : ChangesUi() {
     fun chose(commit: Commit?) {
         if(commit == null) return
         val prevCommit = this.commitRepo.data.filter { it.created < commit.created }.maxByOrNull { it.created } ?: return
-        println("${commit.created} Comparing with ${prevCommit.created}")
         val commitDiff = commit.diff(commit = prevCommit)
         this.schemasLV.items.also {
             it.setAll(commitDiff.schemasCreated.map { "$it \t+++" })
