@@ -2,6 +2,7 @@ package com.urosjarc.dbanalyser.app
 
 import com.urosjarc.dbanalyser.app.client.ClientRepo
 import com.urosjarc.dbanalyser.app.client.ClientService
+import com.urosjarc.dbanalyser.app.commit.CommitRepo
 import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.app.logs.LogRepo
 import com.urosjarc.dbanalyser.app.logs.LogService
@@ -16,24 +17,25 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 
 object App {
-	fun modul() = module {
-		this.single<DbRepo> { DbRepo("db.json") }
-		this.single<LogRepo> { LogRepo() }
-		this.single<ClientRepo> { ClientRepo() }
-		this.single<ClientService> { ClientService() }
-		this.single<TableRepo> { TableRepo() }
-		this.single<ShowConnectionsEvent> { ShowConnectionsEvent() }
-		this.single<TableConnectionRepo> { TableConnectionRepo() }
-		this.single<SchemaRepo> { SchemaRepo() }
-		this.single<QueryRepo> { QueryRepo() }
+    fun modul() = module {
+        this.single<DbRepo> { DbRepo("db.json") }
+        this.single<CommitRepo> { CommitRepo("commits.json") }
+        this.single<LogRepo> { LogRepo() }
+        this.single<ClientRepo> { ClientRepo() }
+        this.single<ClientService> { ClientService() }
+        this.single<TableRepo> { TableRepo() }
+        this.single<ShowConnectionsEvent> { ShowConnectionsEvent() }
+        this.single<TableConnectionRepo> { TableConnectionRepo() }
+        this.single<SchemaRepo> { SchemaRepo() }
+        this.single<QueryRepo> { QueryRepo() }
 
-		this.single { TableService(get()) }
-		this.single { LogService(get()) }
-	}
+        this.single { TableService(get()) }
+        this.single { LogService(get()) }
+    }
 
-	fun init() {
-		startKoin { this.modules(modul()) }
-	}
+    fun init() {
+        startKoin { this.modules(modul()) }
+    }
 
-	fun reset() = stopKoin()
+    fun reset() = stopKoin()
 }
