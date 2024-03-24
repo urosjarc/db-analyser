@@ -67,7 +67,7 @@ class QueryInfo : QueryInfoUi() {
         this.langCB.setOnAction { this.updateDTO() }
 
         val db = this.dbRepo.chosen?.type
-        if (listOf(Db.Type.DB2, Db.Type.DERBY, Db.Type.H2, Db.Type.MARIA, Db.Type.MYSQL, Db.Type.ORACLE).contains(db)) {
+        if (listOf(Db.Type.DB2, Db.Type.H2, Db.Type.MARIA, Db.Type.MYSQL, Db.Type.ORACLE).contains(db)) {
             this.resultTA.promptText = """
 			SQL statement...
 			
