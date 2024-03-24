@@ -1,6 +1,6 @@
 package com.urosjarc.dbanalyser.gui.windows
 
-import com.urosjarc.dbanalyser.app.db.DbRepo
+import com.urosjarc.dbanalyser.app.commit.CommitRepo
 import com.urosjarc.dbanalyser.app.query.QueryRepo
 import com.urosjarc.dbanalyser.app.schema.Schema
 import com.urosjarc.dbanalyser.app.schema.SchemaRepo
@@ -39,6 +39,9 @@ abstract class DbAnalyserUi : KoinComponent {
 
 	@FXML
 	lateinit var tablesTP: TabPane
+
+	@FXML
+	lateinit var commitsT: Tab
 }
 
 class DbAnalyser : DbAnalyserUi() {
@@ -46,6 +49,7 @@ class DbAnalyser : DbAnalyserUi() {
 	val log = this.logger()
 	val schemaRepo by this.inject<SchemaRepo>()
 	val queryRepo by this.inject<QueryRepo>()
+	val commitRepo by this.inject<CommitRepo>()
 	val tableRepo by this.inject<TableRepo>()
 	val showConnectionsEvent by this.inject<ShowConnectionsEvent>()
 
@@ -67,6 +71,7 @@ class DbAnalyser : DbAnalyserUi() {
 			this.tablesT.text = "Tables: $tableSize"
 			this.tablesParentT.text = this.tablesT.text
 			this.columnsT.text = "Columns: $columnSize"
+			this.commitsT.text = "Commits: ${this.commitRepo.data.size}"
 		}
 	}
 }

@@ -32,7 +32,7 @@
     <Tab fx:id="queriesT" text="Queries">
         <fx:include fx:id="querySearch" source="../widgets/queries/QuerySearch.fxml" />
     </Tab>
-    <Tab fx:id="changesT" text="Changes">
-        <fx:include fx:id="changes" source="../widgets/changes/Changes.fxml" />
+    <Tab fx:id="commitsT" text="Commits">
+        <fx:include fx:id="commits" source="../widgets/commits/Commits.fxml" />
     </Tab>
 </TabPane>

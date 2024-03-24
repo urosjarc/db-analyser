@@ -14,6 +14,11 @@ data class Column(
 	var foreignKey: ForeignKey? = null
 ) {
 
+	fun signature(): String {
+		val defaultValue = if(defaultValue != null) "='$defaultValue'" else ""
+		val fk = if(foreignKey != null) " FK='${foreignKey!!.to}'" else ""
+		return "${this.table.schema?.name}.${this.table.name}.${this.name} $type$defaultValue NOT_NULL=$notNull PK=$primaryKey$fk"
+	}
 	override fun toString(): String = "${this.table.schema?.name}.${this.table.name}.${this.name}"
 	override fun hashCode(): Int = this.toString().hashCode()
 	override fun equals(other: Any?): Boolean = other.hashCode() == this.hashCode()
