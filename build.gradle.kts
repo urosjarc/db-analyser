@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.9.22"
     id("org.openjfx.javafxplugin") version "0.0.13"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.22"
-    id("org.beryx.runtime") version "1.13.1"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "com.urosjarc"
@@ -55,21 +55,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.0")
 
     // Logging
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
     implementation("org.apache.logging.log4j:log4j-slf4j2-impl:2.20.0")
-    implementation("org.apache.logging.log4j:log4j-api:2.17.2")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:1.2.0")
-    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
-    implementation("org.apache.logging.log4j:log4j-layout-template-json:2.17.1")
 
     // koin
     implementation("io.insert-koin:koin-logger-slf4j:3.3.0")
     implementation("io.insert-koin:koin-core:3.3.0")
     implementation("org.jetbrains.kotlin:kotlin-test")
-}
-runtime {
-    imageZip.set(project.file("${project.buildDir}/image-zip/db-analyzer.zip"))
-    options = listOf("--compress", "2", "--no-header-files", "--no-man-pages")
-    modules = listOf("java.desktop", "jdk.unsupported", "java.scripting", "java.logging", "java.xml", "java.management")
-    launcher { noConsole = true }
 }

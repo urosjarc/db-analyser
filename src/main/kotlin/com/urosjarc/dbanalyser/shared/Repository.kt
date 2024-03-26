@@ -95,7 +95,7 @@ abstract class Repository<T : Any>() : KoinComponent {
 		this.onResetNotify()
 	}
 
-	fun delete(t: T) {
+	open fun delete(t: T) {
 		this.resetHistory(all = false)
 		this.history.removeAll { it == t }
 		this.future.removeAll { it == t }

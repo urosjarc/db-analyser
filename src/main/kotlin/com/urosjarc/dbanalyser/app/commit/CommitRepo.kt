@@ -1,28 +1,34 @@
 package com.urosjarc.dbanalyser.app.commit
 
+import com.urosjarc.dbanalyser.app.db.DbRepo
 import com.urosjarc.dbanalyser.shared.Repository
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.apache.logging.log4j.kotlin.logger
-import java.io.File
+import org.koin.core.component.inject
 
-class CommitRepo(val fileName: String) : Repository<Commit>() {
+class CommitRepo : Repository<Commit>() {
+
+    val dbRepo by this.inject<DbRepo>()
     override val log = this.logger()
 
     init {
-        this.load()
+        this.dbRepo.onChose {
+            this.set(it?.commits ?: listOf())
+        }
     }
 
-    override fun load() {
-        val file = File(this.fileName)
-        if (!file.exists()) return
-        this.set(Json.decodeFromString(file.readText()))
+    override fun save(t: Commit): Commit {
+        val saved = super.save(t)
+        dbRepo.chosen?.commits?.add(saved)
+        this.dbRepo.save()
+        return saved
     }
 
-    override fun save() {
-        val file = File(this.fileName)
-        if (!file.exists()) file.createNewFile()
-        file.writeText(Json.encodeToString(this.data))
+    override fun delete(t: Commit) {
+        dbRepo.chosen?.let { db ->
+            db.commits.removeIf { it == t }
+            this.set(db.commits)
+            this.dbRepo.save()
+        }
+        super.delete(t)
     }
-
 }

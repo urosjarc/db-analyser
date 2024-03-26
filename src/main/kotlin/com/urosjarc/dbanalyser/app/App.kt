@@ -19,7 +19,7 @@ import org.koin.dsl.module
 object App {
     fun modul() = module {
         this.single<DbRepo> { DbRepo("db.json") }
-        this.single<CommitRepo> { CommitRepo("commits.json") }
+        this.single<CommitRepo> { CommitRepo() }
         this.single<LogRepo> { LogRepo() }
         this.single<ClientRepo> { ClientRepo() }
         this.single<ClientService> { ClientService() }

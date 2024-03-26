@@ -9,8 +9,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Commit(
-    val created: Instant = Clock.System.now(),
     val name: String,
+    val created: Instant = Clock.System.now(),
     val schemas: Set<String>,
     val tables: Set<String>,
     val columns: Set<String>,
@@ -30,18 +30,18 @@ data class Commit(
     fun diff(commit: Commit): CommitDiff {
         val cdiff = CommitDiff()
 
-        val beforeSchemas = this.schemas
-        val nowSchemas = commit.schemas
+        val nowSchemas = this.schemas
+        val beforeSchemas = commit.schemas
         cdiff.schemasCreated = nowSchemas - beforeSchemas
         cdiff.schemasDeleted = beforeSchemas - nowSchemas
 
-        val beforeTables = this.tables
-        val nowTables = commit.tables
+        val nowTables = this.tables
+        val beforeTables = commit.tables
         cdiff.tablesCreated = nowTables - beforeTables
         cdiff.tablesDeleted = beforeTables - nowTables
 
-        val beforeColumns = this.columns
-        val nowColumns = commit.columns
+        val nowColumns = this.columns
+        val beforeColumns = commit.columns
         cdiff.columnsCreated = nowColumns - beforeColumns
         cdiff.columnsDeleted = beforeColumns - nowColumns
 

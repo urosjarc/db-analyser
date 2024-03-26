@@ -1,5 +1,6 @@
 package com.urosjarc.dbanalyser.app.db
 
+import com.urosjarc.dbanalyser.app.commit.Commit
 import com.urosjarc.dbanalyser.app.query.Query
 import kotlinx.serialization.Serializable
 
@@ -10,7 +11,8 @@ data class Db(
     var password: String,
     var url: String,
     var type: Type,
-    var queries: MutableList<Query> = mutableListOf()
+    var queries: MutableList<Query> = mutableListOf(),
+    var commits: MutableList<Commit> = mutableListOf()
 ) {
     enum class Type { SQLITE, MS_SQL, POSTGRESQL, MYSQL, ORACLE, MARIA, DB2, H2 }
 

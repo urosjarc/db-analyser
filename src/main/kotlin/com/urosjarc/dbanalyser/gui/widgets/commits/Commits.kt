@@ -7,7 +7,6 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ListView
 import javafx.scene.control.TextArea
-import javafx.scene.input.MouseEvent
 import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -69,7 +68,7 @@ class Changes : ChangesUi() {
     }
 
     fun chose(commit: Commit?) {
-        if(commit == null) return
+        if (commit == null) return
         val prevCommit = this.commitRepo.data.filter { it.created < commit.created }.maxByOrNull { it.created } ?: return
         val commitDiff = commit.diff(commit = prevCommit)
         this.schemasLV.items.also {
@@ -90,7 +89,7 @@ class Changes : ChangesUi() {
     }
 
     private fun commit() {
-        val schemas = this.schemaRepo.selected
+        val schemas = this.schemaRepo.data
         val commit = Commit(name = this.commitMsgTA.text, schemas = schemas)
         this.commitRepo.save(commit)
     }
