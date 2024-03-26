@@ -21,7 +21,8 @@ data class Db(
     }
 
     override fun equals(other: Any?): Boolean {
-        return this.hashCode() == other.hashCode()
+        if (other !is Db) return false
+        return this.type == other.type && this.name == other.name
     }
 
     override fun toString(): String = "${this.type} | ${this.name} -> ${this.url}"
