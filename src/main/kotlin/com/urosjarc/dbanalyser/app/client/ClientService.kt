@@ -1,10 +1,10 @@
 package com.urosjarc.dbanalyser.app.client
 
+import com.jakewharton.fliptables.FlipTableConverters
 import com.urosjarc.dbanalyser.app.query.QueryHeader
 import com.urosjarc.dbanalyser.app.query.QueryResult
 import com.urosjarc.dbanalyser.app.table.Table
 import com.urosjarc.dbanalyser.app.tableConnection.TableConnection
-import com.urosjarc.dbanalyser.shared.FlipTableConverters
 import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

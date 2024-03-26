@@ -1,44 +1,29 @@
 plugins {
-    id 'java'
-    id 'application'
-    id 'org.jetbrains.kotlin.jvm' version '1.8.22'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.22'
+    java
+    application
+    kotlin("jvm") version "1.9.22"
+    id("org.openjfx.javafxplugin") version "0.0.13"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.22"
+    id("org.beryx.runtime") version "1.13.1"
 }
 
-group 'com.urosjarc'
-version 'v0.1.0'
+group = "com.urosjarc"
+version = "0.0.1"
+
+kotlin {
+    jvmToolchain(19)
+}
 
 repositories {
     mavenCentral()
 }
 
-ext {
-    junitVersion = '5.9.2'
-    slf4jVersion = "2.0.9"
-    koinVersion = "3.3.0"
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-sourceSets {
-    named("main") {
-        java.srcDir("src/main/kotlin")
-    }
-}
-
 application {
-    mainClass = 'com.urosjarc.dbanalyser.MainKt'
-}
-kotlin {
-    jvmToolchain(19)
+    mainClass = "com.urosjarc.dbanalyser.MainKt"
 }
 
 javafx {
-    version = '18'
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = listOf("javafx.controls", "javafx.fxml")
 }
 
 dependencies {
@@ -78,14 +63,13 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-layout-template-json:2.17.1")
 
     // koin
-    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    testImplementation("io.insert-koin:koin-test-junit5:$koinVersion")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    implementation("io.insert-koin:koin-logger-slf4j:3.3.0")
+    implementation("io.insert-koin:koin-core:3.3.0")
+    implementation("org.jetbrains.kotlin:kotlin-test")
 }
-
-test {
-    useJUnitPlatform()
+runtime {
+    imageZip.set(project.file("${project.buildDir}/image-zip/db-analyzer.zip"))
+    options = listOf("--compress", "2", "--no-header-files", "--no-man-pages")
+    modules = listOf("java.desktop", "jdk.unsupported", "java.scripting", "java.logging", "java.xml", "java.management")
+    launcher { noConsole = true }
 }
