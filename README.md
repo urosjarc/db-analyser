@@ -1,4 +1,5 @@
 <h1 align="center">DB Analyser</h1>
+<h2>(Currently in testing phase before first official release)</h2>
 <p align="center">
     <b>Cross platform GUI</b> to help you dealing with HUGE databases</b>.<br>
     Inspect <b>all possible foreign key paths</b> from star to the end table.<br>
@@ -25,9 +26,7 @@
     You are a programmer and you joust got a new job as backend programmer
     in a project with DB containing more than 1000 tables over 20+ schemas.
     Diagram of DB is so huge that Jetbrain's IDE crashes every time while
-    its tries to display huge mess of countless lines and squares... RIP Jetbrains.
-    This tool was build from programmer for programers, no need for diagrams (nobody got time for that),
-    whip out this BAD boy and you will be flying in no time!
+    its tries to display huge mess of countless lines and squares... 
 </p>
 
 <h3 align="center" width="100%">Install</h3>
